@@ -3,12 +3,12 @@ package middleware
 import (
 	"fmt"
 	"strings"
+
 	"github.com/AlfrinP/point_calculator/config"
 	"github.com/AlfrinP/point_calculator/repository"
 	"github.com/AlfrinP/point_calculator/storage"
-	"github.com/AlfrinP/point_calculator/util"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt"
 )
 
 func DeserializeUser(c *fiber.Ctx) error {
@@ -16,15 +16,11 @@ func DeserializeUser(c *fiber.Ctx) error {
 	authorization := c.Get("Authorization")
 	config, _ := config.LoadConfig(".")
 
-	fmt.Println(authorization)
-	fmt.Println(config)
 	if strings.HasPrefix(authorization, "Bearer ") {
 		tokenString = strings.TrimPrefix(authorization, "Bearer ")
 	} else if c.Cookies("token") != "" {
 		tokenString = c.Cookies("token")
 	}
-	fmt.Println(tokenString)
-
 
 	if tokenString == "" {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": "You are not logged in"})
@@ -34,7 +30,6 @@ func DeserializeUser(c *fiber.Ctx) error {
 		if _, ok := jwtToken.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %s", jwtToken.Header["alg"])
 		}
-
 		return []byte(config.JwtSecret), nil
 	})
 
@@ -45,7 +40,6 @@ func DeserializeUser(c *fiber.Ctx) error {
 	claims, ok := tokenByte.Claims.(jwt.MapClaims)
 	if !ok || !tokenByte.Valid {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": "invalid token claim"})
-
 	}
 
 	role := claims["role"].(string)
@@ -53,7 +47,6 @@ func DeserializeUser(c *fiber.Ctx) error {
 	if !ok {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": "invalid token claim 11"})
 	}
-	util.SetRoleAndID(role, uint(id))
 
 	if role == "student" {
 		studentRepo := repository.NewStudentRepository(storage.GetDB())
