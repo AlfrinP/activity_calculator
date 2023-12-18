@@ -7,6 +7,7 @@ import (
 	"github.com/AlfrinP/point_calculator/config"
 	"github.com/AlfrinP/point_calculator/repository"
 	"github.com/AlfrinP/point_calculator/storage"
+	"github.com/AlfrinP/point_calculator/util"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt"
 )
@@ -20,12 +21,15 @@ func DeserializeUser(c *fiber.Ctx) error {
 		tokenString = strings.TrimPrefix(authorization, "Bearer ")
 	} else if c.Cookies("token") != "" {
 		tokenString = c.Cookies("token")
+	} else {
+		tokenString = c.Locals("token").(string)
 	}
 
 	if tokenString == "" {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": "You are not logged in"})
 	}
 
+	c.Locals("token", tokenString)
 	tokenByte, err := jwt.Parse(tokenString, func(jwtToken *jwt.Token) (interface{}, error) {
 		if _, ok := jwtToken.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %s", jwtToken.Header["alg"])
@@ -54,7 +58,10 @@ func DeserializeUser(c *fiber.Ctx) error {
 		if err != nil {
 			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "the user belonging to this token no logger exists"})
 		}
-		c.Locals("student", student)
+		c.Locals("user", &util.Data{
+			ID:   student.ID,
+			Role: "student",
+		})
 
 	} else if role == "faculty" {
 
@@ -65,7 +72,10 @@ func DeserializeUser(c *fiber.Ctx) error {
 			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "the user belonging to this token no logger exists"})
 		}
 
-		c.Locals("faculty", faculty)
+		c.Locals("user", &util.Data{
+			ID:   faculty.ID,
+			Role: "faculty",
+		})
 	} else {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": "invalid token claim"})
 	}
