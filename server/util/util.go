@@ -8,12 +8,20 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type Data struct {
-	Role string
-	ID   uint
+var isLogged bool
+
+func SetLoginStatus(v bool) {
+	isLogged = v
 }
 
-var data *Data
+func GetLoginStatus() bool {
+	return isLogged
+}
+
+type Data struct {
+	ID   uint
+	Role string
+}
 
 func GenerateToken(id uint, role string, config config.Config) (string, error) {
 	tokenByte := jwt.New(jwt.SigningMethodHS256)
@@ -31,16 +39,4 @@ func GenerateToken(id uint, role string, config config.Config) (string, error) {
 
 func VerifyPassword(hashedPassword string, password string) error {
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
-}
-
-func SetRoleAndID(role string, id uint) *Data {
-	data = &Data{
-		Role: role,
-		ID:   id,
-	}
-	return data
-}
-
-func GetRoleAndID() (string, uint) {
-	return data.Role, data.ID
 }

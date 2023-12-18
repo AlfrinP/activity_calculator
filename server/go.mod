@@ -33,7 +33,6 @@ require (
 )
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/gofiber/fiber/v2 v2.49.2
 	github.com/hashicorp/hcl v1.0.0 // indirect

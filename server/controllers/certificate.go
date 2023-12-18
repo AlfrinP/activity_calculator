@@ -13,8 +13,9 @@ import (
 
 func PostCertificate(c *fiber.Ctx) error {
 
-	role, id := util.GetRoleAndID()
-	if role == "student" {
+	s, _ := c.Locals("user").(*util.Data)
+
+	if s != nil && s.Role == "student" {
 		params := &models.CertificateCreate{}
 		if err := c.BodyParser(params); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -40,7 +41,7 @@ func PostCertificate(c *fiber.Ctx) error {
 			return err
 		}
 		certificate := &models.Certificate{
-			StudentID: id,
+			StudentID: s.ID,
 			Name:      params.Name,
 			Category:  params.Category,
 			Level:     params.Level,
@@ -55,11 +56,12 @@ func PostCertificate(c *fiber.Ctx) error {
 			})
 		}
 		return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-			"message": "Certificate successfully uploaded",
+			"msg": "Certificate successfully uploaded",
 		})
+
 	} else {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "invalid role",
+			"error": "Invalid user role",
 		})
 	}
 
