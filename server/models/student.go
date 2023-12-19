@@ -14,18 +14,18 @@ type Student struct {
 	Name         string        `json:"name"`
 	RegNo        string        `json:"reg_no"`
 	Batch        string        `json:"batch"`
+	FacultyName  string        `json:"faculty_name"`
 	FacultyID    uint          `json:"faculty_id" gorm:"index;default:null"`
 	Certificates []Certificate `json:"certificates" gorm:"foreignKey:StudentID"`
 }
 
 type StudentCreate struct {
 	Name       string `validate:"required" json:"name"`
+	Email      string `validate:"required" json:"email"`
+	RegNo      string ` json:"reg_no"`
 	Password   string `validate:"required" json:"password"`
-	Email      string `json:"email"`
-	RegNo      string `json:"reg_no"`
-	Department string `json:"department"`
-	Batch      string `json:"batch"`
-	FacultyID  uint   `json:"faculty_id"`
+	Department string `validate:"required" json:"department"`
+	Batch      string `validate:"required" json:"batch"`
 }
 
 type UserSignIn struct {
@@ -62,6 +62,5 @@ func (bc *StudentCreate) Convert() (*Student, error) {
 		PasswordHash: string(hashedPasswd),
 		Department:   bc.Department,
 		Batch:        bc.Batch,
-		FacultyID:    bc.FacultyID,
 	}, nil
 }

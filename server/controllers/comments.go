@@ -12,9 +12,8 @@ import (
 
 func PostComment(c *fiber.Ctx) error {
 
-	role, _ := util.GetRoleAndID()
-	log.Println(role)
-	if role == "faculty" {
+	f, _ := c.Locals("user").(*util.Data)
+	if f != nil && f.Role == "faculty" {
 		params := &models.CommentCreate{}
 		if err := c.BodyParser(params); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -29,11 +28,6 @@ func PostComment(c *fiber.Ctx) error {
 		}
 		log.Println(params)
 
-		// certificateID, err := strconv.Atoi(params.CertificateID)
-		// if err != nil {
-		// 	return err
-		// }
-
 		comment := &models.Comment{
 			Message:       params.Message,
 			CertificateID: uint(params.CertificateID),
@@ -46,13 +40,12 @@ func PostComment(c *fiber.Ctx) error {
 				"msg": err.Error(),
 			})
 		}
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": "Comment successfully uploaded",
+		return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+			"msg": "Comment successfully uploaded",
 		})
 	} else {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "invalid role",
+			"error": "role is not allowed",
 		})
 	}
-
 }
