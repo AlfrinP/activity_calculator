@@ -40,7 +40,6 @@ function Faculty() {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        console.log(response.data);
         setfacultyData(response.data.faculty);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -51,14 +50,12 @@ function Faculty() {
   }, []);
 
   let totalStudents = facultyData.students?.length || 0;
-  console.log(totalStudents);
-
   return (
     <div className="w-full center flex-col">
       <Navbar />
       <BatchReport isOpen={openBatch} handleOpen={handleOpenBatch} />
       <Activity isOpen={openActivity} handleOpen={handleOpenActivity} />
-      <Shortlist isOpen={openShort} data={facultyData.students?facultyData.students:null} handleOpen={handleOpenShort} />
+      <Shortlist isOpen={openShort} batch={facultyData?.batch} department={facultyData?.department} handleOpen={handleOpenShort} />
       <Pending isOpen={openPending} handleOpen={handleOpenPending} />
       <Sorted isOpen={openSorted} handleOpen={handleOpenSorted} />
       <div className="w-full center flex-col gap-5 px-60">
@@ -85,7 +82,7 @@ function Faculty() {
             <div className="center gap-3 ">
               <div className="center flex-col items-start bg-[#512B81] rounded-xl w-[180px] py-1 px-2 text-white">
                 <span className="font-light ">Batch :</span>
-                <span className="font-semibold">{facultyData?facultyData.batch:""}</span>
+                <span className="font-semibold">{facultyData?.batch}</span>
               </div>
               <div className="center flex-col items-start w-[180px] border-2 border-[#512B81] rounded-xl py-1 px-2 text-white">
                 <span className="font-light text-[#512B81] ">Branch</span>

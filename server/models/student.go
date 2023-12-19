@@ -20,9 +20,9 @@ type Student struct {
 
 type StudentCreate struct {
 	Name       string `validate:"required" json:"name"`
-	Email       string `validate:"required" json:"email"`
-	RegNo      string `validate:"required" json:"reg_no"`
 	Password   string `validate:"required" json:"password"`
+	Email      string `json:"email"`
+	RegNo      string `json:"reg_no"`
 	Department string `json:"department"`
 	Batch      string `json:"batch"`
 	FacultyID  uint   `json:"faculty_id"`

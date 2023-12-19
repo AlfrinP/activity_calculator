@@ -146,7 +146,7 @@ func SignIn(c *fiber.Ctx) error {
 		Domain:   "localhost",
 	})
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"role": role})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"token": tokenString})
 }
 
 func LogoutUser(c *fiber.Ctx) error {

@@ -11,6 +11,7 @@ func SetupProtectedRoutes(app *fiber.App) {
 	api.Use(middleware.DeserializeUser)
 	api.Get("/securitycheck", controllers.SecurityCheck)
 	api.Get("/dashboard/:role", controllers.Dashboard)
+	api.Post("/studentsfilter", controllers.StudentFilter)
 	api.Post("/shortlist", controllers.UpdateFacultyID)
 	api.Post("/certificate", controllers.PostCertificate)
 	api.Get("/certificate", controllers.GetAllCertificate)

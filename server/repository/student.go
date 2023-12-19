@@ -74,3 +74,13 @@ func (repo *StudentRepositry) GetAll(id uint) (*models.Student, error) {
 
 	return &student, nil
 }
+
+func (repo *StudentRepositry) Shortlist(batch string,department string) ([]models.Student, error) {
+	var student []models.Student
+	if err := repo.db.Where("batch = ? and department = ?", batch,department).First(&student).Error; err != nil {
+		return student, err
+	}
+	return student, nil
+}
+
+

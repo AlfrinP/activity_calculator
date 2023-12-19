@@ -1,14 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import Search from "../../../assets/General/Search.svg";
 import { Dialog } from "@material-tailwind/react";
+import axios from "axios";
+import { baseURL } from "../../Util";
 
-function Shortlist({ isOpen, handleOpen, data }) {
+function Shortlist({ isOpen, handleOpen, batch, department }) {
   const [isAdded, setIsAdded] = useState(false);
+  const [responseData, setResponseData] = useState(null);
 
   const handleButtonClick = () => {
     setIsAdded(true);
   };
-  console.log(data)
+
+  console.log("data");
+  console.log(batch);
+  console.log(department);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          `${baseURL}studentsfilter`,
+          {"batch":batch,"department":department},
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        console.log(response.data);
+        console.log("response.data");
+        setResponseData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Dialog
@@ -30,7 +59,7 @@ function Shortlist({ isOpen, handleOpen, data }) {
           clipRule="evenodd"
         />
       </svg>
-      <table className="w-full text-sm text-left rtl:text-right text-black">
+      {/* <table className="w-full text-sm text-left rtl:text-right text-black">
         <thead className="text-black uppercase bg-gray-5 border-b text-sm">
           <tr>
             <th scope="col" className="px-5 py-3 text-center">
@@ -54,28 +83,32 @@ function Shortlist({ isOpen, handleOpen, data }) {
             </th>
           </tr>
         </thead>
-        {
-          data?(<tbody className="text-black text-md">
-          {data.map((item, index) => (
-            <tr key={index} className={index % 2 === 0 ? 'even:bg-[#F7F6FE]' : 'odd:bg-white'}>
-              <td className="px-5 py-2 text-center">{item.id}</td>
-              <td className="px-5 py-2 text-center">{item.email}</td>
-              <td className="px-5 py-2 text-center">{item.department}</td>
-              <td className="px-5 py-2 text-center text-[#512B81] cursor-pointer">
-                <a onClick={handleButtonClick} href="#">
-                  {isAdded ? (
-                    <span style={{ color: "green" }}>Added</span>
-                  ) : (
-                    <span>Add</span>
-                  )}
-                </a>
-              </td>
-            </tr>
-          ))}
-        </tbody>):null
-        }
-        
-      </table>
+        {responseData ? (
+          <tbody className="text-black text-md">
+            {responseData.map((item, index) => (
+              <tr
+                key={index}
+                className={
+                  index % 2 === 0 ? "even:bg-[#F7F6FE]" : "odd:bg-white"
+                }
+              >
+                <td className="px-5 py-2 text-center">{item.id}</td>
+                <td className="px-5 py-2 text-center">{item.email}</td>
+                <td className="px-5 py-2 text-center">{item.department}</td>
+                <td className="px-5 py-2 text-center text-[#512B81] cursor-pointer">
+                  <a onClick={handleButtonClick} href="#">
+                    {isAdded ? (
+                      <span style={{ color: "green" }}>Added</span>
+                    ) : (
+                      <span>Add</span>
+                    )}
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        ) : null}
+      </table> */}
     </Dialog>
   );
 }
