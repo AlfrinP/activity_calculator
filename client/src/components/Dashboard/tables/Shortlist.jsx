@@ -5,12 +5,7 @@ import axios from "axios";
 import { baseURL } from "../../Util";
 
 function Shortlist({ isOpen, handleOpen, batch, department }) {
-  const [isAdded, setIsAdded] = useState(false);
   const [responseData, setResponseData] = useState(null);
-
-  const handleButtonClick = () => {
-    setIsAdded(true);
-  };
 
   console.log("data");
   console.log(batch);
@@ -19,25 +14,21 @@ function Shortlist({ isOpen, handleOpen, batch, department }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(
-          `${baseURL}studentsfilter`,
-          {"batch":batch,"department":department},
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        console.log(response.data);
-        console.log("response.data");
+        const data = { batch: batch, department: department };
+        const response = await axios.post(`${baseURL}studentsfilter`, data, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         setResponseData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
-    fetchData();
-  }, []);
+    if (isOpen) {
+      fetchData();
+    }
+  }, [isOpen, batch, department]);
 
   return (
     <Dialog
@@ -59,7 +50,7 @@ function Shortlist({ isOpen, handleOpen, batch, department }) {
           clipRule="evenodd"
         />
       </svg>
-      {/* <table className="w-full text-sm text-left rtl:text-right text-black">
+      <table className="w-full text-sm text-left rtl:text-right text-black">
         <thead className="text-black uppercase bg-gray-5 border-b text-sm">
           <tr>
             <th scope="col" className="px-5 py-3 text-center">
@@ -92,24 +83,52 @@ function Shortlist({ isOpen, handleOpen, batch, department }) {
                   index % 2 === 0 ? "even:bg-[#F7F6FE]" : "odd:bg-white"
                 }
               >
-                <td className="px-5 py-2 text-center">{item.id}</td>
+                <td className="px-5 py-2 text-center">{item.ID}</td>
                 <td className="px-5 py-2 text-center">{item.email}</td>
                 <td className="px-5 py-2 text-center">{item.department}</td>
                 <td className="px-5 py-2 text-center text-[#512B81] cursor-pointer">
-                  <a onClick={handleButtonClick} href="#">
-                    {isAdded ? (
-                      <span style={{ color: "green" }}>Added</span>
-                    ) : (
-                      <span>Add</span>
-                    )}
-                  </a>
+                  <Add id={item.ID}/>
                 </td>
               </tr>
             ))}
           </tbody>
         ) : null}
-      </table> */}
+      </table>
     </Dialog>
+  );
+}
+
+function Add({id}) {
+
+  const [isAdded, setIsAdded] = useState(false);
+
+  const handleButtonClick = () => {
+    const fetchData = async () => {
+      try {
+        const data = { faculty_name:localStorage.getItem("name"), student_id: id };
+        const response = await axios.post(`${baseURL}shortlist`, data, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setResponseData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData()
+    setIsAdded(true);
+  };
+
+
+  return (
+    <a onClick={handleButtonClick} href="#">
+      {isAdded ? (
+        <span style={{ color: "green" }}>Added</span>
+      ) : (
+        <span>Add</span>
+      )}
+    </a>
   );
 }
 

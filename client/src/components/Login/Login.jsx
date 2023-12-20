@@ -51,6 +51,7 @@ function Login() {
       if (response && response.status === 200) {
         localStorage.setItem("role", logdata);
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("name", response.data.name);
         navigate(`/dashboard/${logdata}`)
       }
     } catch (error) {

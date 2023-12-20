@@ -8,15 +8,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-var isLogged bool
-
-func SetLoginStatus(v bool) {
-	isLogged = v
-}
-
-func GetLoginStatus() bool {
-	return isLogged
-}
 
 type Data struct {
 	ID   uint

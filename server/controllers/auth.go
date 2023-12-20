@@ -86,81 +86,72 @@ func SignUp(c *fiber.Ctx) error {
 }
 
 func SignIn(c *fiber.Ctx) error {
-	if !util.GetLoginStatus() {
-		params := &models.UserSignIn{}
-		var id uint
-		role := c.Params("role")
+	params := &models.UserSignIn{}
+	var id uint
+	role := c.Params("role")
 
-		if err := c.BodyParser(params); err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"err": "Invaid User Request",
-			})
-		}
-
-		if role == "student" {
-			studentRepo := repository.NewStudentRepository(storage.GetDB())
-			student, err := studentRepo.Get(params.Email)
-			id = student.ID
-			if err != nil {
-				return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-					"msg": "User not found",
-				})
-			}
-			if err := util.VerifyPassword(student.PasswordHash, params.Password); err != nil {
-				return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-					"msg": "Invalid Email or Password",
-				})
-			}
-		} else if role == "faculty" {
-			facultyRepo := repository.NewFacultyRepository(storage.GetDB())
-			faculty, err := facultyRepo.Get(params.Email)
-			id = faculty.ID
-			if err != nil {
-				return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-					"msg": "User not found",
-				})
-			}
-			if err := util.VerifyPassword(faculty.Password, params.Password); err != nil {
-				return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-					"msg": "Invalid Email or Password",
-				})
-			}
-		} else {
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"error": "Invalid role",
-			})
-		}
-
-		config, _ := config.LoadConfig(".")
-		tokenString, err := util.GenerateToken(id, role, config)
-		if err != nil {
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"msg": "token gen failed",
-			})
-		}
-		c.Cookie(&fiber.Cookie{
-			Name:     "token",
-			Value:    tokenString,
-			Path:     "/",
-			MaxAge:   config.JwtMaxAge * 60,
-			Secure:   false,
-			HTTPOnly: true,
-			Domain:   "localhost",
-		})
-
-		util.SetLoginStatus(true)
-
-		return c.Status(fiber.StatusOK).JSON(fiber.Map{"token": tokenString})
-	} else {
+	if err := c.BodyParser(params); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"msg": "user alerady logged in",
+			"err": "Invaid User Request",
 		})
 	}
+
+	if role == "student" {
+		studentRepo := repository.NewStudentRepository(storage.GetDB())
+		student, err := studentRepo.Get(params.Email)
+		id = student.ID
+		if err != nil {
+			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+				"msg": "User not found",
+			})
+		}
+		if err := util.VerifyPassword(student.PasswordHash, params.Password); err != nil {
+			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+				"msg": "Invalid Email or Password",
+			})
+		}
+	} else if role == "faculty" {
+		facultyRepo := repository.NewFacultyRepository(storage.GetDB())
+		faculty, err := facultyRepo.Get(params.Email)
+		id = faculty.ID
+		if err != nil {
+			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+				"msg": "User not found",
+			})
+		}
+		if err := util.VerifyPassword(faculty.Password, params.Password); err != nil {
+			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+				"msg": "Invalid Email or Password",
+			})
+		}
+	} else {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"error": "Invalid role",
+		})
+	}
+
+	config, _ := config.LoadConfig(".")
+	tokenString, err := util.GenerateToken(id, role, config)
+	if err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"msg": "token gen failed",
+		})
+	}
+	c.Cookie(&fiber.Cookie{
+		Name:     "token",
+		Value:    tokenString,
+		Path:     "/",
+		MaxAge:   config.JwtMaxAge * 60,
+		Secure:   false,
+		HTTPOnly: true,
+		Domain:   "localhost",
+	})
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"token": tokenString})
 }
 
 func LogoutUser(c *fiber.Ctx) error {
 	c.Locals("user", nil)
-	util.SetLoginStatus(false)
 	expired := time.Now().Add(-time.Hour * 24)
 	c.Cookie(&fiber.Cookie{
 		Name:    "token",

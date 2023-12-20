@@ -35,7 +35,7 @@ function Faculty() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${baseURL}dashboard/${logdata}`, {
+        const response = await axios.get(`${baseURL}dashboard/`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

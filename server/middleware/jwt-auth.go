@@ -21,8 +21,6 @@ func DeserializeUser(c *fiber.Ctx) error {
 		tokenString = strings.TrimPrefix(authorization, "Bearer ")
 	} else if c.Cookies("token") != "" {
 		tokenString = c.Cookies("token")
-	} else {
-		tokenString = c.Locals("token").(string)
 	}
 
 	if tokenString == "" {

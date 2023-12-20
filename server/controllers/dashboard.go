@@ -67,32 +67,37 @@ func UpdateFacultyID(c *fiber.Ctx) error {
 		})
 	}
 }
+
 type Shortlist struct {
-	Batch string `json:"batch"`
+	Batch      string `json:"batch"`
 	Department string `json:"department"`
 }
 
 func StudentFilter(c *fiber.Ctx) error {
-	params := &Shortlist{}
-	if err := c.BodyParser(params); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"msg": err.Error(),
-		})
-	}
 
-	role, _:= util.GetRoleAndID()
-	log.Println(params)
-	
+	u, _ := c.Locals("user").(*util.Data)
 
+	fmt.Println(u)
 
-	if role == "faculty" {
+	if u == nil {
+		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "the user belonging to this token no logger exists"})
+	} else if u.Role == "faculty" {
+		params := &Shortlist{}
+		if err := c.BodyParser(params); err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"msg": err.Error(),
+			})
+		}
+		fmt.Println(params)
 		studentRepo := repository.NewStudentRepository(storage.GetDB())
-        student, err := studentRepo.Shortlist(params.Batch, params.Department)
+		student, err := studentRepo.Shortlist(params.Batch, params.Department)
 		if err != nil {
 			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "the user belonging to this token no logger exists"})
 		}
 		return c.Status(fiber.StatusOK).JSON(student)
 	} else {
-		return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "not updated"})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Invalid user role",
+		})
 	}
 }
