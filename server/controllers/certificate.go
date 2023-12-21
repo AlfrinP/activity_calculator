@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -15,17 +16,22 @@ func PostCertificate(c *fiber.Ctx) error {
 
 	s, _ := c.Locals("user").(*util.Data)
 
-	if s != nil && s.Role == "student" {
+	if s == nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "User not found",
+		})
+	}
+	if s.Role == "student" {
 		params := &models.CertificateCreate{}
 		if err := c.BodyParser(params); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"msg": err.Error(),
+				"error": "Cant get certificate data",
 			})
 		}
 
 		if err := params.Validate(); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"msg": err.Error(),
+				"error": "certificate parames are not valid",
 			})
 		}
 
@@ -74,4 +80,43 @@ func GetAllCertificate(c *fiber.Ctx) error {
 		return err
 	}
 	return c.JSON(certificate)
+}
+
+type CertificateStatus struct {
+	CertficateID uint   `json:"certificate_id"`
+	Status       string `json:"status"`
+}
+
+func UpdateStatus(c *fiber.Ctx) error {
+
+	s, _ := c.Locals("user").(*util.Data)
+
+	fmt.Println(s)
+
+	if s == nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"error": "User not found",
+		})
+	}
+	if s.Role == "faculty" {
+		req := &CertificateStatus{}
+		if err := c.BodyParser(req); err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": "Cant get certificate status",
+			})
+		}
+		certificateRepo := repository.NewCertificateRepository(storage.GetDB())
+		if err := certificateRepo.ChangeStatus(req.CertficateID, req.Status); err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"msg": "Certificate status updated failed",
+			})
+		}
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+			"msg": "Certificate status updated successfully",
+		})
+	} else {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Invalid user role",
+		})
+	}
 }

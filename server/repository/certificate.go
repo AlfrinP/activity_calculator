@@ -43,3 +43,7 @@ func (repo *CertificateRepository) GetAll() ([]models.Certificate, error) {
 	err := repo.db.Model(&models.Certificate{}).Preload("Comment").Find(&certificate).Error
 	return certificate, err
 }
+
+func (repo *CertificateRepository) ChangeStatus(certificateID uint, status string) error {
+	return repo.db.Model(&models.Certificate{}).Where("id = ?", certificateID).Update("status", status).Error
+}

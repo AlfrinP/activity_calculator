@@ -13,6 +13,7 @@ type Certificate struct {
 	Level     string    `json:"level"`
 	Name      string    `json:"name"`
 	Date      time.Time `json:"date"`
+	Status    string    `json:"status" gorm:"default:pending"`
 	Comment   []Comment `json:"comment"`
 	StudentID uint      `json:"student_id" gorm:"index"`
 }
