@@ -102,7 +102,7 @@ export default function Student() {
         </div>
         <span className="flex items-start w-full pl-24 ">
           <PopMessage
-            data={studentData.certificates?.length === 0 ? null : studentData.certificates} 
+            data={studentData.certificates?.length === 0 ?null: studentData.certificates} 
             faculty={studentData.faculty_name}
           />
         </span>

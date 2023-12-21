@@ -7,7 +7,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 import Add from "../../assets/General/Addicon.svg";
-import { baseURL,form } from "../Util";
+import { baseURL, form } from "../Util";
 
 function FileUploadModel({ isOpen, handleOpen }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -15,6 +15,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [selectedPosition, setSelectedPosition] = useState(null);
   const [date, setDate] = useState("");
+  const [uploadedCertificate, setUploadedCertificate] = useState(null);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
@@ -38,6 +39,11 @@ function FileUploadModel({ isOpen, handleOpen }) {
     setSelectedPosition(position);
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setUploadedCertificate(file);
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     let bodyFormData = new FormData();
@@ -46,22 +52,18 @@ function FileUploadModel({ isOpen, handleOpen }) {
     bodyFormData.append("category", selectedCategory);
     bodyFormData.append("position", selectedPosition);
     bodyFormData.append("date", date);
+    bodyFormData.append("upload_certificate", uploadedCertificate);
 
     try {
-      const response = await axios.post(
-        `${baseURL}certificate`,
-        bodyFormData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      setResponseMessage(response.data);
+      const response = await axios.post(`${baseURL}certificate`, bodyFormData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(response.data);
     } catch (error) {
       console.error("Error submitting form:", error);
-      setResponseMessage(error.response.data.error);
     }
   };
 
@@ -90,16 +92,18 @@ function FileUploadModel({ isOpen, handleOpen }) {
           className="w-full flex flex-col items-center mt-6 gap-4"
           onSubmit={handleFormSubmit}
         >
-          <div className="border-dashed border-2 border-gray-300 rounded p-4 w-full bg-[#F7F6FE]">
+          <label className="border-dashed border-2 center flex-col border-gray-300 rounded p-4 w-full bg-[#F7F6FE]">
             <h4 className="text-black text-center text-xl">
               Drop your files here!
             </h4>
             <p className="text-gray-400 text-center pb-4">or click</p>
-          </div>
-          <div className="bg-[#512B81] rounded z-10 flex items-center justify-center gap-2 px-9 h-12 -mt-12 cursor-pointer">
-            <img src={Add} alt="addicon" className="w-5" />
-            <p className="text-white">Add files</p>
-          </div>
+            <div className="bg-[#512B81] rounded z-10 flex top-0 w-fit items-center justify-center gap-2 px-9 h-12 cursor-pointer">
+              <img src={Add} alt="addicon" className="w-5" />
+              <p className="text-white">Add files</p>
+            </div>
+            <input type="file" name="upload_certificate" className="hidden" onChange={handleFileChange} />
+          </label>
+
           <div className="w-full">
             <h4 className="text-black text-md font-medium">OPTIONS</h4>
             <hr className="border-gray-400" />

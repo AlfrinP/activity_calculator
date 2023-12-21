@@ -39,8 +39,8 @@ function PopMessage({ data, faculty }) {
                 <div className="flex flex-col message p-4">
                   <h4 className="font-bold text-black">{faculty}</h4>
                   <p>{item.name}</p>
-                  {data.comment.map((item, index) => {
-                    <p key={index}>{item.message}</p>;
+                  {data.map((item, index) => {
+                    <p key={index}>{item.comment}</p>;
                   })}
                 </div>
               </span>;
