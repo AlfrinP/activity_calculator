@@ -11,6 +11,7 @@ type Certificate struct {
 	gorm.Model
 	Category  string    `json:"category"`
 	Level     string    `json:"level"`
+	Position  string    `json:"position"`
 	Name      string    `json:"name"`
 	Date      time.Time `json:"date"`
 	Status    string    `json:"status" gorm:"default:pending"`
@@ -21,7 +22,8 @@ type Certificate struct {
 type CertificateCreate struct {
 	Name     string `validate:"required" json:"name"`
 	Category string `validate:"required" json:"category"`
-	Level    string `validate:"required" json:"level"`
+	Level    string `json:"level"`
+	Position string `json:"position"`
 	Date     string `validate:"required" json:"date"`
 }
 

@@ -38,7 +38,7 @@ function Table({data}) {
           </tr>
         </thead>
         <tbody className="text-black text-md">
-          {data.map((item, index) => (
+          {data?.map((item, index) => (
             <tr
               key={index}
               className="odd:bg-white even:bg-[#F7F6FE] "

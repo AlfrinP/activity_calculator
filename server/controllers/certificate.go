@@ -51,6 +51,7 @@ func PostCertificate(c *fiber.Ctx) error {
 			Name:      params.Name,
 			Category:  params.Category,
 			Level:     params.Level,
+			Position:  params.Position,
 			Date:      date,
 		}
 

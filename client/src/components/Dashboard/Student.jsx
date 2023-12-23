@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import sprofile from "../../assets/Dashboard/Student/profile.png";
 import upload from "../../assets/General/file-upload.png";
 import graph from "../../assets/General/graph.png";
@@ -8,7 +8,7 @@ import FileUploadModel from "./FileUploadModal";
 import ViewPointsModal from "./ViewPointsModal";
 import PopMessage from "./PopMessage";
 import axios from "axios";
-import {dep,logdata,baseURL} from "../Util";
+import { dep, baseURL } from "../Util";
 
 export default function Student() {
   const [openFileModal, setOpenFileModal] = React.useState(false);
@@ -16,19 +16,18 @@ export default function Student() {
 
   const handleOpenFileModal = () => setOpenFileModal(!openFileModal);
   const handleOpenViewPoints = () => setOpenViewPoints(!openViewPoints);
-  
+
   const [studentData, setStudentData] = useState("");
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${baseURL}dashboard/${logdata}`,{
+        const response = await axios.get(`${baseURL}dashboard/`, {
           headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        console.log(response.data);
+        console.log(response.data.student);
         setStudentData(response.data.student);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -54,7 +53,11 @@ export default function Student() {
         <div className="w-full center flex-col gap-5 px-60">
           <div className="w-full center justify-evenly">
             <div className="ring-offset-8 ring-2 ring-[#512B81] rounded-full w-32">
-              <img src={sprofile} className="rounded-full" alt="Student Profile" />
+              <img
+                src={sprofile}
+                className="rounded-full"
+                alt="Student Profile"
+              />
             </div>
             <div className="center flex-col gap-3 items-start col-span-2">
               <div className="center flex-col items-start">
@@ -71,7 +74,7 @@ export default function Student() {
                 <div className="center flex-col items-start w-[180px] border-2 border-[#512B81] rounded-xl py-1 px-2 justify-evenly text-white">
                   <span className="font-light text-[#512B81] ">Branch</span>
                   <span className="font-semibold text-black">
-                  {dep[studentData.department] || ""}
+                    {dep[studentData.department] || ""}
                   </span>
                 </div>
               </div>
@@ -92,11 +95,16 @@ export default function Student() {
             </div>
           </div>
           <div className="w-full center shadow-[0_3px_10px_rgb(0,0,0,0.2)] text-black rounded-lg">
-            <Table data={studentData.certificates}/>
+            <Table
+              data={studentData.certificates?.length === 0 ? null : studentData.certificates} 
+            />
           </div>
         </div>
         <span className="flex items-start w-full pl-24 ">
-          <PopMessage data={studentData.certificates} faculty={studentData.faculty.name} />
+          <PopMessage
+            data={studentData.certificates?.length === 0 ?null: studentData.certificates} 
+            faculty={studentData.faculty_name}
+          />
         </span>
       </div>
     </>
