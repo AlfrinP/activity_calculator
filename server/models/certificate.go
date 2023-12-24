@@ -14,6 +14,7 @@ type Certificate struct {
 	Position  string    `json:"position"`
 	Name      string    `json:"name"`
 	Date      time.Time `json:"date"`
+	Status    string    `json:"status" gorm:"default:pending"`
 	Comment   []Comment `json:"comment"`
 	StudentID uint      `json:"student_id" gorm:"index"`
 }
