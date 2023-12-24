@@ -50,8 +50,9 @@ func PostCertificate(c *fiber.Ctx) error {
 			StudentID: s.ID,
 			Name:      params.Name,
 			Category:  params.Category,
-			Level:     params.Level,
+			Level:     util.Levels[params.Level],
 			Position:  params.Position,
+			Point:     util.GetPoint(params),
 			Date:      date,
 		}
 
