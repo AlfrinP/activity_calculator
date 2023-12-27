@@ -216,6 +216,9 @@ var data = []Activity{
 		Category: "Entrepreneurship and Innovation",
 		Point:    []int{50},
 	},
+}
+
+var dataWithPosition = []Activity{
 	{
 		Name:     "Student Professional Societies",
 		Category: "Leadership & Management",
@@ -262,14 +265,26 @@ func VerifyPassword(hashedPassword string, password string) error {
 }
 
 func GetPoint(c *models.CertificateCreate) int {
-	for _, v := range data {
-		if v.Category == c.Category && v.Name == c.Name {
-			if GetPostionIndex(c.Position) != -1 {
-				return v.Point[GetPostionIndex(c.Position)]
-			} else {
-				return v.Point[c.Level]
+	if int(c.Level) > len(Levels) {
+		return 0
+	} else if c.Position == "" || GetPostionIndex(c.Position) == -1 {
+		for _, v := range data {
+			if v.Category == c.Category && v.Name == c.Name {
+
+				if c.Level <= uint(len(v.Point)) {
+					return v.Point[c.Level]
+				} else {
+					return v.Point[0]
+				}
 			}
 		}
+	} else {
+		for _, v := range dataWithPosition {
+			if v.Category == c.Category && v.Name == c.Name {
+				return v.Point[GetPostionIndex(c.Position)]
+			}
+		}
+
 	}
 	return 0
 }
