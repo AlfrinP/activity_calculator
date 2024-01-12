@@ -10,29 +10,29 @@ import Add from "../../assets/General/Addicon.svg";
 import { baseURL, form } from "../Util";
 
 function FileUploadModel({ isOpen, handleOpen }) {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedActivity, setSelectedActivity] = useState(null);
-  const [selectedLevel, setSelectedLevel] = useState(null);
-  const [selectedPosition, setSelectedPosition] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedActivity, setSelectedActivity] = useState("");
+  const [selectedLevel, setSelectedLevel] = useState(0);
+  const [selectedPosition, setSelectedPosition] = useState("");
   const [date, setDate] = useState("");
   const [uploadedCertificate, setUploadedCertificate] = useState(null);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setSelectedActivity(null);
-    setSelectedLevel(null);
-    setSelectedPosition(null);
+    setSelectedLevel(0);
+    setSelectedPosition("");
   };
 
   const handleActivityChange = (activity) => {
     setSelectedActivity(activity);
-    setSelectedLevel(null);
-    setSelectedPosition(null);
+    setSelectedLevel(0);
+    setSelectedPosition("");
   };
 
   const handleLevelChange = (level) => {
     setSelectedLevel(level);
-    setSelectedPosition(null);
+    setSelectedPosition("");
   };
 
   const handlePositionChange = (position) => {
@@ -48,11 +48,13 @@ function FileUploadModel({ isOpen, handleOpen }) {
     e.preventDefault();
     let bodyFormData = new FormData();
     bodyFormData.append("name", selectedActivity);
-    bodyFormData.append("level", selectedLevel);
+    bodyFormData.append("level", Number(selectedLevel));
     bodyFormData.append("category", selectedCategory);
     bodyFormData.append("position", selectedPosition);
     bodyFormData.append("date", date);
     bodyFormData.append("upload_certificate", uploadedCertificate);
+
+    console.log(bodyFormData);
 
     try {
       const response = await axios.post(`${baseURL}certificate`, bodyFormData, {
@@ -110,6 +112,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
             <div className="grid grid-cols-2 gap-5 mt-4 h-min">
               {/* Category dropdown */}
               <select
+                defaultValue={"National Initatives Participation"}
                 className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200  text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus: focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 variant="outlined"
                 label="Category"
@@ -126,6 +129,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
               {/* Activity dropdown */}
               {selectedCategory && (
                 <select
+                  defaultValue={"NSS"}
                   className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200  text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus: focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   variant="outlined"
                   label="Activity Name"
@@ -156,6 +160,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
                       activityData.activity_name === selectedActivity
                   )?.levels && (
                   <select
+                    defaultValue={0}
                     className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200  text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus: focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                     variant="outlined"
                     label="Levels"
@@ -172,7 +177,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
                           activityData.activity_name === selectedActivity
                       )
                       ?.levels.map((level, index) => (
-                        <option key={index} value={level}>
+                        <option key={index} value={index}>
                           {level}
                         </option>
                       ))}

@@ -14,6 +14,8 @@ type Certificate struct {
 	Position  string    `json:"position"`
 	Name      string    `json:"name"`
 	Date      time.Time `json:"date"`
+	Point     int       `json:"point"`
+	Status    string    `json:"status" gorm:"default:pending"`
 	Comment   []Comment `json:"comment"`
 	StudentID uint      `json:"student_id" gorm:"index"`
 }
@@ -21,7 +23,7 @@ type Certificate struct {
 type CertificateCreate struct {
 	Name     string `validate:"required" json:"name"`
 	Category string `validate:"required" json:"category"`
-	Level    string `json:"level"`
+	Level    uint   `json:"level"`
 	Position string `json:"position"`
 	Date     string `validate:"required" json:"date"`
 }
