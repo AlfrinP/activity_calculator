@@ -264,18 +264,22 @@ func VerifyPassword(hashedPassword string, password string) error {
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 }
 
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
 func GetPoint(c *models.CertificateCreate) int {
 	if int(c.Level) > len(Levels) {
 		return 0
-	} else if c.Position == "" || GetPostionIndex(c.Position) == -1 {
+	}
+
+	if c.Position == "" || GetPostionIndex(c.Position) == -1 {
 		for _, v := range data {
 			if v.Category == c.Category && v.Name == c.Name {
-
-				if c.Level <= uint(len(v.Point)) {
-					return v.Point[c.Level]
-				} else {
-					return v.Point[0]
-				}
+				return v.Point[min(int(c.Level), len(v.Point)-1)]
 			}
 		}
 	} else {
@@ -284,7 +288,6 @@ func GetPoint(c *models.CertificateCreate) int {
 				return v.Point[GetPostionIndex(c.Position)]
 			}
 		}
-
 	}
 	return 0
 }
