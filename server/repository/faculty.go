@@ -56,7 +56,7 @@ func (repo *FacultyRepositry) All() ([]models.Faculty, error) {
 
 func (repo *FacultyRepositry) GetAll(id uint) (*models.Faculty, error) {
 	var faculty models.Faculty
-	if err := repo.db.Preload("Students").First(&faculty, id).Error; err != nil {
+	if err := repo.db.Preload("Students.Certificates", "status = ?", "pending").First(&faculty, id).Error; err != nil {
 		return nil, err
 	}
 
