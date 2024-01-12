@@ -44,6 +44,7 @@ type Comment struct {
 
 type CommentCreate struct {
 	Message       string `validate:"required" json:"message"`
+	Status        string `validate:"required" json:"status"`
 	CertificateID uint   `json:"certificate_id"`
 }
 
