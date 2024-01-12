@@ -2,71 +2,77 @@ import React from "react";
 import CheckCertificate from "../CheckCertificate";
 import { Dialog } from "@material-tailwind/react";
 
-function Pending({ isOpen, handleOpen }) {
+function Pending({ isOpen, handleOpen, studentData=[] }) {
   const [openCheckCertificate, setOpenCheckCertificate] = React.useState(false);
-  const handleOpenCheckCertificate = () => setOpenCheckCertificate(!openCheckCertificate);
+  const handleOpenCheckCertificate = () =>
+    setOpenCheckCertificate(!openCheckCertificate);
 
   const data = [
     {
       no: "01",
       regno: "CCE22CS001",
       name: "Aalap",
-      point:"15",
+      point: "15",
       approval: "Processing",
     },
     {
       no: "01",
       regno: "CCE22CS001",
       name: "Abhishek",
-      point:"15",
+      point: "15",
       approval: "Processing",
     },
     {
       no: "01",
       regno: "CCE22CS001",
       name: "Adithya",
-      point:"15",
+      point: "15",
       approval: "Processing",
     },
     {
       no: "01",
       regno: "CCE22CS001",
       name: "Agna",
-      point:"15",
+      point: "15",
       approval: "Processing",
     },
     {
       no: "01",
       regno: "CCE22CS001",
       name: "Agna",
-      point:"15",
+      point: "15",
       approval: "Processing",
     },
     {
       no: "01",
       regno: "CCE22CS001",
       name: "Agna",
-      point:"15",
+      point: "15",
       approval: "Processing",
     },
     {
       no: "01",
       regno: "CCE22CS001",
       name: "Agna",
-      point:"15",
+      point: "15",
       approval: "Processing",
     },
     {
       no: "01",
       regno: "CCE22CS001",
       name: "Agna",
-      point:"15",
+      point: "15",
       approval: "Processing",
     },
   ];
   return (
-    <Dialog size="lg" open={isOpen} handler={handleOpen} className="relative overflow-x-auto shadow-md sm:rounded-lg w-full h-[400px]">
-         <svg
+    <Dialog
+      size="lg"
+      open={isOpen}
+      handler={handleOpen}
+      className="relative overflow-x-auto shadow-md sm:rounded-lg w-full h-[400px]"
+    >
+      <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="currentColor"
@@ -96,29 +102,31 @@ function Pending({ isOpen, handleOpen }) {
               Student Name
             </th>
             <th scope="col" className="px-5 py-3 text-center">
-            Total Activity Point
+              Total Activity Point
             </th>
             <th scope="col" className="px-5 py-3 text-center">
-            Approval
+              Approval
             </th>
-            <th scope="col" className="px-5 py-3 text-center">
-            </th>
+            <th scope="col" className="px-5 py-3 text-center"></th>
           </tr>
         </thead>
         <tbody className="text-black text-md">
-          {data.map((item, index) => (
-            <tr
-              key={index}
-              className="odd:bg-white even:bg-[#F7F6FE] "
-            >
+          {studentData.map((item, index) => (
+            <tr key={index} className="odd:bg-white even:bg-[#F7F6FE] ">
               <td className="px-5 py-2 text-center">{item.no}</td>
               <td className="px-5 py-2 text-center">{item.regno}</td>
               <td className="px-5 py-2 text-center">{item.name}</td>
               <td className="px-5 py-2 text-center">{item.point}</td>
-              <td className="px-5 py-2 center"><div className="p-2 px-3 w-fit rounded-full text-center font-semibold text-[#CD6200] bg-[#FEF2E5]">{item.approval}</div></td>
+              <td className="px-5 py-2 center">
+                <div className="p-2 px-3 w-fit rounded-full text-center font-semibold text-[#CD6200] bg-[#FEF2E5]">
+                  {item.}
+                </div>
+              </td>
               <td className="px-5 py-2 text-center text-[#512B81] hover:underline cursor-pointer">
-                <a onClick={handleOpenCheckCertificate} href="#">View</a>
-                </td>
+                <a onClick={handleOpenCheckCertificate} href="#">
+                  View
+                </a>
+              </td>
             </tr>
           ))}
         </tbody>

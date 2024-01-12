@@ -14,13 +14,16 @@ import { dep, logdata, baseURL } from "../Util";
 
 function Faculty() {
   const [openBatch, setOpenBatch] = React.useState(false);
+
   const [reload, setReload] = useState(false);
+
   const handleOpenBatch = () => setOpenBatch(!openBatch);
 
   const [openActivity, setOpenActivity] = React.useState(false);
   const handleOpenActivity = () => setOpenActivity(!openActivity);
 
   const [openShort, setOpenShort] = React.useState(false);
+
   const handleOpenShort = () => {
     setOpenShort(!openShort);
     setReload(!reload);
@@ -43,11 +46,11 @@ function Faculty() {
           },
         });
         setfacultyData(response.data.faculty);
+        console.log(response.data.faculty);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, [reload]);
 
@@ -63,7 +66,11 @@ function Faculty() {
         department={facultyData?.department}
         handleOpen={handleOpenShort}
       />
-      <Pending isOpen={openPending} handleOpen={handleOpenPending} />
+      <Pending
+        isOpen={openPending}
+        handleOpen={handleOpenPending}
+        studentData={facultyData.students}
+      />
       <Sorted isOpen={openSorted} handleOpen={handleOpenSorted} />
       <div className="w-full center flex-col gap-5 px-60">
         <div className="w-full flex gap-10 ">
