@@ -10,17 +10,21 @@ import Shortlist from "./tables/Shortlist";
 import Sorted from "./tables/Sorted";
 import Pending from "./tables/Pending";
 import axios from "axios";
-import {dep,logdata,baseURL} from "../Util";
+import { dep, logdata, baseURL } from "../Util";
 
 function Faculty() {
   const [openBatch, setOpenBatch] = React.useState(false);
+  const [reload, setReload] = useState(false);
   const handleOpenBatch = () => setOpenBatch(!openBatch);
 
   const [openActivity, setOpenActivity] = React.useState(false);
   const handleOpenActivity = () => setOpenActivity(!openActivity);
 
   const [openShort, setOpenShort] = React.useState(false);
-  const handleOpenShort = () => setOpenShort(!openShort);
+  const handleOpenShort = () => {
+    setOpenShort(!openShort);
+    setReload(!reload);
+  };
 
   const [openPending, setOpenPending] = React.useState(false);
   const handleOpenPending = () => setOpenPending(!openPending);
@@ -29,8 +33,6 @@ function Faculty() {
   const handleOpenSorted = () => setOpenSorted(!openSorted);
 
   const [facultyData, setfacultyData] = useState("");
-
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,7 +49,7 @@ function Faculty() {
     };
 
     fetchData();
-  }, []);
+  }, [reload]);
 
   let totalStudents = facultyData.students?.length || 0;
   return (
@@ -55,7 +57,12 @@ function Faculty() {
       <Navbar />
       <BatchReport isOpen={openBatch} handleOpen={handleOpenBatch} />
       <Activity isOpen={openActivity} handleOpen={handleOpenActivity} />
-      <Shortlist isOpen={openShort} batch={facultyData?.batch} department={facultyData?.department} handleOpen={handleOpenShort} />
+      <Shortlist
+        isOpen={openShort}
+        batch={facultyData?.batch}
+        department={facultyData?.department}
+        handleOpen={handleOpenShort}
+      />
       <Pending isOpen={openPending} handleOpen={handleOpenPending} />
       <Sorted isOpen={openSorted} handleOpen={handleOpenSorted} />
       <div className="w-full center flex-col gap-5 px-60">
@@ -127,7 +134,10 @@ function Faculty() {
               <button onClick={handleOpenActivity} className="bg-[#512B81]">
                 <span className="font-semibold">Activity Point</span>
               </button>
-              <button onClick={handleOpenSorted} className="border-purple-900 border-2 text-black">
+              <button
+                onClick={handleOpenSorted}
+                className="border-purple-900 border-2 text-black"
+              >
                 <span>View sorted list</span>
               </button>
             </div>
