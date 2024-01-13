@@ -108,3 +108,39 @@ func StudentFilter(c *fiber.Ctx) error {
 		})
 	}
 }
+
+type YearlyPoint struct {
+	FacultyID uint   `json:"faculty_id"`
+	Year      string `json:"year"`
+}
+
+func YearlyTotalPoint(c *fiber.Ctx) error {
+	u, _ := c.Locals("user").(*util.Data)
+
+	if u == nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Invalid user",
+		})
+	}
+
+	if u.Role == "faculty" {
+		params := &YearlyPoint{}
+		if err := c.BodyParser(params); err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"msg": err.Error(),
+			})
+		}
+		fmt.Println(params)
+
+		studentRepo := repository.NewStudentRepository(storage.GetDB())
+		yearlyPoint, err := studentRepo.FetchStudentTotalPoints(params.FacultyID, params.Year)
+		if err != nil {
+			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "cant find yearly point"})
+		}
+		return c.Status(fiber.StatusOK).JSON(yearlyPoint)
+	} else {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Invalid user role",
+		})
+	}
+}
