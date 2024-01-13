@@ -82,3 +82,25 @@ func (repo *StudentRepositry) Shortlist(batch string, department string) ([]mode
 	}
 	return student, nil
 }
+
+func (repo *StudentRepositry) FetchStudentTotalPoints(facultyID uint, year string) ([]map[string]interface{}, error) {
+	var result []map[string]interface{}
+
+	// Gorm query to fetch the required data
+	err := repo.db.
+		Model(&models.Student{}).
+		Select("students.name, students.reg_no, SUM(certificates.point) as total_points, EXTRACT(YEAR FROM certificates.date) as year").
+		Joins("JOIN certificates ON students.id = certificates.student_id").
+		Where("students.faculty_id = ? AND certificates.status = ? AND EXTRACT(YEAR FROM certificates.date) = ? AND students.deleted_at IS NULL",
+			facultyID, "approved", year).
+		Group("students.id, year").
+		Order("year").
+		Scan(&result).
+		Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}

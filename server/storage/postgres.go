@@ -15,7 +15,6 @@ func ConnectDB(config *config.Config) {
 	if err != nil {
 		panic("DB Connection failed")
 	}
-
 	db.Exec("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"")
 	db.Logger = logger.Default.LogMode(logger.Info)
 
