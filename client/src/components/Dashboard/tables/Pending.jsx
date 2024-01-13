@@ -1,70 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import CheckCertificate from "../CheckCertificate";
 import { Dialog } from "@material-tailwind/react";
 
-function Pending({ isOpen, handleOpen, studentData=[] }) {
-  const [openCheckCertificate, setOpenCheckCertificate] = React.useState(false);
+function Pending({ isOpen, handleOpen, certificateData = [] }) {
+  const [openCheckCertificate, setOpenCheckCertificate] = useState(false);
   const handleOpenCheckCertificate = () =>
     setOpenCheckCertificate(!openCheckCertificate);
+  console.log(certificateData);
 
-  const data = [
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Aalap",
-      point: "15",
-      approval: "Processing",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Abhishek",
-      point: "15",
-      approval: "Processing",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Adithya",
-      point: "15",
-      approval: "Processing",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Agna",
-      point: "15",
-      approval: "Processing",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Agna",
-      point: "15",
-      approval: "Processing",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Agna",
-      point: "15",
-      approval: "Processing",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Agna",
-      point: "15",
-      approval: "Processing",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Agna",
-      point: "15",
-      approval: "Processing",
-    },
-  ];
+  const [data, setData] = useState();
+
   return (
     <Dialog
       size="lg"
@@ -88,6 +33,7 @@ function Pending({ isOpen, handleOpen, studentData=[] }) {
       <CheckCertificate
         isOpen={openCheckCertificate}
         handleOpen={handleOpenCheckCertificate}
+        data={data}
       />
       <table className="w-full text-sm text-left rtl:text-right text-black">
         <thead className="text-black uppercase bg-gray-5 border-b text-sm">
@@ -102,33 +48,50 @@ function Pending({ isOpen, handleOpen, studentData=[] }) {
               Student Name
             </th>
             <th scope="col" className="px-5 py-3 text-center">
-              Total Activity Point
+              Certificate Name
             </th>
             <th scope="col" className="px-5 py-3 text-center">
-              Approval
+              Activity Point
+            </th>
+            <th scope="col" className="px-5 py-3 text-center">
+              Action
             </th>
             <th scope="col" className="px-5 py-3 text-center"></th>
           </tr>
         </thead>
         <tbody className="text-black text-md">
-          {studentData.map((item, index) => (
-            <tr key={index} className="odd:bg-white even:bg-[#F7F6FE] ">
-              <td className="px-5 py-2 text-center">{item.no}</td>
-              <td className="px-5 py-2 text-center">{item.regno}</td>
-              <td className="px-5 py-2 text-center">{item.name}</td>
-              <td className="px-5 py-2 text-center">{item.point}</td>
-              <td className="px-5 py-2 center">
-                <div className="p-2 px-3 w-fit rounded-full text-center font-semibold text-[#CD6200] bg-[#FEF2E5]">
-                  {item.}
-                </div>
-              </td>
-              <td className="px-5 py-2 text-center text-[#512B81] hover:underline cursor-pointer">
-                <a onClick={handleOpenCheckCertificate} href="#">
-                  View
-                </a>
-              </td>
-            </tr>
-          ))}
+          {certificateData.map((student, studentIndex) =>
+            student.certificates.map((item, certificateIndex) => (
+              <tr
+                key={certificateIndex}
+                className="odd:bg-white even:bg-[#F7F6FE] "
+              >
+                <td className="px-5 py-2 text-center">
+                  {certificateIndex + 1}
+                </td>
+                <td className="px-5 py-2 text-center">{student.batch}</td>
+                <td className="px-5 py-2 text-center">{student.name}</td>
+                <td className="px-5 py-2 text-center">{item.name}</td>
+                <td className="px-5 py-2 text-center">{item.point}</td>
+                <td className="px-5 py-2 center">
+                  <div className="p-2 px-3 w-fit rounded-full text-center font-semibold text-[#CD6200] bg-[#FEF2E5]">
+                    {item.status}
+                  </div>
+                </td>
+                <td className="px-5 py-2 text-center text-[#512B81] hover:underline cursor-pointer">
+                  <a
+                    onClick={() => {
+                      setData(item);
+                      handleOpenCheckCertificate();
+                    }}
+                    href="#"
+                  >
+                    View
+                  </a>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </Dialog>
