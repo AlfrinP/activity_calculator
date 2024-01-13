@@ -13,50 +13,36 @@ import (
 func PostCommentWithStatusChange(c *fiber.Ctx) error {
 
 	f, _ := c.Locals("user").(*util.Data)
-	if f != nil && f.Role == "faculty" {
+	if f == nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "user is not allowed",
+		})
+	}
+
+	if f.Role == "faculty" {
 		params := &models.CommentCreate{}
 		if err := c.BodyParser(params); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"msg": err.Error(),
+				"error": "error in parsing request data ",
 			})
 		}
 		log.Println(params.CertificateID)
 		if err := params.Validate(); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"msg": err.Error(),
+				"error": "error in validating request data ",
 			})
 		}
 		log.Println(params)
 		commentRepo := repository.NewCommentRepository(storage.GetDB())
-		comment, err := commentRepo.GetByCertificateID(params.CertificateID)
-
-		if err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"msg": err.Error(),
-			})
+		comment := &models.Comment{
+			Message:       params.Message,
+			CertificateID: uint(params.CertificateID),
 		}
 
-		if comment != nil {
-			// Comment already exists, update the message
-			comment.Message = params.Message
-
-			if err := commentRepo.Update(comment); err != nil {
-				return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-					"msg": err.Error(),
-				})
-			}
-		} else {
-			// Comment doesn't exist, create a new comment
-			comment := &models.Comment{
-				Message:       params.Message,
-				CertificateID: uint(params.CertificateID),
-			}
-
-			if err := commentRepo.Create(comment); err != nil {
-				return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-					"msg": err.Error(),
-				})
-			}
+		if err := commentRepo.Create(comment); err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": "errror in creating the comment",
+			})
 		}
 
 		certificateRepo := repository.NewCertificateRepository(storage.GetDB())
