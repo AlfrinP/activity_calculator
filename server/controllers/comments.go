@@ -21,38 +21,29 @@ func PostCommentWithStatusChange(c *fiber.Ctx) error {
 
 	if f.Role == "faculty" {
 		params := &models.CommentCreate{}
+		log.Println(string(c.Request().Body()))
 		if err := c.BodyParser(params); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"error": "error in parsing request data ",
 			})
 		}
-		log.Println(params.CertificateID)
+
 		if err := params.Validate(); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"error": "error in validating request data ",
 			})
 		}
 		log.Println(params)
-		commentRepo := repository.NewCommentRepository(storage.GetDB())
-		comment := &models.Comment{
-			Message:       params.Message,
-			CertificateID: uint(params.CertificateID),
-		}
-
-		if err := commentRepo.Create(comment); err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"error": "errror in creating the comment",
-			})
-		}
-
 		certificateRepo := repository.NewCertificateRepository(storage.GetDB())
-		if err := certificateRepo.ChangeStatus(params.CertificateID, params.Status); err != nil {
+
+		if err := certificateRepo.ChangeStatusComment(params.CertificateID, params.Status, params.Message); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"msg": "Certificate status updated failed",
+				"error": err.Error(),
 			})
 		}
+
 		return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-			"msg": "Comment successfully uploaded and status changed",
+			"msg": "Comment and status changed",
 		})
 	} else {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
