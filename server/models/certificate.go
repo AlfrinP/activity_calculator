@@ -16,7 +16,7 @@ type Certificate struct {
 	Date      time.Time `json:"date"`
 	Point     int       `json:"point"`
 	Status    string    `json:"status" gorm:"default:pending"`
-	Comment   []Comment `json:"comment"`
+	Comment   string `json:"comment"`
 	StudentID uint      `json:"student_id" gorm:"index"`
 }
 
@@ -36,16 +36,10 @@ func (cc *CertificateCreate) Validate() error {
 	return nil
 }
 
-type Comment struct {
-	gorm.Model
-	Message       string `json:"message"`
-	CertificateID int    `json:"certificate_id"`
-}
-
 type CommentCreate struct {
 	Message       string `validate:"required" json:"message"`
 	Status        string `validate:"required" json:"status"`
-	CertificateID int    `json:"certificate_id"`
+	CertificateID uint    `json:"certificate_id"`
 }
 
 func (cm *CommentCreate) Validate() error {

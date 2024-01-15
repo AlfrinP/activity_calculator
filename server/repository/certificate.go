@@ -36,14 +36,15 @@ func (repo *CertificateRepository) All() ([]models.Certificate, error) {
 	return certificates, nil
 }
 
-
-
 func (repo *CertificateRepository) GetAll() ([]models.Certificate, error) {
 	var certificate []models.Certificate
-	err := repo.db.Model(&models.Certificate{}).Preload("Comment").Find(&certificate).Error
+	err := repo.db.Find(&certificate).Error
 	return certificate, err
 }
 
-func (repo *CertificateRepository) ChangeStatus(certificateID uint, status string) error {
-	return repo.db.Model(&models.Certificate{}).Where("id = ?", certificateID).Update("status", status).Error
+func (repo *CertificateRepository) ChangeStatusComment(certificateID uint, status string, comment string) error {
+	return repo.db.Model(&models.Certificate{}).Where("id = ?", certificateID).Updates(map[string]interface{}{
+		"status":  status,
+		"comment": comment,
+	}).Error
 }
