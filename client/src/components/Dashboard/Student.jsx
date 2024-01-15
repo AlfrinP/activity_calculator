@@ -48,6 +48,7 @@ export default function Student() {
         <ViewPointsModal
           isOpen={openViewPoints}
           handleOpen={handleOpenViewPoints}
+          data={studentData.certificates?.length === 0 ?null: studentData.certificates}
         />
 
         <div className="w-full center flex-col gap-5 px-60">

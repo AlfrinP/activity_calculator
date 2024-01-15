@@ -18,6 +18,8 @@ const CheckCertificate = ({ isOpen, handleOpen, data = "" }) => {
   useEffect(() => {
     setId(data.ID);
   }, [data.ID]);
+
+  
   const fetchData = async () => {
     try {
       const requestData = {

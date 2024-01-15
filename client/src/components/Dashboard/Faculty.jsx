@@ -44,14 +44,12 @@ function Faculty() {
         setfacultyData(response.faculty);
         console.log(response);
       } catch (error) {
-        console.error('Error fetching data:', error.message);
-        // Optionally, you can set an error state or show a user-friendly error message
+        console.error("Error fetching data:", error.message);
       }
     };
-  
+
     fetchData();
   }, [reload]);
-  
 
   let totalStudents = facultyData.students?.length || 0;
   return (
