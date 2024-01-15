@@ -9,8 +9,8 @@ import Activity from "./tables/Activity";
 import Shortlist from "./tables/Shortlist";
 import Sorted from "./tables/Sorted";
 import Pending from "./tables/Pending";
-import axios from "axios";
-import { dep, logdata, baseURL } from "../Util";
+import { dep } from "../Util";
+import api from "../api/Instance";
 
 function Faculty() {
   const [openBatch, setOpenBatch] = React.useState(false);
@@ -40,26 +40,29 @@ function Faculty() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${baseURL}dashboard/`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        setfacultyData(response.data.faculty);
-        console.log(response.data.faculty);
+        const response = await api.get("dashboard/");
+        setfacultyData(response.faculty);
+        console.log(response);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error.message);
+        // Optionally, you can set an error state or show a user-friendly error message
       }
     };
+  
     fetchData();
   }, [reload]);
+  
 
   let totalStudents = facultyData.students?.length || 0;
   return (
     <div className="w-full center flex-col">
       <Navbar />
       <BatchReport isOpen={openBatch} handleOpen={handleOpenBatch} />
-      <Activity isOpen={openActivity} handleOpen={handleOpenActivity} />
+      <Activity
+        isOpen={openActivity}
+        handleOpen={handleOpenActivity}
+        data={facultyData}
+      />
       <Shortlist
         isOpen={openShort}
         batch={facultyData?.batch}
@@ -69,7 +72,7 @@ function Faculty() {
       <Pending
         isOpen={openPending}
         handleOpen={handleOpenPending}
-        studentData={facultyData.students}
+        certificateData={facultyData?.students}
       />
       <Sorted isOpen={openSorted} handleOpen={handleOpenSorted} />
       <div className="w-full center flex-col gap-5 px-60">

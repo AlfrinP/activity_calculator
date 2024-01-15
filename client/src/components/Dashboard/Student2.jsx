@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useState} from "react";
 import sprofile from "../../assets/Dashboard/Student/profile.png";
 import Wdownload from "../../assets/General/Whitedownload.svg";
 import back from "../../assets/General/back.svg"
@@ -10,7 +10,7 @@ import Downloaddetail from "./Downloaddetail";
 
 export default function Student2({ isOpen, handleOpen }) {
 
-  const [openDownload, setOpenDownload] = React.useState(false);
+  const [openDownload, setOpenDownload] = useState(false);
   const handleOpenDownload = () => setOpenDownload(!openDownload);
 
   return (

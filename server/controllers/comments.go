@@ -21,7 +21,7 @@ func PostCommentWithStatusChange(c *fiber.Ctx) error {
 
 	if f.Role == "faculty" {
 		params := &models.CommentCreate{}
-		log.Println(string(c.Request().Body()))
+    
 		if err := c.BodyParser(params); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"error": "error in parsing request data ",
@@ -34,7 +34,6 @@ func PostCommentWithStatusChange(c *fiber.Ctx) error {
 			})
 		}
 		log.Println(params)
-		certificateRepo := repository.NewCertificateRepository(storage.GetDB())
 
 		if err := certificateRepo.ChangeStatusComment(params.CertificateID, params.Status, params.Message); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
