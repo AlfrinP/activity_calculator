@@ -6,7 +6,7 @@ require (
 	github.com/go-playground/validator/v10 v10.15.5
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/spf13/viper v1.17.0
-	golang.org/x/crypto v0.13.0
+	golang.org/x/crypto v0.14.0
 )
 
 require (
@@ -29,7 +29,7 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.50.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
-	golang.org/x/net v0.15.0 // indirect
+	golang.org/x/net v0.17.0 // indirect
 )
 
 require (
