@@ -12,7 +12,7 @@ type Student struct {
 	PasswordHash string        `json:"-"`
 	Department   string        `json:"department"`
 	Name         string        `json:"name"`
-	RegNo        string        `json:"reg_no"`
+	RegNo        string        `json:"regno"`
 	Batch        string        `json:"batch"`
 	FacultyName  string        `json:"faculty_name"`
 	FacultyID    uint          `json:"faculty_id" gorm:"index;default:null"`
@@ -22,7 +22,7 @@ type Student struct {
 type StudentCreate struct {
 	Name       string `validate:"required" json:"name"`
 	Email      string `validate:"required" json:"email"`
-	RegNo      string ` json:"reg_no"`
+	RegNo      string `validate:"required" json:"regno"`
 	Password   string `validate:"required" json:"password"`
 	Department string `validate:"required" json:"department"`
 	Batch      string `validate:"required" json:"batch"`
