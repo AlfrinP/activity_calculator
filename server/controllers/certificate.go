@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/AlfrinP/point_calculator/internals"
+	internals "github.com/AlfrinP/point_calculator/internal"
 	"github.com/AlfrinP/point_calculator/models"
 	"github.com/AlfrinP/point_calculator/repository"
 	"github.com/AlfrinP/point_calculator/storage"
