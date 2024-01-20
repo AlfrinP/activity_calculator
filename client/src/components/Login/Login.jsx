@@ -229,6 +229,7 @@ function Login() {
                 Register
               </button>
             </div>
+            <div className="w-full text-center">Don't have an account <Link className="underline text-[#41208B]" to={"/register"}>SignUp</Link></div>
           </form>
         </div>
       </div>

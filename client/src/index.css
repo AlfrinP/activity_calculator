@@ -2,26 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@layer base{
-  img{
+@layer base {
+  img {
     max-width: 100%;
     height: auto;
     shape-margin: 0.5rem;
     vertical-align: middle;
     font-size: italic;
   }
-  button{
-    @apply center justify-evenly w-full rounded gap-1 text-white px-4 py-2 text-sm font-medium cursor-pointer whitespace-nowrap
+
+  button {
+    @apply center justify-evenly w-full rounded gap-1 text-white px-4 py-2 text-sm font-medium cursor-pointer whitespace-nowrap;
   }
 }
+
 @layer components {
   .center {
     @apply flex items-center justify-center;
   }
+
   .background-main {
     background: linear-gradient(298deg, #000 0.63%, #6e33bf 189.88%);
   }
+
   .background-login {
     border-radius: 12px;
     background: linear-gradient(
@@ -31,6 +34,7 @@
       #2c1e59 91.56%
     );
   }
+
   .background-form {
     border-radius: 30px;
     border: 1px solid rgb(122, 121, 121);
@@ -38,20 +42,47 @@
     box-shadow: -8px 4px 5px 0px rgba(0, 0, 0, 0.24);
     backdrop-filter: blur(26.5px);
   }
-  .height{
+
+  .height {
     height: calc(100vh - 100px);
   }
-}
-.message{
-    box-shadow: 0px 5px 16px 0px #080F342E;
+
+  .message {
+    box-shadow: 0px 5px 16px 0px #080f342e;
     border-radius: 50px 50px 50px 0px;
+  }
+
+  .box {
+    box-shadow: 0px 4px 48px 0px #00000040;
+  }
+
+  .box2 {
+    box-shadow: 13px 12px 21px 10px #00000040, 0px 4px 4px 0px #00000040;
+  }
+
+  .box3 {
+    box-shadow: 0px 3.812619686126709px 3.050095796585083px 6.862716197967529px
+        #0f4e5230,
+      0px 3.050095796585083px 3.050095796585083px 0px #00000040;
+  }
+
+  .animation-pulse {
+    animation: pulse 2s infinite;
+  }
 }
-.box{
-  box-shadow: 0px 4px 48px 0px #00000040;
-}
-.box2{
-box-shadow: 13px 12px 21px 10px #00000040, 0px 4px 4px 0px #00000040;
-}
-.box3{
-  box-shadow: 0px 3.812619686126709px 3.050095796585083px 6.862716197967529px #0F4E5230,0px 3.050095796585083px 3.050095796585083px 0px #00000040;
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    box-shadow: 0 0 0 0 rgb(62, 176, 229);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 60px rgba(229, 62, 62, 0);
+  }
+
+  100% {
+    transform: scale(0.8);
+  }
 }

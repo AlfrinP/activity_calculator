@@ -1,11 +1,3 @@
-const dep = {
-  CSE: "Computer Science",
-  ECE: "Electrical and Communication Engineering",
-  EEE: "Electrical and Electronics Engineering",
-  CE: "Civil Engineering",
-  ME: "Mechanical Engineering",
-};
-
 const baseURL = "http://localhost:3000/api/";
 
 const logdata = localStorage.getItem("role");
@@ -242,4 +234,57 @@ const form = [
   },
 ];
 
-export { baseURL ,dep,logdata,form};
+function validateRegisterNo(registerNo) {
+  const validationResult = {
+    regNo: "",
+    batch: "",
+    department: "",
+    error: "",
+  };
+
+  const validFormat = registerNo.match(/^CCE\d{2}[A-Z]{2}\d{3}$/i); // Case-insensitive validation
+
+  if (validFormat) {
+    const regNoLowerCase = registerNo.toLowerCase();
+    validationResult.regNo = regNoLowerCase;
+
+    const batchYear = regNoLowerCase.substr(3, 2);
+    const departmentCode = regNoLowerCase.substr(5, 2);
+
+    // Determine batch
+    const batchStartYear = 2000 + parseInt(batchYear);
+    const batchEndYear = batchStartYear + 4;
+    validationResult.batch = `${batchStartYear}-${batchEndYear}`;
+
+    // Determine department
+    switch (departmentCode) {
+      case "cs":
+        validationResult.department = "CSE";
+        break;
+      case "ee":
+        validationResult.department = "EEE";
+        break;
+      case "ec":
+        validationResult.department =
+          "ECE";
+        break;
+      case "me":
+        validationResult.department = "MEC";
+        break;
+      case "ce":
+        validationResult.department = "CE";
+        break;
+      // Add more cases for other departments as needed
+
+      default:
+        validationResult.department = "Unknown Department";
+        break;
+    }
+  } else {
+    validationResult.error = "Invalid register number format.";
+  }
+
+  return validationResult;
+}
+
+export { baseURL, logdata, form, validateRegisterNo };
