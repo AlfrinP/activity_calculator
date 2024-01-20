@@ -4,6 +4,7 @@ import (
 	"log"
 	"time"
 
+	internals "github.com/AlfrinP/point_calculator/internal"
 	"github.com/AlfrinP/point_calculator/models"
 	"github.com/AlfrinP/point_calculator/repository"
 	"github.com/AlfrinP/point_calculator/storage"
@@ -51,7 +52,7 @@ func PostCertificate(c *fiber.Ctx) error {
 			Category:  params.Category,
 			Level:     util.Levels[params.Level],
 			Position:  params.Position,
-			Point:     util.GetPoint(params),
+			Point:     internals.GetPoint(params),
 			Date:      date,
 		}
 
