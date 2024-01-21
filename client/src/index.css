@@ -7,8 +7,8 @@
     max-width: 100%;
     height: auto;
     shape-margin: 0.5rem;
-    vertical-align: middle;
     font-size: italic;
+    display: block;
   }
 
   button {
@@ -44,7 +44,7 @@
   }
 
   .height {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 80px);
   }
 
   .message {
@@ -68,6 +68,9 @@
 
   .animation-pulse {
     animation: pulse 2s infinite;
+  }
+  .dashicon{
+    @apply flex flex-col justify-start items-start gap-1 w-full rounded-lg text-white px-4 pl-2 py-2 text-base font-medium whitespace-nowrap;
   }
 }
 

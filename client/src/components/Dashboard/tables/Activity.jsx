@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {
   Dialog,
   DialogBody,
@@ -8,38 +7,33 @@ import {
   Select,
 } from "@material-tailwind/react";
 import Table4 from "./Table4";
-import { baseURL } from "../../Util";
+import api from "../../api/Instance";
 
 function Activity({ isOpen, handleOpen, data }) {
   const [year, setYear] = useState("");
   const [tableData, setTableData] = useState(null);
 
   const handleFormSubmit = async (e) => {
-    e.preventDefault();
-
+    e.preventDefault(); 
+  
     if (year) {
       const requestData = {
         year: year,
         faculty_id: data.ID,
       };
-
+  
       try {
-        const response = await axios.post(
-          `${baseURL}yearlypoint`,
-          requestData,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log(response.data);
-        setTableData(response.data);
+        const response = await api.post("yearlypoint", requestData);
+        setTableData(response);
       } catch (error) {
         console.error("Error submitting form:", error);
       }
     }
+  };
+  
+
+  const submitForm = () => {
+    handleFormSubmit({ preventDefault: () => {} });
   };
 
   return (
@@ -70,18 +64,20 @@ function Activity({ isOpen, handleOpen, data }) {
             label="Select"
             onChange={(value) => setYear(value)}
           >
-            <Option value="2022">22-23</Option>
-            <Option value="2023">23-24</Option>
-            <Option value="2024">24-25</Option>
-            <Option value="2025">25-26</Option>
+            <Option value="2022" onClick={submitForm}>
+              22-23
+            </Option>
+            <Option value="2023" onClick={submitForm}>
+              23-24
+            </Option>
+            <Option value="2024" onClick={submitForm}>
+              24-25
+            </Option>
+            <Option value="2025" onClick={submitForm}>
+              25-26
+            </Option>
           </Select>
           <Table4 data={tableData} />
-          <button
-            type="submit"
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            Submit
-          </button>
         </DialogBody>
       </form>
     </Dialog>

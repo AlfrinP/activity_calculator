@@ -7,6 +7,7 @@ import {
   Select,
 } from "@material-tailwind/react";
 import Table4 from "./Table4";
+
 function Sorted({ isOpen, handleOpen }) {
   return (
     <Dialog open={isOpen} handler={handleOpen} className="p-4">

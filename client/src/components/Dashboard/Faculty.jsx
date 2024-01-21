@@ -11,6 +11,7 @@ import Sorted from "./tables/Sorted";
 import Pending from "./tables/Pending";
 import api from "../api/Instance";
 import Loader from "../subComponents/Loader";
+import Layout from "./Layout";
 
 function Faculty() {
   const [openBatch, setOpenBatch] = useState(false);
@@ -35,22 +36,34 @@ function Faculty() {
   const handleOpenSorted = () => setOpenSorted(!openSorted);
 
   const [facultyData, setFacultyData] = useState();
+
   const [isLoading, setLoading] = useState(true);
+
   useEffect(() => {
+    const controller = new AbortController();
+    let isMounted = true;
+
     const fetchData = async () => {
       try {
-        const response = await api.get("dashboard/");
-        console
-        setFacultyData(response.faculty);
+        const response = await api.get("dashboard/", {
+          signal: controller.signal,
+        });
+        isMounted && setFacultyData(response.faculty);
         setTimeout(() => {
           setLoading(false);
-        }, 2000);
+        }, 1000);
+        console.log(facultyData);
       } catch (error) {
         console.error("Error fetching data:", error.message);
       }
     };
 
     fetchData();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, [reloadData]);
 
   let totalStudents = facultyData?.students?.length || 0;
@@ -58,11 +71,14 @@ function Faculty() {
   return (
     <>
       {isLoading ? (
-        <Loader/>
+        <Loader />
       ) : (
-        <div className="w-full center flex-col">
-          <Navbar />
-          <BatchReport isOpen={openBatch} handleOpen={handleOpenBatch} />
+        <Layout>
+          <BatchReport
+            isOpen={openBatch}
+            handleOpen={handleOpenBatch}
+            data={facultyData}
+          />
           <Activity
             isOpen={openActivity}
             handleOpen={handleOpenActivity}
@@ -80,22 +96,24 @@ function Faculty() {
             certificateData={facultyData?.students}
           />
           <Sorted isOpen={openSorted} handleOpen={handleOpenSorted} />
-          <div className="w-full center flex-col gap-5 px-60">
+          <div className="w-full center flex-col gap-5 px-[100px] md:px-[200px]  ">
             <div className="w-full flex gap-10 ">
               <div className="ring-offset-8 ring-2 ring-[#512B81] rounded-full w-32">
                 <img src={facultyImage} className="rounded-full" />
               </div>
               <div className="center flex-col gap-3 items-start">
-                <div className="center flex-col items-start">
+                <div className="dashicon flex-row text-lg">
                   <span className="font-normal text-[#512B81]">
-                    Faculty Name
+                    Faculty Name :
                   </span>
-                  <span className="text-xl font-semibold">
+                  <span className="text-xl font-semibold text-black">
                     {facultyData.name}
                   </span>
                 </div>
-                <div className="center flex-col items-start w-fit border-2 border-[#512B81] rounded-xl py-1 px-2 justify-evenly text-white">
-                  <span className="font-light text-[#512B81] ">Department</span>
+                <div className=" text-lg border-2 border-[#512B81] dashicon flex-row">
+                  <span className="font-light text-[#512B81] ">
+                    Department -
+                  </span>
                   <span className="font-semibold text-black text-xl">
                     {facultyData.department || ""}
                   </span>
@@ -105,28 +123,28 @@ function Faculty() {
             <div className="font-bold text-lg text-start w-full">
               Batch info
             </div>
-            <div className="w-full center justify-between gap-10">
+            <div className="w-full center flex-wrap xl:justify-between gap-10">
               <div className="center flex-col w-fit gap-2 p-5 rounded-lg border-t border-solid border-gray-300 border-opacity-82 bg-white shadow-md shadow-offset-x-11 shadow-offset-y-24 shadow-blur-26 shadow-opacity-20">
-                <div className="center gap-3 ">
-                  <div className="center flex-col items-start bg-[#512B81] rounded-xl w-[180px] py-1 px-2 text-white">
+                <div className="center w-full gap-2 justify-evenly">
+                  <div className=" bg-[#512B81] flex-row dashicon ">
                     <span className="font-light ">Batch :</span>
                     <span className="font-semibold">{facultyData?.batch}</span>
                   </div>
-                  <div className="center flex-col items-start w-[180px] border-2 border-[#512B81] rounded-xl py-1 px-2 text-white">
-                    <span className="font-light text-[#512B81] ">Branch</span>
+                  <div className="dashicon flex-row border-2 border-[#512B81]">
+                    <span className="font-light text-[#512B81] ">Branch :</span>
                     <span className="font-semibold text-black">
                       {facultyData.department || ""}
                     </span>
                   </div>
                 </div>
-                <div className="center gap-3 ">
-                  <div className="center flex-col items-start bg-[#512B81] rounded-xl w-[180px] py-1 px-2 text-white">
-                    <span className="font-light">Semester</span>
+                <div className="center w-full gap-2 justify-evenly">
+                  <div className=" dashicon flex-row bg-[#512B81]">
+                    <span className="font-light">Semester :</span>
                     <span className="font-semibold">4</span>
                   </div>
-                  <div className="center flex-col items-start w-[180px] border-2 border-[#512B81] rounded-xl py-1 px-2 text-white">
+                  <div className=" dashicon flex-row border-2 border-[#512B81]">
                     <span className="font-light text-[#512B81] ">
-                      Number of Students
+                      Number of Students :
                     </span>
                     <span className="font-semibold text-black">
                       {totalStudents}
@@ -173,7 +191,7 @@ function Faculty() {
               ) : null}
             </div>
           </div>
-        </div>
+        </Layout>
       )}
     </>
   );

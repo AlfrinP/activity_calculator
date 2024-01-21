@@ -28,15 +28,13 @@ function Navbar() {
   }
 
   return (
-    <div className="h-[100px] center w-full">
-      <div className="justify-between max-w-7xl w-full center p-1">
-        <img src={christ} alt="Logo" />
-        <button className="center justify-end gap-1 p-3" onClick={handleLogout}>
-          <img src={logout} alt="Logout Icon" />
+      <div className="justify-between w-full center p-1">
+        <img src={christ} alt="Logo" className="w-12" />
+        <button className="center w-fit gap-1" onClick={handleLogout}>
+          <img src={logout} alt="Logout Icon" className="w-12 h-12" />
           <div className="text-lg text-[#512B81] font-semibold">Logout</div>
         </button>
       </div>
-    </div>
   );
 }
 
