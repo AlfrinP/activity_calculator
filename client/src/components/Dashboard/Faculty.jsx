@@ -3,7 +3,6 @@ import facultyImage from "../../assets/Dashboard/Faculty/faculty.png";
 import short from "../../assets/General/short.png";
 import arrowDown from "../../assets/General/arrow_down.svg";
 import TableFaculty from "./tables/TableFaculty";
-import Navbar from "../Navbar";
 import BatchReport from "./tables/BatchReport";
 import Activity from "./tables/Activity";
 import Shortlist from "./tables/Shortlist";
