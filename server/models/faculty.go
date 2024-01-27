@@ -18,9 +18,9 @@ type Faculty struct {
 
 type FacultyCreate struct {
 	Name       string `validate:"required" json:"name"`
-	Email      string `validate:"required,email" json:"email"`
-	Department string `json:"department"`
-	Batch      string `json:"batch"`
+	Email      string `validate:"required" json:"email"`
+	Department string `validate:"required" json:"department"`
+	Batch      string `validate:"required" json:"batch"`
 	Password   string `validate:"required" json:"password"`
 }
 

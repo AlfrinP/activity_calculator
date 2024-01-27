@@ -83,8 +83,17 @@ func (repo *StudentRepositry) Shortlist(batch string, department string) ([]mode
 	return student, nil
 }
 
+// type StudentSummary struct {
+// 	Name        string
+// 	RegNo       string
+// 	TotalPoints int
+// }
+
 func (repo *StudentRepositry) FetchStudentTotalPoints(facultyID uint, year string) ([]map[string]interface{}, error) {
 	var result []map[string]interface{}
+
+	// var students []models.Student
+	// var summery []StudentSummary
 
 	// Gorm query to fetch the required data
 	err := repo.db.
@@ -98,9 +107,27 @@ func (repo *StudentRepositry) FetchStudentTotalPoints(facultyID uint, year strin
 		Scan(&result).
 		Error
 
+	// err := repo.db.Model(&models.Student{}).Preload("Certificates", "status = 'approved'").Find(&students).Error
+
 	if err != nil {
 		return nil, err
 	}
+
+	// for _, student := range students {
+	// 	totalPoints := 0
+	// 	for _, cert := range student.Certificates {
+	// 		fmt.Println(cert.Date.Year())
+	// 		if cert.Date.Year() == year {
+	// 			totalPoints += cert.Point
+	// 		}
+	// 	}
+	// 	summery = append(summery, StudentSummary{
+	// 		Name:        student.Name,
+	// 		RegNo:       student.RegNo,
+	// 		TotalPoints: totalPoints,
+	// 	})
+
+	// }
 
 	return result, nil
 }
