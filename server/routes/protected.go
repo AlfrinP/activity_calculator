@@ -14,7 +14,6 @@ func SetupProtectedRoutes(app *fiber.App) {
 	api.Post("/studentsfilter", controllers.StudentFilter)
 	api.Post("/shortlist", controllers.UpdateFacultyID)
 	api.Post("/certificate", controllers.PostCertificate)
-	api.Get("/certificate", controllers.GetAllCertificate)
 	api.Post("/commentstatus", controllers.PostCommentWithStatusChange)
 	api.Post("/yearlypoint", controllers.YearlyTotalPoint)
 	api.Post("/generatexl", controllers.GenerateExcel)
