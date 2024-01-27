@@ -25,7 +25,7 @@ func (repo *StudentRepositry) Create(u *models.Student) error {
 		if strings.Contains(err.Error(), "duplicate key value violates unique") {
 			return errors.New("email already exists")
 		}
-		return err
+		return errors.New("student registration failed")
 	}
 	return nil
 }
