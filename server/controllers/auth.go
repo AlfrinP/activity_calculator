@@ -20,27 +20,27 @@ func SignUp(c *fiber.Ctx) error {
 		params := &models.StudentCreate{}
 		if err := c.BodyParser(params); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"error": "Invaid User Request",
+				"error": "Invaid student detailes",
 			})
 		}
 		fmt.Printf("%v", params)
 		if err := params.Validate(); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"error": "Invalid user detailes",
+				"error": "Invalid student detailes",
 			})
 		}
 
 		student, err := params.Convert()
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"error": "User registeration failed",
+				"error": "Invalid user detailes found",
 			})
 		}
 
 		studentRepo := repository.NewStudentRepository(storage.GetDB())
 		if err := studentRepo.Create(student); err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-				"error": "User registeration failed",
+				"error": err.Error(),
 			})
 		}
 
@@ -51,27 +51,27 @@ func SignUp(c *fiber.Ctx) error {
 		params := &models.FacultyCreate{}
 		if err := c.BodyParser(params); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"error": "User registeration failed",
+				"error": "Invalid faculty details",
 			})
 		}
 
 		if err := params.Validate(); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"error": "User registeration failed",
+				"error": "invalid faculty detailes",
 			})
 		}
 
 		faculty, err := params.Convert()
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"error": "User registeration failed",
+				"error": "Invalid faculty detailes found",
 			})
 		}
 
 		facultyRepo := repository.NewFacultyRepository(storage.GetDB())
 		if err := facultyRepo.Create(faculty); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"error": "User registeration failed",
+				"error": err.Error(),
 			})
 		}
 
@@ -80,7 +80,7 @@ func SignUp(c *fiber.Ctx) error {
 		})
 	} else {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "ivalid user role",
+			"error": "Invalid user role",
 		})
 	}
 }
@@ -92,7 +92,7 @@ func SignIn(c *fiber.Ctx) error {
 
 	if err := c.BodyParser(params); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"err": "Invaid User Request",
+			"error": "Invaid User Request",
 		})
 	}
 
@@ -102,12 +102,12 @@ func SignIn(c *fiber.Ctx) error {
 		id = student.ID
 		if err != nil {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"msg": "User not found",
+				"error": "User not found",
 			})
 		}
 		if err := util.VerifyPassword(student.PasswordHash, params.Password); err != nil {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"msg": "Invalid Email or Password",
+				"error": "Invalid Email or Password",
 			})
 		}
 	} else if role == "faculty" {
@@ -116,17 +116,17 @@ func SignIn(c *fiber.Ctx) error {
 		id = faculty.ID
 		if err != nil {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"msg": "User not found",
+				"error": "User not found",
 			})
 		}
 		if err := util.VerifyPassword(faculty.Password, params.Password); err != nil {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"msg": "Invalid Email or Password",
+				"error": "Invalid Email or Password",
 			})
 		}
 	} else {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"error": "Invalid role",
+			"error": "Invalid role found",
 		})
 	}
 
@@ -134,7 +134,7 @@ func SignIn(c *fiber.Ctx) error {
 	tokenString, err := util.GenerateToken(id, role, config)
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"msg": "token gen failed",
+			"error": "token genration failed",
 		})
 	}
 	c.Cookie(&fiber.Cookie{
@@ -158,5 +158,5 @@ func LogoutUser(c *fiber.Ctx) error {
 		Value:   "",
 		Expires: expired,
 	})
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success"})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"msg": "user loged out"})
 }

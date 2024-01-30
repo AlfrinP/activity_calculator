@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"errors"
+
 	"github.com/AlfrinP/point_calculator/models"
 	"gorm.io/gorm"
 )
@@ -15,7 +17,7 @@ func NewCertificateRepository(db *gorm.DB) *CertificateRepository {
 
 func (repo *CertificateRepository) Create(u *models.Certificate) error {
 	if err := repo.db.Create(u).Error; err != nil {
-		return err
+		return errors.New("certificate creation failed")
 	}
 	return nil
 }

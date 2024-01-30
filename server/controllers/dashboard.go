@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 
+	"github.com/AlfrinP/point_calculator/internal"
 	"github.com/AlfrinP/point_calculator/repository"
 	"github.com/AlfrinP/point_calculator/storage"
 	"github.com/AlfrinP/point_calculator/util"
@@ -138,6 +139,42 @@ func YearlyTotalPoint(c *fiber.Ctx) error {
 			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "cant find yearly point"})
 		}
 		return c.Status(fiber.StatusOK).JSON(yearlyPoint)
+	} else {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Invalid user role",
+		})
+	}
+}
+
+func GenerateExcel(c *fiber.Ctx) error {
+	u, _ := c.Locals("user").(*util.Data)
+
+	if u == nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Invalid user",
+		})
+	}
+
+	if u.Role == "faculty" {
+		params := &YearlyPoint{}
+		if err := c.BodyParser(params); err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"msg": err.Error(),
+			})
+		}
+		fmt.Println(params)
+
+		fileName, err := internal.Excelize(params.FacultyID, params.Year)
+		if err != nil {
+			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "cant find yearly point"})
+		}
+		c.Set("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+
+		// Set the Content-Disposition header to prompt the user to download the file
+		c.Set("Content-Disposition", "attachment; filename="+fileName)
+
+		// Send the file as a response
+		return c.SendFile(fileName)
 	} else {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "Invalid user role",
