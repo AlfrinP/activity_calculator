@@ -4,10 +4,10 @@ import React from "react";
 function Layout({ children }) {
   return (
     <div className="w-full center flex-col gap-1 p-2 ">
-      <div className="h-20 relative center w-full px-[50px] md:px-[180px] max-w-screen-2xl">
+      <div className="h-20 relative center w-full px-[50px] md:px-[100px] max-w-screen-2xl">
         <Navbar />
       </div>
-      <main className="max-w-screen-2xl">{children}</main>
+      <main className="max-w-screen-2xl w-full">{children}</main>
     </div>
   );
 }

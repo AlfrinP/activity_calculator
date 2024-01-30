@@ -50,9 +50,7 @@ export default function Student() {
             isOpen={openViewPoints}
             handleOpen={handleOpenViewPoints}
             data={
-              studentData.certificates?.length === 0
-                ? null
-                : studentData.certificates
+              studentData?.certificates??[]
             }
           />
 
@@ -79,7 +77,7 @@ export default function Student() {
                     <div className=" bg-[#512B81] dashicon">
                       <span className="font-light">Register No:</span>
                       <span className="font-semibold">
-                        {studentData.reg_no?.toUpperCase()}
+                        {studentData.regno?.toUpperCase()}
                       </span>
                     </div>
                     <div className=" border-2 border-[#512B81] dashicon">

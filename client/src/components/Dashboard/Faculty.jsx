@@ -39,15 +39,10 @@ function Faculty() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    const controller = new AbortController();
-    let isMounted = true;
-
     const fetchData = async () => {
       try {
-        const response = await api.get("dashboard/", {
-          signal: controller.signal,
-        });
-        isMounted && setFacultyData(response.faculty);
+        const response = await api.get("dashboard/");
+        setFacultyData(response.faculty);
         setTimeout(() => {
           setLoading(false);
         }, 1000);
@@ -58,11 +53,6 @@ function Faculty() {
     };
 
     fetchData();
-
-    return () => {
-      isMounted = false;
-      controller.abort();
-    };
   }, [reloadData]);
 
   let totalStudents = facultyData?.students?.length || 0;
@@ -106,7 +96,7 @@ function Faculty() {
                     Faculty Name :
                   </span>
                   <span className="text-xl font-semibold text-black">
-                    {facultyData.name}
+                    {facultyData?.name}
                   </span>
                 </div>
                 <div className=" text-lg border-2 border-[#512B81] dashicon flex-row">
