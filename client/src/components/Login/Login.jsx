@@ -5,7 +5,6 @@ import book from "../../assets/Login/book.png";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { baseURL } from "../Util";
-import SignUp from "./SignUp";
 
 function Login() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -226,7 +225,7 @@ function Login() {
                 className="block select-none rounded-lg  px-6 align-middle  uppercase shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none py-3 text-center cursor-pointer text-white font-semibold text-lg w-full background-login"
                 type="submit"
               >
-                Register
+                Sign In
               </button>
             </div>
             <div className="w-full text-center">Don't have an account <Link className="underline text-[#41208B]" to={"/register"}>SignUp</Link></div>
