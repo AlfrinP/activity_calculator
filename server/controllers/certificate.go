@@ -1,9 +1,10 @@
 package controllers
 
 import (
+	"fmt"
 	"time"
 
-	internals "github.com/AlfrinP/point_calculator/internal"
+	"github.com/AlfrinP/point_calculator/internal"
 	"github.com/AlfrinP/point_calculator/models"
 	"github.com/AlfrinP/point_calculator/repository"
 	"github.com/AlfrinP/point_calculator/storage"
@@ -46,7 +47,21 @@ func PostCertificate(c *fiber.Ctx) error {
 		})
 	}
 
-	c.SaveFile(file, "certificates/"+file.Filename)
+	f, err := file.Open()
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "certificate upload failed",
+		})
+	}
+	res, err := internal.Uploader(f, file.Filename)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+	fmt.Println(res)
+
+	// c.SaveFile(file, "certificates/"+file.Filename)
 
 	date, err := time.Parse("2006-01-02", params.Date)
 	if err != nil {
@@ -60,8 +75,9 @@ func PostCertificate(c *fiber.Ctx) error {
 		Category:  params.Category,
 		Level:     util.Levels[params.Level],
 		Position:  params.Position,
-		Point:     internals.GetPoint(params),
+		Point:     internal.GetPoint(params),
 		Date:      date,
+		FileUrl:   res,
 	}
 
 	certificateRepo := repository.NewCertificateRepository(storage.GetDB())

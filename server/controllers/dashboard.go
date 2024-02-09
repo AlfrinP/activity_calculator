@@ -164,17 +164,15 @@ func GenerateExcel(c *fiber.Ctx) error {
 		}
 		fmt.Println(params)
 
-		fileName, err := internal.Excelize(params.FacultyID, params.Year)
+		file, err := internal.Excelize(params.FacultyID, params.Year)
 		if err != nil {
 			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "cant find yearly point"})
 		}
-		c.Set("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-
-		// Set the Content-Disposition header to prompt the user to download the file
-		c.Set("Content-Disposition", "attachment; filename="+fileName)
 
 		// Send the file as a response
-		return c.SendFile(fileName)
+		return c.Status(fiber.StatusAccepted).JSON(fiber.Map{
+			"file":file,
+		})
 	} else {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "Invalid user role",
