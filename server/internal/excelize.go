@@ -2,8 +2,6 @@ package internal
 
 import (
 	"fmt"
-	"log"
-	"os"
 
 	"github.com/AlfrinP/point_calculator/repository"
 	"github.com/AlfrinP/point_calculator/storage"
@@ -49,20 +47,16 @@ func Excelize(facultyID uint, year string) (string, error) {
 	// Set active sheet of the workbook.
 	f.SetActiveSheet(index)
 
-	// Save spreadsheet with a unique name
-	os.Mkdir("excel", os.ModeAppend)
-	fileName := fmt.Sprintf("excel/Faculty_%d_Year_%s.xlsx", facultyID, year)
-	if err := f.SaveAs(fileName); err != nil {
-		fmt.Println(err)
-		return "", err
-	}
+	fileName := fmt.Sprintf("Faculty_%d_Year_%s.xlsx", facultyID, year)
 
-	// // Read the saved file
-	_, err = os.ReadFile(fileName)
+	buf, err := f.WriteToBuffer()
 	if err != nil {
-		log.Fatal(err)
 		return "", err
 	}
+	res, err := Uploader(buf, fileName)
+	if err != nil {
+		return "", nil
+	}
 
-	return fileName, nil
+	return res, nil
 }

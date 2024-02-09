@@ -16,8 +16,9 @@ type Certificate struct {
 	Date      time.Time `json:"date"`
 	Point     int       `json:"point"`
 	Status    string    `json:"status" gorm:"default:pending"`
-	Comment   string `json:"comment"`
+	Comment   string    `json:"comment"`
 	StudentID uint      `json:"student_id" gorm:"index"`
+	FileUrl   string    `json:"file_url"`
 }
 
 type CertificateCreate struct {
@@ -39,7 +40,7 @@ func (cc *CertificateCreate) Validate() error {
 type CommentCreate struct {
 	Message       string `validate:"required" json:"message"`
 	Status        string `validate:"required" json:"status"`
-	CertificateID uint    `json:"certificate_id"`
+	CertificateID uint   `json:"certificate_id"`
 }
 
 func (cm *CommentCreate) Validate() error {

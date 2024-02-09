@@ -14,6 +14,11 @@ type Config struct {
 	DBPort         string `mapstructure:"POSTGRES_PORT"`
 	DBUrl          string `mapstructure:"DATABASE_URL"`
 
+	Port               string `mapstructure:"PORT"`
+	AWSRegion          string `mapstructure:"AWS_REGION"`
+	AWSAccessKeyID     string `mapstructure:"AWS_ACCESS_KEY_ID"`
+	AWSSecretAccessKey string `mapstructure:"AWS_SECRET_ACCESS_KEY"`
+
 	JwtSecret    string        `mapstructure:"JWT_SECRET"`
 	JwtExpiresIn time.Duration `mapstructure:"JWT_EXPIRED_IN"`
 	JwtMaxAge    int           `mapstructure:"JWT_MAXAGE"`
