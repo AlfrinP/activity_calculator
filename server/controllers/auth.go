@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/AlfrinP/point_calculator/config"
+
 	"github.com/AlfrinP/point_calculator/models"
 	"github.com/AlfrinP/point_calculator/repository"
 	"github.com/AlfrinP/point_calculator/storage"

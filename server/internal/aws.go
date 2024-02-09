@@ -1,39 +1,35 @@
 package internal
 
 import (
-	"context"
 	"fmt"
 	"io"
 
-	"github.com/aws/aws-sdk-go-v2/config"
-	"github.com/aws/aws-sdk-go-v2/feature/s3/manager"
-	"github.com/aws/aws-sdk-go-v2/service/s3"
+	con "github.com/AlfrinP/point_calculator/config"
+
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
 
 func Uploader(file io.Reader, key string) (string, error) {
 
-	cfg, err := config.LoadDefaultConfig(context.Background(), func(lo *config.LoadOptions) error {
-		lo.Region = "ap-south-1"
-		return nil
-	})
+	con, _ := con.LoadConfig(".")
+
+	sess, err := session.NewSession(&aws.Config{
+		Credentials: credentials.NewStaticCredentials(con.AWSAccessKeyID, con.AWSSecretAccessKey, ""),
+		Region:      aws.String(con.AWSRegion)},
+	)
 	if err != nil {
 		return "", err
 	}
+	uploader := s3manager.NewUploader(sess)
 
-	client := s3.NewFromConfig(cfg)
-	if err != nil {
-		return "", err
-	}
-	uploader := manager.NewUploader(client)
-
-	result, err := uploader.Upload(context.Background(), &s3.PutObjectInput{
+	result, err := uploader.Upload(&s3manager.UploadInput{
 		Bucket:             aws.String("activiypoint"),
 		Key:                aws.String(key),
 		Body:               file,
-		ACL:                "public-read",
+		ACL:                aws.String("public-read"),
 		ContentDisposition: aws.String("inline"),
 	})
 	if err != nil {
