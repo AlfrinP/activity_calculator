@@ -1,6 +1,7 @@
 import React from "react";
 
 function Table4({ data }) {
+  console.log(data);
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full h-[200px] mt-2">
       <table className="w-full text-sm text-left rtl:text-right text-black mt-2">

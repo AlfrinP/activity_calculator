@@ -7,10 +7,11 @@ import {
   Button,
 } from "@material-tailwind/react";
 import Add from "../../assets/General/Addicon.svg";
-import { baseURL, form } from "../Util";
+import { baseURL, bytesToMB, capitalize, form } from "../Util";
 
 function FileUploadModel({ isOpen, handleOpen }) {
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [changestatus, setChangestatus] = useState(null);
   const [selectedActivity, setSelectedActivity] = useState("");
   const [selectedLevel, setSelectedLevel] = useState(0);
   const [selectedPosition, setSelectedPosition] = useState("");
@@ -39,8 +40,16 @@ function FileUploadModel({ isOpen, handleOpen }) {
     setSelectedPosition(position);
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
+    e.preventDefault();
     const file = e.target.files[0];
+    const fileDetails = {
+      name: file.name,
+      size: bytesToMB(file.size),
+      type: file.type.split("/")[1],
+    };
+
+    setChangestatus(fileDetails);
     setUploadedCertificate(file);
   };
 
@@ -78,7 +87,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="mr-3 h-5 w-5 float-right"
+            className="mr-3 h-5 w-5 float-right cursor-pointer"
             onClick={handleOpen}
           >
             <path
@@ -89,25 +98,63 @@ function FileUploadModel({ isOpen, handleOpen }) {
           </svg>
         </div>
       </DialogHeader>
+
       <DialogBody>
         <form
           className="w-full flex flex-col items-center mt-6 gap-4"
           onSubmit={handleFormSubmit}
         >
-          <label className="border-dashed border-2 center flex-col border-gray-300 rounded p-4 w-full bg-[#F7F6FE]">
-            <h4 className="text-black text-center text-xl">
-              Drop your files here!
-            </h4>
-            <p className="text-gray-400 text-center pb-4">or click</p>
-            <div className="bg-[#512B81] rounded z-10 flex top-0 w-fit items-center justify-center gap-2 px-9 h-12 cursor-pointer">
-              <img src={Add} alt="addicon" className="w-5" />
-              <p className="text-white">Add files</p>
-            </div>
-            <input type="file" name="upload_certificate" className="hidden" onChange={handleFileChange} />
-          </label>
+          {changestatus ? (
+            <label className="border-dashed border-2 center flex-col border-gray-300 rounded p-4 w-full bg-[#efeefb]">
+              <table className="w-full text-sm text-left rtl:text-right text-black mt-2">
+                <thead className="text-black uppercase bg-gray-5 border-b text-sm">
+                  <tr>
+                    <th scope="col" className="px-5 py-3 text-left">
+                      FIle Name
+                    </th>
+                    <th scope="col" className="px-5 py-3 text-center">
+                      Type
+                    </th>
+                    <th scope="col" className="px-5 py-3 text-center">
+                      Size
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-black text-md">
+                  <tr >
+                    <td className="px-5 py-2 text-left ">{changestatus.name}</td>
+                    <td className="px-5 py-2 text-center ">{changestatus.type.toUpperCase()}</td>
+                    <td className="px-5 py-2 text-center ">{changestatus.size}</td>
+                  </tr>
+                </tbody>
+              </table>
+              {/* <div>
+                <div>Name: </div>
+                <div>Size: {changestatus.size}</div>
+                <div>Type: {changestatus.type}</div>
+              </div> */}
+            </label>
+          ) : (
+            <label className="border-dashed border-2 center flex-col border-gray-300 rounded p-4 w-full bg-[#F7F6FE] hover:bg-[#efeefb]">
+              <h4 className="text-black text-center text-xl">
+                Drop your files here!
+              </h4>
+              <p className="text-gray-400 text-center pb-4">or click</p>
+              <div className="bg-[#512B81] rounded z-10 flex top-0 w-fit items-center justify-center gap-2 px-9 h-12 cursor-pointer">
+                <img src={Add} alt="addicon" className="w-5" />
+                <p className="text-white">Add files</p>
+              </div>
+              <input
+                type="file"
+                name="upload_certificate"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+            </label>
+          )}
 
           <div className="w-full">
-            <h4 className="text-black text-md font-medium">OPTIONS</h4>
+            <h4 className="text-black text-lg font-semibold mb-2">Details</h4>
             <hr className="border-gray-400" />
             <div className="grid grid-cols-2 gap-5 mt-4 h-min">
               {/* Category dropdown */}
@@ -228,29 +275,21 @@ function FileUploadModel({ isOpen, handleOpen }) {
               />
             </div>
           </div>
-          <div className="w-full flex justify-between items-center mt-4">
-            <div className="flex items-center gap-3">
-              <Button
-                type="submit"
-                className="bg-[#512B81] rounded text-white px-4 py-2 text-sm font-medium cursor-pointer text-lowercase capitalize"
-                style={{ color: "white" }}
-              >
-                Upload files
-              </Button>
-              <span className="text-gray-700">or</span>
-              <Button
-                className="text-[#512B81] underline bg-white shadow-none"
-                type="button"
-              >
-                Cancel
-              </Button>
-            </div>
-            <Button
+          <div className="center justify-end w-full gap-3 ">
+            <div
+              className="text-[#512B81] w-fit underline bg-white shadow-none cursor-pointer"
               onClick={handleOpen}
-              className="bg-[#512B81] rounded text-white  cursor-pointer w-fit text-lowercase capitalize"
+            >
+              Cancel
+            </div>
+            <span className="text-gray-700">or</span>
+            <Button
+              type="submit"
+              onClick={handleOpen}
+              className="bg-[#512B81] rounded text-white w-fit px-4 py-2 text-sm font-medium cursor-pointer text-lowercase capitalize"
               style={{ color: "white" }}
             >
-              Done
+              Upload files
             </Button>
           </div>
         </form>

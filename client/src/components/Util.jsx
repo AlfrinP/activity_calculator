@@ -265,8 +265,7 @@ function validateRegisterNo(registerNo) {
         validationResult.department = "EEE";
         break;
       case "ec":
-        validationResult.department =
-          "ECE";
+        validationResult.department = "ECE";
         break;
       case "me":
         validationResult.department = "MEC";
@@ -287,4 +286,18 @@ function validateRegisterNo(registerNo) {
   return validationResult;
 }
 
-export { baseURL, logdata, form, validateRegisterNo };
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
+
+function bytesToMB(bytes) {
+  if (bytes === 0) return "0 Bytes";
+  const k = 1024;
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+}
+
+export { baseURL, logdata, form, validateRegisterNo, capitalize, bytesToMB };

@@ -58,10 +58,9 @@ function Activity({ isOpen, handleOpen, data }) {
       </DialogHeader>
       <form onSubmit={handleFormSubmit}>
         <DialogBody className="relative overflow-x-auto shadow-md sm:rounded-lg w-full h-full border-t border-gray-600">
-          <h1 className="text-black mb-2">Select Year</h1>
           <Select
             variant="outlined"
-            label="Select"
+            label="Select Year"
             onChange={(value) => setYear(value)}
           >
             <Option value="2022" onClick={submitForm}>

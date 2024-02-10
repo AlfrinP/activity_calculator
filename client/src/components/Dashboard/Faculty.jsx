@@ -43,9 +43,7 @@ function Faculty() {
       try {
         const response = await api.get("dashboard/");
         setFacultyData(response.faculty);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
+        setLoading(false);
         console.log(facultyData);
       } catch (error) {
         console.error("Error fetching data:", error.message);

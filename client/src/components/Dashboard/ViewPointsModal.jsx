@@ -53,9 +53,8 @@ function ViewPointsModal({ isOpen, handleOpen, data }) {
         </div>
       </DialogHeader>
       <DialogBody className="flex flex-col border-t border-gray-600">
-        <h1 className="text-black">Year</h1>
         <div className="flex flex-row gap-20 center mb-3">
-          <Select variant="outlined" label="Select">
+          <Select variant="outlined" label="Select Year">
             <Option onClick={() => setSelectedYear(2022)}>22-23</Option>
             <Option onClick={() => setSelectedYear(2023)}>23-24</Option>
             <Option onClick={() => setSelectedYear(2024)}>24-25</Option>
