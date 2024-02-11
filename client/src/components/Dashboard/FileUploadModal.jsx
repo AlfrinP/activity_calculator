@@ -7,7 +7,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 import Add from "../../assets/General/Addicon.svg";
-import { baseURL, bytesToMB, capitalize, form } from "../Util";
+import { baseURL, bytesToMB,form } from "../Util";
 
 function FileUploadModel({ isOpen, handleOpen }) {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -121,18 +121,15 @@ function FileUploadModel({ isOpen, handleOpen }) {
                   </tr>
                 </thead>
                 <tbody className="text-black text-md">
-                  <tr >
-                    <td className="px-5 py-2 text-left ">{changestatus.name}</td>
-                    <td className="px-5 py-2 text-center ">{changestatus.type.toUpperCase()}</td>
-                    <td className="px-5 py-2 text-center ">{changestatus.size}</td>
-                  </tr>
+                  <td className="px-5 py-2 text-left ">{changestatus.name}</td>
+                  <td className="px-5 py-2 text-center ">
+                    {changestatus.type.toUpperCase()}
+                  </td>
+                  <td className="px-5 py-2 text-center ">
+                    {changestatus.size}
+                  </td>
                 </tbody>
               </table>
-              {/* <div>
-                <div>Name: </div>
-                <div>Size: {changestatus.size}</div>
-                <div>Type: {changestatus.type}</div>
-              </div> */}
             </label>
           ) : (
             <label className="border-dashed border-2 center flex-col border-gray-300 rounded p-4 w-full bg-[#F7F6FE] hover:bg-[#efeefb]">
@@ -159,8 +156,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
             <div className="grid grid-cols-2 gap-5 mt-4 h-min">
               {/* Category dropdown */}
               <select
-                defaultValue={"National Initatives Participation"}
-                className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200  text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus: focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                 variant="outlined"
                 label="Category"
                 name="category"
@@ -176,8 +172,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
               {/* Activity dropdown */}
               {selectedCategory && (
                 <select
-                  defaultValue={"NSS"}
-                  className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200  text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus: focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                  className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                   variant="outlined"
                   label="Activity Name"
                   name="name"
@@ -207,8 +202,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
                       activityData.activity_name === selectedActivity
                   )?.levels && (
                   <select
-                    defaultValue={0}
-                    className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200  text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus: focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                    className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                     variant="outlined"
                     label="Levels"
                     name="level"
@@ -242,7 +236,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
                       activityData.activity_name === selectedActivity
                   )?.positions && (
                   <select
-                    className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200  text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus: focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                    className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                     variant="outlined"
                     label="Position"
                     name="position"
@@ -267,7 +261,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
 
               {/* Date input */}
               <input
-                className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200 text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900  focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer text-blue-gray-700  placeholder-shown:border placeholder-shown:placeholder-shown:border-t-blue-gray-200focus:border-gray-900  focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 placeholder="Activity Date"
                 type="date"
                 name="date"
