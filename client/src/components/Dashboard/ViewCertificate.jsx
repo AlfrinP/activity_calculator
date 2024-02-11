@@ -1,20 +1,11 @@
-import React from "react";
-import { Button, ButtonGroup } from "@material-tailwind/react";
-import {
-  Select,
-  Option,
-  Dialog,
-  DialogBody,
-  DialogHeader,
-} from "@material-tailwind/react";
-import BlueClear from "../../assets/General/Blueclear.svg";
+import React, { useState } from "react";
+import { Button } from "@material-tailwind/react";
+import { Dialog, DialogBody, DialogHeader } from "@material-tailwind/react";
 import Download from "../../assets/General/material-symbols_download.png";
 import Delete from "../../assets/General/deletered.svg";
-import DatePicker from "./DatePicker";
-import LargeView from "./LargeView";
-import Print from "./Print";
+
 const ViewCertificate = ({ isOpen, handleOpen, data = "" }) => {
-  const [openPrint, setOpenPrint] = React.useState(false);
+  const [openPrint, setOpenPrint] = useState(false);
   const handleOpenPrint = () => setOpenPrint(!openPrint);
 
   return (
@@ -38,40 +29,43 @@ const ViewCertificate = ({ isOpen, handleOpen, data = "" }) => {
         </div>
       </DialogHeader>
       <DialogBody>
-        <div className="flex flex-row w-full justify-center">
-          <Print isOpen={openPrint} handleOpen={handleOpenPrint} />
-          <form className="flex flex-col w-full">
-            <h3 className="mb-2 underline">Activity Name</h3>
-            <span className="font-semibold text-lg">{data.name}</span>
+        <div className="flex-col w-full center gap-3">
+          <div className="center w-full ">
+            <div className="flex flex-col w-2/3">
+              <h3 className="mb-2 underline">Activity Name</h3>
+              <span className="font-semibold text-lg">{data.name}</span>
 
-            <h3 className="mb-2 mt-2 underline">Category</h3>
-            <span className="font-semibold text-lg">{data.category}</span>
+              <h3 className="mb-2 mt-2 underline">Category</h3>
+              <span className="font-semibold text-lg">{data.category}</span>
 
-            <h3 className="mb-2 mt-2 underline">Level</h3>
-            <span className="font-semibold text-lg">{data.level}</span>
+              <h3 className="mb-2 mt-2 underline">Level</h3>
+              <span className="font-semibold text-lg">{data.level}</span>
 
-            <h3 className="mb-2 mt-2 underline">Date</h3>
-            <span className="font-semibold text-lg">{new Date(data.date).toLocaleDateString()}</span>
-          </form>
-          <div>
-            <div className="flex flex-row center gap-2">
-              <Button
-                onClick={handleOpenPrint}
-                className="flex flex-row bg-green-100 w-fit p-1 px-4 rounded-md text-lowercase capitalize"
-                style={{ color: "#076F2C" }}
-              >
-                <img src={Download} alt="download" className=" w-[19px]" />
-                Download
-              </Button>
-              <Button
-                className="flex flex-row bg-red-200 w-fit p-1 px-4 rounded-md text-lowercase capitalize"
-                style={{ color: "#FF3333" }}
-              >
-                <img src={Delete} alt="delete" />
-                Delete
-              </Button>
+              <h3 className="mb-2 mt-2 underline">Date</h3>
+              <span className="font-semibold text-lg">
+                {new Date(data.date).toLocaleDateString()}
+              </span>
             </div>
-            <LargeView />
+            <div className="block w-1/3 h-full">
+              <img alt="nature" className="w-full block" src={data.file_url} />
+            </div>
+          </div>
+          <div className="justify-end w-full flex-row center gap-2">
+            <Button
+              onClick={handleOpenPrint}
+              className="flex flex-row bg-green-100 w-fit p-1 px-4 rounded-md text-lowercase capitalize"
+              style={{ color: "#076F2C" }}
+            >
+              <img src={Download} alt="download" className=" w-[19px]" />
+              Download
+            </Button>
+            <Button
+              className="flex flex-row bg-red-200 w-fit p-1 px-4 rounded-md text-lowercase capitalize"
+              style={{ color: "#FF3333" }}
+            >
+              <img src={Delete} alt="delete" />
+              Delete
+            </Button>
           </div>
         </div>
       </DialogBody>

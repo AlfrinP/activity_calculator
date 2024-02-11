@@ -6,6 +6,8 @@ function Table({ data }) {
   const [openViewCertificate, setOpenViewCertificate] = useState(false);
   const [selectedData, setSelectedData] = useState();
 
+  console.log(selectedData);
+
   const handleOpenViewCertificate = (item) => {
     setSelectedData(item);
     setOpenViewCertificate(true);
