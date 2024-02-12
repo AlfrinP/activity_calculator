@@ -48,12 +48,13 @@ func PostCertificate(c *fiber.Ctx) error {
 	}
 
 	f, err := file.Open()
+
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "certificate upload failed",
 		})
 	}
-	res, err := internal.Uploader(f, file.Filename)
+	res, err := internal.Uploader(f, file.Filename, util.GetContentType(file.Filename))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": err.Error(),

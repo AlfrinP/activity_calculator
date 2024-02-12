@@ -53,7 +53,7 @@ func Excelize(facultyID uint, year string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	res, err := Uploader(buf, fileName)
+	res, err := Uploader(buf, fileName, "xlsx")
 	if err != nil {
 		return "", nil
 	}
