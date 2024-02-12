@@ -1,15 +1,10 @@
 import React from "react";
-import logo from "../../assets/General/logocce.png";
+import { Spinner } from "@material-tailwind/react";
 
 function Loader() {
   return (
-    <div className="w-full h-full bg-white">
-      <div className="flex justify-center items-center h-screen">
-        <div className="h-[200px] w-[450px] rounded-lg flex justify-center items-center animation-pulse">
-          <img src={logo} className="w-full h-full" />
-        </div>
-      </div>
-      Loader
+    <div className="w-full h-screen center ">
+      <Spinner className="h-12 w-12" color="purple" />
     </div>
   );
 }

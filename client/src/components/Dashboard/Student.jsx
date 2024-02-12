@@ -39,9 +39,10 @@ export default function Student() {
   return (
     <>
       {isLoading ? (
-        <Loader />
+        <Loader/>
       ) : (
         <Layout>
+          
           <FileUploadModel
             isOpen={openFileModal}
             handleOpen={handleOpenFileModal}
@@ -49,9 +50,7 @@ export default function Student() {
           <ViewPointsModal
             isOpen={openViewPoints}
             handleOpen={handleOpenViewPoints}
-            data={
-              studentData?.certificates??[]
-            }
+            data={studentData?.certificates ?? []}
           />
 
           <div className="w-full relative center flex-col justify-between h-full gap-5 px-[100px] md:px-[200px]  ">
@@ -121,18 +120,17 @@ export default function Student() {
                 }
               />
             </div>
-            
           </div>
           <div className="flex items-start w-fit absolute bottom-2 left-10 ">
-              <PopMessage
-                data={
-                  studentData.certificates?.length === 0
-                    ? null
-                    : studentData.certificates
-                }
-                faculty={studentData.faculty_name}
-              />
-            </div>
+            <PopMessage
+              data={
+                studentData.certificates?.length === 0
+                  ? null
+                  : studentData.certificates
+              }
+              faculty={studentData.faculty_name}
+            />
+          </div>
         </Layout>
       )}
     </>
