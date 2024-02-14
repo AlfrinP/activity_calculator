@@ -24,7 +24,7 @@ function PopMessage({ data = [], faculty = "" }) {
             )}
           </Button>
         </PopoverHandler>
-        <PopoverContent>
+        <PopoverContent className="h-1/2 overflow-scroll overflow-x-hidden">
           {data &&
             data.length !== undefined &&
             data.length !== null &&
@@ -32,8 +32,8 @@ function PopMessage({ data = [], faculty = "" }) {
             data
               .filter((item) => item.status === "rejected")
               .map((item, index) => (
-                <div className="w-fit flex flex-row center py-6" key={index}>
-                  <img src={Avatar} alt="avatar" className="rounded-full" />
+                <div className="w-fit center items-end py-2" key={index}>
+                  <img src={Avatar} alt="avatar" className="rounded-full block w-10" />
                   <div className="flex flex-col message p-4">
                     <h4 className="font-bold text-black">{item.faculty}</h4>
                     <p>{item.category}</p>

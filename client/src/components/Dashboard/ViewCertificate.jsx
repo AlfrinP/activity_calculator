@@ -5,9 +5,6 @@ import Download from "../../assets/General/material-symbols_download.png";
 import Delete from "../../assets/General/deletered.svg";
 
 const ViewCertificate = ({ isOpen, handleOpen, data = "" }) => {
-  const [openPrint, setOpenPrint] = useState(false);
-  const handleOpenPrint = () => setOpenPrint(!openPrint);
-
   return (
     <Dialog open={isOpen} handler={handleOpen} className="p-4">
       <DialogHeader>
@@ -51,14 +48,15 @@ const ViewCertificate = ({ isOpen, handleOpen, data = "" }) => {
             </div>
           </div>
           <div className="justify-end w-full flex-row center gap-2">
-            <Button
-              onClick={handleOpenPrint}
-              className="flex flex-row bg-green-100 w-fit p-1 px-4 rounded-md text-lowercase capitalize"
-              style={{ color: "#076F2C" }}
-            >
-              <img src={Download} alt="download" className=" w-[19px]" />
-              Download
-            </Button>
+            <a href={data.file_url} target="/">
+              <Button
+                className="flex flex-row bg-green-100 w-fit p-1 px-4 rounded-md text-lowercase capitalize"
+                style={{ color: "#076F2C" }}
+              >
+                <img src={Download} alt="download" className=" w-[19px]" />
+                Download
+              </Button>
+            </a>
             <Button
               className="flex flex-row bg-red-200 w-fit p-1 px-4 rounded-md text-lowercase capitalize"
               style={{ color: "#FF3333" }}

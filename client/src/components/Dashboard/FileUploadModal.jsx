@@ -7,7 +7,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 import Add from "../../assets/General/Addicon.svg";
-import { baseURL, bytesToMB,form } from "../Util";
+import { baseURL, bytesToMB, form } from "../Util";
 
 function FileUploadModel({ isOpen, handleOpen }) {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -63,8 +63,6 @@ function FileUploadModel({ isOpen, handleOpen }) {
     bodyFormData.append("date", date);
     bodyFormData.append("upload_certificate", uploadedCertificate);
 
-    console.log(bodyFormData);
-
     try {
       const response = await axios.post(`${baseURL}certificate`, bodyFormData, {
         headers: {
@@ -73,6 +71,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
         },
       });
       console.log(response.data);
+      handleOpen;
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -121,13 +120,17 @@ function FileUploadModel({ isOpen, handleOpen }) {
                   </tr>
                 </thead>
                 <tbody className="text-black text-md">
-                  <td className="px-5 py-2 text-left ">{changestatus.name}</td>
-                  <td className="px-5 py-2 text-center ">
-                    {changestatus.type.toUpperCase()}
-                  </td>
-                  <td className="px-5 py-2 text-center ">
-                    {changestatus.size}
-                  </td>
+                  <tr>
+                    <td className="px-5 py-2 text-left ">
+                      {changestatus.name}
+                    </td>
+                    <td className="px-5 py-2 text-center ">
+                      {changestatus.type.toUpperCase()}
+                    </td>
+                    <td className="px-5 py-2 text-center ">
+                      {changestatus.size}
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </label>
@@ -142,6 +145,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
                 <p className="text-white">Add files</p>
               </div>
               <input
+                required
                 type="file"
                 name="upload_certificate"
                 className="hidden"
@@ -156,6 +160,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
             <div className="grid grid-cols-2 gap-5 mt-4 h-min">
               {/* Category dropdown */}
               <select
+                required
                 className=" outline-none w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                 variant="outlined"
                 label="Category"
@@ -172,6 +177,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
               {/* Activity dropdown */}
               {selectedCategory && (
                 <select
+                  required
                   className=" outline-none w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                   variant="outlined"
                   label="Activity Name"
@@ -202,6 +208,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
                       activityData.activity_name === selectedActivity
                   )?.levels && (
                   <select
+                    required
                     className=" outline-none w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                     variant="outlined"
                     label="Levels"
@@ -236,6 +243,8 @@ function FileUploadModel({ isOpen, handleOpen }) {
                       activityData.activity_name === selectedActivity
                   )?.positions && (
                   <select
+                    required
+
                     className=" outline-none w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                     variant="outlined"
                     label="Position"
@@ -261,6 +270,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
 
               {/* Date input */}
               <input
+                
                 className="w-full h-full px-3 py-3 cursor-pointer font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer text-blue-gray-700  placeholder-shown:border placeholder-shown:placeholder-shown:border-t-blue-gray-200focus:border-gray-900  focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 type="date"
                 name="date"
@@ -278,7 +288,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
             <span className="text-gray-700">or</span>
             <Button
               type="submit"
-              onClick={handleOpen}
+              onClick={handleFormSubmit}
               className="bg-[#512B81] rounded text-white w-fit px-4 py-2 text-sm font-medium cursor-pointer text-lowercase capitalize"
               style={{ color: "white" }}
             >

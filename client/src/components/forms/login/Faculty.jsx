@@ -48,7 +48,7 @@ function Faculty({ onSubmit }) {
         {faculty_form.map((item, index) => (
           <div key={index} className="relative h-11 w-full min-w-[200px]">
             <input
-              {...register(item.name)}
+              {...register(item.name, { required: true})}
               type={
                 item.type === "password"
                   ? isPasswordVisible

@@ -21,7 +21,7 @@ function Navbar() {
       );
       console.log(response.data);
       localStorage.removeItem("token");
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("Error fetching data:", error);
     }

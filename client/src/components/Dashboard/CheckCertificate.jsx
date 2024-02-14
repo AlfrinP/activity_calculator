@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // Make sure to import axios
+import axios from "axios";
 import {
   Dialog,
   DialogHeader,
@@ -7,27 +7,26 @@ import {
   Textarea,
   Button,
 } from "@material-tailwind/react";
-import LargeVeiw2 from "./LargeVeiw2";
 import { baseURL } from "../Util";
 
-const CheckCertificate = ({ isOpen, handleOpen, data = "" }) => {
-  const [status, setStatus] = useState("");
-  const [comment, setComment] = useState("");
-  const [id, setId] = useState(data.ID);
+const CheckCertificate = ({ isOpen, handleOpen, data = [] }) => {
+  const [status, setStatus] = useState(null);
+  const [comment, setComment] = useState(null);
 
-  useEffect(() => {
-    setId(data.ID);
-  }, [data.ID]);
-
-  
   const fetchData = async () => {
     try {
       const requestData = {
         message: comment,
         status: status,
-        certificate_id: id,
+        certificate_id: data.ID,
       };
+
+      if (!comment || !status || !data.ID) {
+        throw new Error("Required fields are missing");
+      }
+
       console.log(requestData);
+
       const response = await axios.post(
         `${baseURL}commentstatus`,
         requestData,
@@ -38,10 +37,9 @@ const CheckCertificate = ({ isOpen, handleOpen, data = "" }) => {
           },
         }
       );
-
       console.log(response.data);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error.message);
     }
   };
 
@@ -65,9 +63,18 @@ const CheckCertificate = ({ isOpen, handleOpen, data = "" }) => {
         </div>
       </DialogHeader>
       <DialogBody>
-        <div className="flex flex-row w-full justify-center gap-6 border-t border-black">
-          <div className="flex flex-col w-full">
-            <LargeVeiw2 />
+        <div className="center w-full justify-evenly border-t pt-5 border-black">
+          <div className="center flex-col w-full">
+            <div className="relative group hover:bg-black w-40">
+              <img
+                alt="nature"
+                className="w-full block group-hover:filter group-hover:brightness-50 transition cursor-pointer"
+                src={data.file_url}
+              />
+              <button className="text-white w-fit absolute border hidden group-hover:block top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-white rounded-full px-4 py-2">
+                View
+              </button>
+            </div>
           </div>
           <div className="flex flex-col center gap-2">
             <h3 className="text-purple-500">Comment box</h3>
@@ -85,7 +92,7 @@ const CheckCertificate = ({ isOpen, handleOpen, data = "" }) => {
                 style={{ color: "#2930D4" }}
                 onClick={() => {
                   setStatus("approved");
-                  fetchData();
+                  status == "rejected" ? fetchData() : null;
                 }}
               >
                 Approve
@@ -95,7 +102,7 @@ const CheckCertificate = ({ isOpen, handleOpen, data = "" }) => {
                 style={{ color: "#FF3333" }}
                 onClick={() => {
                   setStatus("rejected");
-                  fetchData();
+                  status == "rejected" ? fetchData() : null;
                 }}
               >
                 Rejected

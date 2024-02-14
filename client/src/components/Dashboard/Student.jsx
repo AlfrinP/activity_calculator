@@ -33,7 +33,6 @@ export default function Student() {
         setLoading(true);
       }
     };
-
     fetchData();
   }, []);
 

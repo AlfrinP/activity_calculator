@@ -20,7 +20,7 @@ function Table({ data }) {
   };
 
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full h-full">
+    <div className="relative shadow-md sm:rounded-lg w-full h-56  overflow-scroll overflow-x-hidden">
       <ViewCertificate
         isOpen={openViewCertificate}
         handleOpen={() => setOpenViewCertificate(!openViewCertificate)}
@@ -52,7 +52,7 @@ function Table({ data }) {
             </th>
           </tr>
         </thead>
-        <tbody className="text-black text-md">
+        <tbody className="text-black text-md ">
           {data?.map((item, index) => (
             <tr
               key={index}
