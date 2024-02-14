@@ -21,25 +21,39 @@ func Dashboard(c *fiber.Ctx) error {
 	fmt.Println(u)
 
 	if u == nil {
-		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "the user belonging to this token no logger exists"})
-	} else if u.Role == "student" {
+		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
+			"status":  "fail",
+			"message": "the user does not exist",
+		})
+	}
+	if u.Role == "student" {
 		studentRepo := repository.NewStudentRepository(storage.GetDB())
 		student, err := studentRepo.GetAll(u.ID)
 		if err != nil {
-			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "the user belonging to this token no logger exists"})
+			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
+				"status":  "fail",
+				"message": "the student user belonging to this token no logger exists",
+			})
 		}
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "student": student})
-	} else if u.Role == "faculty" {
+	}
+	if u.Role == "faculty" {
 		facultyRepo := repository.NewFacultyRepository(storage.GetDB())
 		faculty, err := facultyRepo.GetAll(u.ID)
 
 		if err != nil {
-			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "the user belonging to this token no logger exists"})
+			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
+				"status":  "fail",
+				"message": "the faculty user belonging to this token no logger exists",
+			})
 		}
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "faculty": faculty})
-	} else {
-		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "the user belonging to this token no logger exists"})
 	}
+
+	return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
+		"status":  "fail",
+		"message": "user role does not exists",
+	})
 
 }
 
@@ -110,11 +124,6 @@ func StudentFilter(c *fiber.Ctx) error {
 	}
 }
 
-type YearlyPoint struct {
-	FacultyID uint   `json:"faculty_id"`
-	Year      string `json:"year"`
-}
-
 func YearlyTotalPoint(c *fiber.Ctx) error {
 	u, _ := c.Locals("user").(*util.Data)
 
@@ -125,18 +134,12 @@ func YearlyTotalPoint(c *fiber.Ctx) error {
 	}
 
 	if u.Role == "faculty" {
-		params := &YearlyPoint{}
-		if err := c.BodyParser(params); err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"msg": err.Error(),
-			})
-		}
-		fmt.Println(params)
+		year := c.Params("year")
 
 		studentRepo := repository.NewStudentRepository(storage.GetDB())
-		yearlyPoint, err := studentRepo.FetchStudentTotalPoints(params.FacultyID, params.Year)
+		yearlyPoint, err := studentRepo.FetchStudentTotalPoints(u.ID, year)
 		if err != nil {
-			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "cant find yearly point"})
+			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "cant generate yearly point"})
 		}
 		return c.Status(fiber.StatusOK).JSON(yearlyPoint)
 	} else {
@@ -151,27 +154,21 @@ func GenerateExcel(c *fiber.Ctx) error {
 
 	if u == nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "Invalid user",
+			"error": "Invalid user found",
 		})
 	}
 
 	if u.Role == "faculty" {
-		params := &YearlyPoint{}
-		if err := c.BodyParser(params); err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"msg": err.Error(),
-			})
-		}
-		fmt.Println(params)
+		year := c.Params("year")
 
-		file, err := internal.Excelize(params.FacultyID, params.Year)
+		file, err := internal.Excelize(u.ID, year)
 		if err != nil {
-			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "cant find yearly point"})
+			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "cant generate excel file"})
 		}
 
 		// Send the file as a response
 		return c.Status(fiber.StatusAccepted).JSON(fiber.Map{
-			"file":file,
+			"file": file,
 		})
 	} else {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{

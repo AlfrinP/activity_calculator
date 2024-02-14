@@ -12,7 +12,16 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
 
-func Uploader(file io.Reader, key string) (string, error) {
+func Uploader(file io.Reader, key string, fileType string) (string, error) {
+
+	contentType := aws.String("binary/octet-stream")
+
+	switch fileType {
+	case "jpg", "png", "jpeg":
+		contentType = aws.String("image/jpg")
+	case "pdf":
+		contentType = aws.String("application/pdf")
+	}
 
 	con, _ := con.LoadConfig(".")
 
@@ -31,6 +40,7 @@ func Uploader(file io.Reader, key string) (string, error) {
 		Body:               file,
 		ACL:                aws.String("public-read"),
 		ContentDisposition: aws.String("inline"),
+		ContentType:        contentType,
 	})
 	if err != nil {
 		return "", err

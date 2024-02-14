@@ -1,6 +1,8 @@
 package util
 
 import (
+	"fmt"
+	"strings"
 	"time"
 
 	"github.com/AlfrinP/point_calculator/config"
@@ -50,4 +52,10 @@ func Min(a, b int) int {
 		return a
 	}
 	return b
+}
+
+func GetContentType(filename string) string {
+	res := strings.Split(filename, ".")
+	fmt.Println(res)
+	return res[len(res)-1]
 }
