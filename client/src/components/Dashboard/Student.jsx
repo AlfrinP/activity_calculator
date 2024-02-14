@@ -24,14 +24,16 @@ export default function Student() {
     const fetchData = async () => {
       try {
         const response = await api.get("dashboard/");
-        setStudentData(response?.student);
+        setStudentData(response.student);
         setTimeout(() => {
           setLoading(false);
-        }, 1000);
-      } catch (error) {
-        console.error("Error fetching data:", error.message);
+        }, "1000");
+        console.log(response.student);
+      } catch (e) {
+        setLoading(true);
       }
     };
+
     fetchData();
   }, []);
 

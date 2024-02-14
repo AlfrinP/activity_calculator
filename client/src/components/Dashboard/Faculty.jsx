@@ -43,14 +43,17 @@ function Faculty() {
       try {
         const response = await api.get("dashboard/");
         setFacultyData(response.faculty);
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, "1000");
         console.log(response.faculty);
       } catch (error) {
         console.error("Error fetching data:", error.message);
+        setLoading(true);
       }
     };
 
-      fetchData();
+    fetchData();
   }, [reloadData]);
 
   let totalStudents = facultyData?.students?.length || 0;
@@ -102,7 +105,7 @@ function Faculty() {
                     Department -
                   </span>
                   <span className="font-semibold text-black text-xl">
-                    {facultyData.department || ""}
+                    {facultyData?.department || ""}
                   </span>
                 </div>
               </div>

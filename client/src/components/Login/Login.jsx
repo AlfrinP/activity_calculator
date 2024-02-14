@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import si from "../../assets/Login/student_icon.png";
 import fi from "../../assets/Login/faculty_icon.png";
 import book from "../../assets/Login/book.png";
@@ -43,6 +43,13 @@ function Login() {
     },
   ];
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate(`/dashboard/`);
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let bodyFormData = new FormData();
@@ -50,7 +57,6 @@ function Login() {
     bodyFormData.append("password", pass);
     try {
       const formData = new FormData(e.target);
-
       const response = await axios.post(
         `${baseURL}auth/signin/${logdata}`,
         bodyFormData,
@@ -67,9 +73,7 @@ function Login() {
         localStorage.setItem("role", logdata);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("name", response.data.name);
-        if (localStorage.getItem("token") != null) {
-          navigate(`/dashboard/${logdata}`);
-        }
+        navigate(`/dashboard/${logdata}`);
       }
     } catch (error) {
       console.error("Error submitting form:", error);

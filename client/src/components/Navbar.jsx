@@ -19,7 +19,7 @@ function Navbar() {
           },
         }
       );
-      console.log(response.data.student);
+      console.log(response.data);
       localStorage.removeItem("token");
       navigate("/login");
     } catch (error) {

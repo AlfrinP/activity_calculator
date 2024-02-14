@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Printer from "../../../assets/General/Blueprint.png";
 import Download from "../../../assets/General/material-symbols_download.png";
 import { Dialog, Button, Select, Option } from "@material-tailwind/react";
 import api from "../../api/Instance";
