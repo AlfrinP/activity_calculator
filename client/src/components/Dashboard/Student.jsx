@@ -24,7 +24,7 @@ export default function Student() {
     const fetchData = async () => {
       try {
         const response = await api.get("dashboard/");
-        setStudentData(response.student);
+        setStudentData(response?.student);
         setTimeout(() => {
           setLoading(false);
         }, 1000);
@@ -32,17 +32,15 @@ export default function Student() {
         console.error("Error fetching data:", error.message);
       }
     };
-
     fetchData();
   }, []);
 
   return (
     <>
       {isLoading ? (
-        <Loader/>
+        <Loader />
       ) : (
         <Layout>
-          
           <FileUploadModel
             isOpen={openFileModal}
             handleOpen={handleOpenFileModal}

@@ -67,7 +67,9 @@ function Login() {
         localStorage.setItem("role", logdata);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("name", response.data.name);
-        navigate(`/dashboard/${logdata}`);
+        if (localStorage.getItem("token") != null) {
+          navigate(`/dashboard/${logdata}`);
+        }
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -215,7 +217,9 @@ function Login() {
                     {item.label}
                   </label>
                   {item.name === "password" ? (
-                    <Link className="text-white" to={"/register"}>Forgot password ?</Link>
+                    <Link className="text-white" to={"/register"}>
+                      Forgot password ?
+                    </Link>
                   ) : null}
                 </div>
               ))}
@@ -228,7 +232,12 @@ function Login() {
                 Sign In
               </button>
             </div>
-            <div className="w-full text-center">Don't have an account <Link className="underline text-[#41208B]" to={"/register"}>SignUp</Link></div>
+            <div className="w-full text-center">
+              Don't have an account{" "}
+              <Link className="underline text-[#41208B]" to={"/register"}>
+                SignUp
+              </Link>
+            </div>
           </form>
         </div>
       </div>

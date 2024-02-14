@@ -156,7 +156,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
             <div className="grid grid-cols-2 gap-5 mt-4 h-min">
               {/* Category dropdown */}
               <select
-                className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
+                className=" outline-none w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                 variant="outlined"
                 label="Category"
                 name="category"
@@ -172,7 +172,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
               {/* Activity dropdown */}
               {selectedCategory && (
                 <select
-                  className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
+                  className=" outline-none w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                   variant="outlined"
                   label="Activity Name"
                   name="name"
@@ -202,7 +202,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
                       activityData.activity_name === selectedActivity
                   )?.levels && (
                   <select
-                    className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
+                    className=" outline-none w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                     variant="outlined"
                     label="Levels"
                     name="level"
@@ -236,7 +236,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
                       activityData.activity_name === selectedActivity
                   )?.positions && (
                   <select
-                    className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
+                    className=" outline-none w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                     variant="outlined"
                     label="Position"
                     name="position"
@@ -261,8 +261,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
 
               {/* Date input */}
               <input
-                className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer text-blue-gray-700  placeholder-shown:border placeholder-shown:placeholder-shown:border-t-blue-gray-200focus:border-gray-900  focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                placeholder="Activity Date"
+                className="w-full h-full px-3 py-3 cursor-pointer font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer text-blue-gray-700  placeholder-shown:border placeholder-shown:placeholder-shown:border-t-blue-gray-200focus:border-gray-900  focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 type="date"
                 name="date"
                 onChange={(e) => setDate(e.target.value)}

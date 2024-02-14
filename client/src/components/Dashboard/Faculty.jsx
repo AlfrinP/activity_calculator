@@ -44,13 +44,13 @@ function Faculty() {
         const response = await api.get("dashboard/");
         setFacultyData(response.faculty);
         setLoading(false);
-        console.log(facultyData);
+        console.log(response.faculty);
       } catch (error) {
         console.error("Error fetching data:", error.message);
       }
     };
 
-    fetchData();
+      fetchData();
   }, [reloadData]);
 
   let totalStudents = facultyData?.students?.length || 0;
