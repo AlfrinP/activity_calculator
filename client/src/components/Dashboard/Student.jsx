@@ -11,8 +11,8 @@ import Loader from "../subComponents/Loader";
 import Layout from "./Layout";
 
 export default function Student() {
-  const [openFileModal, setOpenFileModal] = React.useState(false);
-  const [openViewPoints, setOpenViewPoints] = React.useState(false);
+  const [openFileModal, setOpenFileModal] =useState(false);
+  const [openViewPoints, setOpenViewPoints] =useState(false);
 
   const handleOpenFileModal = () => setOpenFileModal(!openFileModal);
   const handleOpenViewPoints = () => setOpenViewPoints(!openViewPoints);

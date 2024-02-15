@@ -8,6 +8,7 @@ import {
 } from "@material-tailwind/react";
 import Add from "../../assets/General/Addicon.svg";
 import { baseURL, bytesToMB, form } from "../Util";
+import { Spinner } from "@material-tailwind/react";
 
 function FileUploadModel({ isOpen, handleOpen }) {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -17,6 +18,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
   const [selectedPosition, setSelectedPosition] = useState("");
   const [date, setDate] = useState("");
   const [uploadedCertificate, setUploadedCertificate] = useState(null);
+  const [loader, setLoader] = useState(false);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
@@ -64,6 +66,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
     bodyFormData.append("upload_certificate", uploadedCertificate);
 
     try {
+      setLoader(true);
       const response = await axios.post(`${baseURL}certificate`, bodyFormData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -71,7 +74,8 @@ function FileUploadModel({ isOpen, handleOpen }) {
         },
       });
       console.log(response.data);
-      handleOpen;
+      setLoader(false);
+      handleOpen();
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -244,7 +248,6 @@ function FileUploadModel({ isOpen, handleOpen }) {
                   )?.positions && (
                   <select
                     required
-
                     className=" outline-none w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                     variant="outlined"
                     label="Position"
@@ -270,7 +273,6 @@ function FileUploadModel({ isOpen, handleOpen }) {
 
               {/* Date input */}
               <input
-                
                 className="w-full h-full px-3 py-3 cursor-pointer font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer text-blue-gray-700  placeholder-shown:border placeholder-shown:placeholder-shown:border-t-blue-gray-200focus:border-gray-900  focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 type="date"
                 name="date"
@@ -289,10 +291,12 @@ function FileUploadModel({ isOpen, handleOpen }) {
             <Button
               type="submit"
               onClick={handleFormSubmit}
-              className="bg-[#512B81] rounded text-white w-fit px-4 py-2 text-sm font-medium cursor-pointer text-lowercase capitalize"
+              className={`${
+                loader ? "disabled" : ""
+              } bg-[#512B81] rounded center gap-1 text-white w-fit px-4 py-2 text-sm font-medium cursor-pointer text-lowercase capitalize`}
               style={{ color: "white" }}
             >
-              Upload files
+              {loader ? <Spinner color="purple" /> : null}Upload files
             </Button>
           </div>
         </form>

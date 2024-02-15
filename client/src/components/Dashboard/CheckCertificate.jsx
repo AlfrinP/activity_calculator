@@ -71,9 +71,9 @@ const CheckCertificate = ({ isOpen, handleOpen, data = [] }) => {
                 className="w-full block group-hover:filter group-hover:brightness-50 transition cursor-pointer"
                 src={data.file_url}
               />
-              <button className="text-white w-fit absolute border hidden group-hover:block top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-white rounded-full px-4 py-2">
+              <a target="/" href={data.file_url}  className="text-white w-fit absolute border hidden group-hover:block top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-white rounded-full px-4 py-2">
                 View
-              </button>
+              </a>
             </div>
           </div>
           <div className="flex flex-col center gap-2">
@@ -92,7 +92,7 @@ const CheckCertificate = ({ isOpen, handleOpen, data = [] }) => {
                 style={{ color: "#2930D4" }}
                 onClick={() => {
                   setStatus("approved");
-                  status == "rejected" ? fetchData() : null;
+                  status == "approved" ? fetchData() : null;
                 }}
               >
                 Approve
