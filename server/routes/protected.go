@@ -9,13 +9,19 @@ import (
 func SetupProtectedRoutes(app *fiber.App) {
 	api := app.Group("/api")
 	api.Use(middleware.DeserializeUser)
+
+	//Common
 	api.Get("/securitycheck", controllers.SecurityCheck)
-	api.Get("/dashboard/", controllers.Dashboard)
+	api.Get("/dashboard", controllers.Dashboard)
+	api.Post("/yearlypoint/:year", controllers.YearlyTotalPoint)
+	api.Post("/logout", controllers.LogoutUser)
+
+	//Faculty
 	api.Post("/studentsfilter", controllers.StudentFilter)
 	api.Post("/shortlist", controllers.UpdateFacultyID)
-	api.Post("/certificate", controllers.PostCertificate)
 	api.Post("/commentstatus", controllers.PostCommentWithStatusChange)
-	api.Post("/yearlypoint/:year", controllers.YearlyTotalPoint)
 	api.Post("/generatexl/:year", controllers.GenerateExcel)
-	api.Post("/logout", controllers.LogoutUser)
+
+	//Student
+	api.Post("/certificate", controllers.PostCertificate)
 }

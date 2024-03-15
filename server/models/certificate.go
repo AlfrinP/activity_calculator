@@ -38,7 +38,7 @@ func (cc *CertificateCreate) Validate() error {
 }
 
 type CommentCreate struct {
-	Message       string `validate:"required" json:"message"`
+	Message       string `json:"message"`
 	Status        string `validate:"required" json:"status"`
 	CertificateID uint   `json:"certificate_id"`
 }
