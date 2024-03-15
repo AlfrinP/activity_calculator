@@ -1,4 +1,4 @@
-package internal
+package helpers
 
 import (
 	"github.com/AlfrinP/point_calculator/models"
