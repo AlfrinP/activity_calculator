@@ -12,17 +12,19 @@ import (
 
 func PostCommentWithStatusChange(c *fiber.Ctx) error {
 
-	f, _ := c.Locals("user").(*util.Data)
-	
+	f, _ := c.Locals("user").(*util.TokenData)
+
 	if f == nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "user is not allowed",
+			"error": true,
+			"msg":   "user is not allowed",
 		})
 	}
 
 	if f.Role != "faculty" {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "role is not allowed",
+			"error": true,
+			"msg":   "role is not allowed",
 		})
 	}
 
@@ -30,13 +32,15 @@ func PostCommentWithStatusChange(c *fiber.Ctx) error {
 
 	if err := c.BodyParser(params); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "failed in parsing request data ",
+			"error": true,
+			"msg":   "failed in parsing request data ",
 		})
 	}
 
 	if err := params.Validate(); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "failed in validating request data ",
+			"error": true,
+			"msg":   "failed in validating request data ",
 		})
 	}
 	log.Println(params)
@@ -44,11 +48,13 @@ func PostCommentWithStatusChange(c *fiber.Ctx) error {
 	certificateRepo := repository.NewCertificateRepository(storage.GetDB())
 	if err := certificateRepo.ChangeStatusComment(params.CertificateID, params.Status, params.Message); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "certificate status and comment update failed",
+			"error": true,
+			"msg":   "certificate status and comment update failed",
 		})
 	}
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"msg": "Comment and status changed",
+		"error": true,
+		"msg":   "comment and status changed",
 	})
 }

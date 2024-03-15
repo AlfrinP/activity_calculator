@@ -10,6 +10,7 @@ func HealthCheck(ctx *fiber.Ctx) error {
 
 func SecurityCheck(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusAccepted).JSON(fiber.Map{
-		"message": "Security Check Succesful",
+		"error": false,
+		"msg":   "security checked succesful",
 	})
 }
