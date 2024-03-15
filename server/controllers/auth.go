@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log"
 	"time"
 
 	"github.com/AlfrinP/point_calculator/config"
@@ -15,7 +16,9 @@ import (
 
 func SignUp(c *fiber.Ctx) error {
 
-	role := types.Role(c.Params("role"))
+	role := c.Params("role")
+
+	log.Println(role)
 
 	if role == types.Student {
 		params := &models.StudentCreate{}
@@ -102,7 +105,7 @@ func SignUp(c *fiber.Ctx) error {
 func SignIn(c *fiber.Ctx) error {
 	params := &models.UserSignIn{}
 	var id uint
-	role := types.Role(c.Params("role"))
+	role := c.Params("role")
 
 	if err := c.BodyParser(params); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{

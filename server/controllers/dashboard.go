@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/AlfrinP/point_calculator/repository"
 	"github.com/AlfrinP/point_calculator/storage"
@@ -11,9 +11,10 @@ import (
 )
 
 func Dashboard(c *fiber.Ctx) error {
+	log.Println(c.Locals("user"))
 	u, _ := c.Locals("user").(*util.TokenData)
 
-	fmt.Println(u)
+	log.Println(u)
 
 	if u == nil {
 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{

@@ -54,7 +54,7 @@ func DeserializeUser(c *fiber.Ctx) error {
 		})
 	}
 
-	role := claims["role"].(types.Role)
+	role := claims["role"].(string)
 	id, ok := claims["user_id"].(float64)
 	if !ok {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
