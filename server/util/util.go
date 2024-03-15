@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/AlfrinP/point_calculator/config"
+	"github.com/AlfrinP/point_calculator/types"
 	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -24,12 +25,12 @@ var Positions = []string{
 	"Volunteer",
 }
 
-type Data struct {
+type TokenData struct {
 	ID   uint
-	Role string
+	Role types.Role
 }
 
-func GenerateToken(id uint, role string, config config.Config) (string, error) {
+func GenerateToken(id uint, role types.Role, config config.Config) (string, error) {
 	tokenByte := jwt.New(jwt.SigningMethodHS256)
 	now := time.Now().UTC()
 	claims := tokenByte.Claims.(jwt.MapClaims)
