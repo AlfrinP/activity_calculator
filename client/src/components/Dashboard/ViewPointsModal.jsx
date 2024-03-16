@@ -1,12 +1,7 @@
-import {
-  Dialog,
-  DialogBody,
-  DialogHeader,
-  Option,
-  Select,
-} from "@material-tailwind/react";
+import { Option, Select } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
 import Table2 from "./tables/Table2";
+import ModalLayout from "../modal/modalLayout";
 
 function ViewPointsModal({ isOpen, handleOpen, data }) {
   const [totalPoint, setTotalPoint] = useState(0);
@@ -33,42 +28,26 @@ function ViewPointsModal({ isOpen, handleOpen, data }) {
   };
 
   return (
-    <Dialog open={isOpen} handler={handleOpen} className="p-4">
-      <DialogHeader>
-        <div className="flex items-center justify-between w-full">
-          <h1 className="text-2xl font-bold text-purple-900">Activity Point</h1>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="mr-3 h-5 w-5 float-right"
-            onClick={handleOpen}
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-              clipRule="evenodd"
-            />
-          </svg>
+    <ModalLayout
+      isOpen={isOpen}
+      handleOpen={handleOpen}
+      header="Activity Point Details"
+    >
+      <div className="flex flex-row gap-20 center mb-3">
+        <Select variant="outlined" label="Select Year">
+          <Option onClick={() => setSelectedYear(2022)}>22-23</Option>
+          <Option onClick={() => setSelectedYear(2023)}>23-24</Option>
+          <Option onClick={() => setSelectedYear(2024)}>24-25</Option>
+          <Option onClick={() => setSelectedYear(2025)}>25-26</Option>
+        </Select>
+        <div className="bg-purple-900 w-fit py-1 px-5 rounded-lg box">
+          <p className="text-center text-white text-xs">
+            Total Points {totalPoint}
+          </p>
         </div>
-      </DialogHeader>
-      <DialogBody className="flex flex-col border-t border-gray-600">
-        <div className="flex flex-row gap-20 center mb-3">
-          <Select variant="outlined" label="Select Year">
-            <Option onClick={() => setSelectedYear(2022)}>22-23</Option>
-            <Option onClick={() => setSelectedYear(2023)}>23-24</Option>
-            <Option onClick={() => setSelectedYear(2024)}>24-25</Option>
-            <Option onClick={() => setSelectedYear(2025)}>25-26</Option>
-          </Select>
-          <div className="bg-purple-900 w-fit py-1 px-5 rounded-lg box">
-            <p className="text-center text-white text-xs">
-              Total Points {totalPoint}
-            </p>
-          </div>
-        </div>
-        <Table2 data={data} year={selectedYear} />
-      </DialogBody>
-    </Dialog>
+      </div>
+      <Table2 data={data} year={selectedYear} />
+    </ModalLayout>
   );
 }
 

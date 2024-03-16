@@ -10,19 +10,6 @@
     font-size: italic;
     display: block;
   }
-
-  button {
-    @apply center justify-evenly w-full rounded gap-1 text-white px-4 py-2 text-sm font-medium cursor-pointer whitespace-nowrap;
-  }
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: #ffffff;
-    transition: background-color 5000s ease-in-out 0s;
-    box-shadow: inset 0 0 20px 20px #23232329;
-  }
 }
 
 @layer components {
@@ -53,7 +40,7 @@
   }
 
   .height {
-    height: calc(100vh - 80px);
+    height: calc(100vh - 120px);
   }
 
   .message {
@@ -79,7 +66,7 @@
     animation: pulse 2s infinite;
   }
   .dashicon {
-    @apply flex flex-col justify-start items-start gap-1 w-full rounded-lg text-white px-4 pl-2 py-2 text-base font-medium whitespace-nowrap;
+    @apply flex flex-col justify-start items-start gap-1 w-full rounded-lg text-white px-3 py-1 text-base font-medium whitespace-nowrap;
   }
 }
 
@@ -97,4 +84,14 @@
   100% {
     transform: scale(0.8);
   }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #ffffff;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px #23232329;
 }

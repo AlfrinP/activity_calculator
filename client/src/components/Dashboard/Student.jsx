@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from "react";
 import sprofile from "../../assets/Dashboard/Student/profile.png";
-import upload from "../../assets/General/file-upload.png";
-import graph from "../../assets/General/graph.png";
-import Table from "./tables/Table";
+import upload from "../../assets/icons/upload.svg";
+import level from "../../assets/icons/level.svg";
+import CertificateTable from "./tables/CertificateTable";
 import FileUploadModel from "./FileUploadModal";
 import ViewPointsModal from "./ViewPointsModal";
 import PopMessage from "./PopMessage";
 import api from "../api/Instance";
 import Loader from "../subComponents/Loader";
 import Layout from "./Layout";
+import { ContainedInputs } from "../selectInput/ContainedInputs";
+import { Avatar, Button } from "@material-tailwind/react";
 
 export default function Student() {
-  const [openFileModal, setOpenFileModal] =useState(false);
-  const [openViewPoints, setOpenViewPoints] =useState(false);
+  const [openFileModal, setOpenFileModal] = useState(false);
+  const [openViewPoints, setOpenViewPoints] = useState(false);
 
   const handleOpenFileModal = () => setOpenFileModal(!openFileModal);
   const handleOpenViewPoints = () => setOpenViewPoints(!openViewPoints);
 
   const [studentData, setStudentData] = useState("");
   const [isLoading, setLoading] = useState(true);
+  const [dataReloading, setDataReloading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +37,7 @@ export default function Student() {
       }
     };
     fetchData();
-  }, []);
+  }, [dataReloading]);
 
   return (
     <>
@@ -44,23 +47,27 @@ export default function Student() {
         <Layout>
           <FileUploadModel
             isOpen={openFileModal}
-            handleOpen={handleOpenFileModal}
+            handleOpen={() => {
+              handleOpenFileModal();
+              setDataReloading(true);
+            }}
           />
+
           <ViewPointsModal
             isOpen={openViewPoints}
             handleOpen={handleOpenViewPoints}
             data={studentData?.certificates ?? []}
           />
 
-          <div className="w-full relative center flex-col justify-between h-full gap-5 px-[100px] md:px-[200px]  ">
-            <div className="w-full center gap-5">
-              <div className="ring-offset-8 ring-2 ring-[#512B81] rounded-full w-32 ">
-                <img
-                  src={sprofile}
-                  className="rounded-full "
-                  alt="Student Profile"
-                />
-              </div>
+          <>
+            <div className="w-full h-fit center gap-5">
+              <Avatar
+                src={sprofile}
+                alt="avatar"
+                withBorder={true}
+                color="#512B81"
+                className="p-1.5 w-44 block h-44"
+              />
               <div className="w-full center justify-around gap-2">
                 <div className="center flex-col gap-3 items-start col-span-2 w-fit">
                   <div className="dashicon">
@@ -78,12 +85,12 @@ export default function Student() {
                         {studentData.regno?.toUpperCase()}
                       </span>
                     </div>
-                    <div className=" border-2 border-[#512B81] dashicon">
+                    <div className="outline outline-2 outline-offset-[-2px] outline-[#512B81] dashicon">
                       <span className="font-light text-[#512B81] ">
                         Branch :
                       </span>
-                      <span className="font-semibold text-black text-lg">
-                        {studentData.department || ""}
+                      <span className="font-semibold text-black">
+                        {studentData.department}
                       </span>
                     </div>
                   </div>
@@ -92,26 +99,29 @@ export default function Student() {
                     <span className="text-2xl text-[#512B81]">4</span>
                   </div>
                 </div>
-                <div className="center flex-col gap-3 w-fit">
-                  <button
-                    className="bg-[#512B81]"
+                <div className="center flex-col gap-3 ">
+                  <Button
+                    className="bg-[#512B81] w-full center gap-2"
+                    ripple={false}
                     onClick={handleOpenFileModal}
                   >
-                    <img src={upload} width={30} alt="Upload Icon" />
-                    <span className=" text-white">Upload Certificate</span>
-                  </button>
-                  <button
-                    className="bg-[#512B81]"
+                    <img src={upload} alt="Upload Icon" />
+                    <span className="text-white">Upload Certificate</span>
+                  </Button>
+                  {/* <ContainedInputs/> */}
+                  <Button
+                    className="bg-[#512B81] w-full center gap-2"
+                    ripple={false}
                     onClick={handleOpenViewPoints}
                   >
-                    <img src={graph} width={20} alt="Graph Icon" />
+                    <img src={level} alt="Graph Icon" className="rotate-90" />
                     <span className=" text-white">View Points</span>
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
-            <div className="w-full center shadow-[0_3px_10px_rgb(0,0,0,0.2)] text-black rounded-lg">
-              <Table
+            <div className="w-full h-full overflow-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] text-black rounded-lg">
+              <CertificateTable
                 data={
                   studentData.certificates?.length === 0
                     ? null
@@ -119,7 +129,7 @@ export default function Student() {
                 }
               />
             </div>
-          </div>
+          </>
           <div className="flex items-start w-fit absolute bottom-2 left-10 ">
             <PopMessage
               data={
