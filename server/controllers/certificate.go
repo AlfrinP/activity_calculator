@@ -86,6 +86,7 @@ func PostCertificate(c *fiber.Ctx) error {
 		Point:     helpers.GetPoint(params),
 		Date:      date,
 		FileUrl:   res,
+		FileName:  file.Filename,
 	}
 
 	certificateRepo := repository.NewCertificateRepository(storage.GetDB())
@@ -97,8 +98,58 @@ func PostCertificate(c *fiber.Ctx) error {
 		})
 	}
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"error": true,
+		"error": false,
 		"msg":   "certificate successfully uploaded",
 	})
 
+}
+
+func DeleteCertificate(c *fiber.Ctx) error {
+	s, _ := c.Locals("user").(*util.TokenData)
+
+	if s == nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": true,
+			"msg":   "user not found",
+		})
+	}
+
+	if s.Role != types.Student {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": true,
+			"msg":   "invalid user role",
+		})
+	}
+
+	certificateID := c.Params("id")
+
+	certificateRepo := repository.NewCertificateRepository(storage.GetDB())
+
+	certificate, err := certificateRepo.GetByID(certificateID)
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": true,
+			"msg":   "certificate not found",
+		})
+	}
+
+	if err := helpers.DeleteFile(certificate.FileName); err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": true,
+			"msg":   "operation failed in s3",
+		})
+	}
+
+	if err := certificateRepo.DeleteByID(certificate.ID); err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": true,
+			"msg":   "operation failed",
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"error": false,
+		"msg":   "certificate deleted successfully",
+	})
 }

@@ -24,4 +24,5 @@ func SetupProtectedRoutes(app *fiber.App) {
 
 	//Student
 	api.Post("/certificate", controllers.PostCertificate)
+	api.Post("/certificate/:id", controllers.DeleteCertificate)
 }

@@ -19,6 +19,7 @@ type Certificate struct {
 	Comment   string    `json:"comment"`
 	StudentID uint      `json:"student_id" gorm:"index"`
 	FileUrl   string    `json:"file_url"`
+	FileName  string    `json:"filename"`
 }
 
 type CertificateCreate struct {
