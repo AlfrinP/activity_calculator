@@ -106,7 +106,7 @@ function Login() {
               <div className="text-lg text-white">Student</div>
             </li>
             <li
-              className={`rounded-lg border center flex-col gap-2 p-5 px-8 border-[#F9F8FD] bg-opacity-0  ${
+              className={`rounded-lg border cursor-pointer center flex-col gap-2 p-5 px-8 border-[#F9F8FD] bg-opacity-0  ${
                 data === "Faculty Login"
                   ? "bg-[#41208B] border-purple-900 bg-opacity-100"
                   : ""
