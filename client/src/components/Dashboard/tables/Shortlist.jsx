@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Search from "../../../assets/General/Search.svg";
-import { Dialog } from "@material-tailwind/react";
 import axios from "axios";
 import { baseURL } from "../../Util";
+import ModalLayout from "../../modal/modalLayout";
 
 function Shortlist({ isOpen, handleOpen, batch, department }) {
   const [responseData, setResponseData] = useState(null);
@@ -31,25 +31,7 @@ function Shortlist({ isOpen, handleOpen, batch, department }) {
   }, [isOpen, batch, department]);
 
   return (
-    <Dialog
-      size="lg"
-      open={isOpen}
-      handler={handleOpen}
-      className="relative overflow-x-auto shadow-md sm:rounded-lg w-full h-[400px]"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        className="mr-5 h-5 w-5 float-right mt-3"
-        onClick={handleOpen}
-      >
-        <path
-          fillRule="evenodd"
-          d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-          clipRule="evenodd"
-        />
-      </svg>
+    <ModalLayout isOpen={isOpen} handleOpen={handleOpen} header="Shortlist ">
       <table className="w-full text-sm text-left rtl:text-right text-black">
         <thead className="text-black uppercase bg-gray-5 border-b text-sm">
           <tr>
@@ -87,25 +69,27 @@ function Shortlist({ isOpen, handleOpen, batch, department }) {
                 <td className="px-5 py-2 text-center">{item.email}</td>
                 <td className="px-5 py-2 text-center">{item.department}</td>
                 <td className="px-5 py-2 text-center text-[#512B81] cursor-pointer">
-                  <Add id={item.ID}/>
+                  <Add id={item.ID} />
                 </td>
               </tr>
             ))}
           </tbody>
         ) : null}
       </table>
-    </Dialog>
+    </ModalLayout>
   );
 }
 
-function Add({id}) {
-
+function Add({ id }) {
   const [isAdded, setIsAdded] = useState(false);
 
   const handleButtonClick = () => {
     const fetchData = async () => {
       try {
-        const data = { faculty_name:localStorage.getItem("name"), student_id: id };
+        const data = {
+          faculty_name: localStorage.getItem("name"),
+          student_id: id,
+        };
         const response = await axios.post(`${baseURL}shortlist`, data, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -116,10 +100,9 @@ function Add({id}) {
         console.error("Error fetching data:", error);
       }
     };
-    fetchData()
+    fetchData();
     setIsAdded(true);
   };
-
 
   return (
     <a onClick={handleButtonClick} href="#">

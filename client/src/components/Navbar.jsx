@@ -1,9 +1,11 @@
 import React from "react";
+import logout from "../assets/icons/log-out.svg";
 import christ from "../assets/General/logocce.png";
 import log from "../assets/General/lo.svg"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "./Util";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from "@material-tailwind/react";
 
 function Navbar() {
@@ -31,8 +33,8 @@ function Navbar() {
   return (
       <div className="justify-between w-full center p-1">
         <img src={christ} alt="Logo" className="w-28" />
-        <Button variant="text" className="center w-fit gap-1 text-lowercase capitalize" onClick={handleLogout}>
-          <img src={log} alt="Logout Icon" className="w-6 h-6" />
+        <Button className="center gap-1" onClick={handleLogout} variant="text">
+          <img src={logout} alt="Logout Icon" className="w-7 h-7" />
           <div className="text-lg text-[#512B81] font-semibold">Logout</div>
         </Button>
       </div>
