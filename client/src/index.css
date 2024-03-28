@@ -98,3 +98,19 @@
     transform: scale(0.8);
   }
 }
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #6e33bf;
+  border-radius: 20px;
+  height: 10px;
+}
+

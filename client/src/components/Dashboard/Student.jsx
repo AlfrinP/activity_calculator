@@ -9,6 +9,7 @@ import PopMessage from "./PopMessage";
 import api from "../api/Instance";
 import Loader from "../subComponents/Loader";
 import Layout from "./Layout";
+import { Button } from "@material-tailwind/react";
 
 export default function Student() {
   const [openFileModal, setOpenFileModal] =useState(false);
@@ -78,7 +79,7 @@ export default function Student() {
                         {studentData.regno?.toUpperCase()}
                       </span>
                     </div>
-                    <div className=" border-2 border-[#512B81] dashicon">
+                    <div className=" border-2 py-[0.3rem] px-2 pr-4 border-[#512B81] dashicon ml-2">
                       <span className="font-light text-[#512B81] ">
                         Branch :
                       </span>
@@ -92,21 +93,21 @@ export default function Student() {
                     <span className="text-2xl text-[#512B81]">4</span>
                   </div>
                 </div>
-                <div className="center flex-col gap-3 w-fit">
-                  <button
+                <div className="center flex-col gap-3 w-fit mt-8">
+                  <Button
                     className="bg-[#512B81]"
                     onClick={handleOpenFileModal}
                   >
                     <img src={upload} width={30} alt="Upload Icon" />
                     <span className=" text-white">Upload Certificate</span>
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     className="bg-[#512B81]"
                     onClick={handleOpenViewPoints}
                   >
                     <img src={graph} width={20} alt="Graph Icon" />
                     <span className=" text-white">View Points</span>
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>

@@ -150,7 +150,7 @@ function Faculty() {
                   </button>
                   <button
                     onClick={handleOpenBatch}
-                    className="border-solid border-2 border-[#512B81] text-black"
+                    className="border-solid border-2 py-2 pl-2 pr-6 border-[#512B81] text-black"
                   >
                     <img src={arrowDown} width={15} />
                     <span>Download Batch Report</span>

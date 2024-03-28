@@ -5,6 +5,7 @@ import book from "../../assets/Login/book.png";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { baseURL } from "../Util";
+import { Button } from "@material-tailwind/react";
 
 function Login() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -130,7 +131,7 @@ function Login() {
           >
             <div className="text-center w-full text-white text-2xl">{data}</div>
             <div className="center justify-evenly lg:hidden">
-              <button
+              <Button ripple={true}
                 type="button"
                 className={`rounded-lg  text-md w-fit border center flex-col gap-2 py-2 px-6 border-[#F9F8FD] bg-opacity-0 ${
                   data === "Student Login"
@@ -140,9 +141,9 @@ function Login() {
                 onClick={handleStudentLogin}
               >
                 Student
-              </button>
+              </Button>
 
-              <button
+              <Button
                 type="button"
                 className={`rounded-lg  text-md w-fit border center flex-col gap-2 py-2 px-6 border-[#F9F8FD] bg-opacity-0 ${
                   data === "Faculty Login"
@@ -152,7 +153,7 @@ function Login() {
                 onClick={handleFacultyLogin}
               >
                 Faculty
-              </button>
+              </Button>
             </div>
             <div className="flex flex-col gap-4 px-6">
               {form.map((item, index) => (
@@ -165,7 +166,7 @@ function Login() {
                           : "password"
                         : item.type
                     }
-                    className={`w-full h-full px-3  relative py-3 font-sans text-sm font-normal transition-all bg-transparent  peer border-t-transparent  outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2  focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 rounded-lg border  border-white outline-none  placeholder:text-white text-white placeholder:text-lg focus:ring-purple-900 focus:border-purple-900 ${
+                    className={`w-full h-full px-3 mb-3 relative py-3 font-sans text-sm font-normal transition-all bg-transparent  peer border-t-transparent  outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2  focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 rounded-lg border  border-white outline-none  placeholder:text-white text-white placeholder:text-lg focus:ring-purple-900 focus:border-purple-900 ${
                       item.name === "password" ? "pr-12" : ""
                     } `}
                     placeholder=" "
@@ -229,12 +230,12 @@ function Login() {
               ))}
             </div>
             <div className="px-6 ">
-              <button
+              <Button
                 className="block select-none rounded-lg  px-6 align-middle  uppercase shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none py-3 text-center cursor-pointer text-white font-semibold text-lg w-full background-login"
                 type="submit"
               >
                 Sign In
-              </button>
+              </Button>
             </div>
             <div className="w-full text-center">
               Don't have an account{" "}
