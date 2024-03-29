@@ -45,27 +45,30 @@ const CheckCertificate = ({ isOpen, handleOpen, data = [] }) => {
   };
 
   return (
-    <ModalLayout isOpen={isOpen} handleOpen={handleOpen} header={null}>
+    <ModalLayout
+      isOpen={isOpen}
+      handleOpen={handleOpen}
+      header={null}
+      size="lg"
+    >
       <div className="center w-full justify-evenly border-t pt-5 border-black">
-        <div className="center flex-col w-full">
-          <div className="relative group hover:bg-black w-40">
-            <img
-              alt="nature"
-              className="w-full block group-hover:filter group-hover:brightness-50 transition cursor-pointer"
-              src={data.file_url}
-            />
-            <a
-              target="/"
-              href={data.file_url}
-              className="text-white w-fit absolute border hidden group-hover:block top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-white rounded-full px-4 py-2"
-            >
-              View
-            </a>
-          </div>
+        <div className="relative group hover:bg-black block m-5 ">
+          <img
+            alt="nature"
+            className="group-hover:filter group-hover:brightness-50 max-w-sm transition cursor-pointer"
+            src={data.file_url}
+          />
+          <a
+            target="/"
+            href={data.file_url}
+            className="text-white w-fit absolute border hidden group-hover:block top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-white rounded-full px-4 py-2"
+          >
+            View
+          </a>
         </div>
         <div className="flex flex-col center gap-2">
           <h3 className="text-purple-500">Comment box</h3>
-          <div className="w-64 ">
+          <div className="w-64">
             <Textarea
               color="purple"
               label="Comment"

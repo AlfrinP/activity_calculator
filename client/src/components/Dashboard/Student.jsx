@@ -64,7 +64,7 @@ export default function Student() {
                 src={sprofile}
                 alt="avatar"
                 withBorder={true}
-                color="#512B81"
+                color="deep-purple"
                 className="p-1.5 w-44 block h-44"
               />
               <div className="w-full center justify-around gap-2">
@@ -73,7 +73,7 @@ export default function Student() {
                     <span className="font-normal text-[#512B81]">
                       Student Name
                     </span>
-                    <span className="text-lg font-semibold text-black">
+                    <span className="text-lg font-semibold text-black capitalize">
                       {studentData.name}
                     </span>
                   </div>
@@ -88,7 +88,7 @@ export default function Student() {
                       <span className="font-light text-[#512B81] ">
                         Branch :
                       </span>
-                      <span className="font-semibold text-black">
+                      <span className="font-semibold text-black uppercase">
                         {studentData.department}
                       </span>
                     </div>

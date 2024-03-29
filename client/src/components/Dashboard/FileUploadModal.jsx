@@ -5,19 +5,19 @@ import { baseURL, bytesToMB, form } from "../Util";
 import { Spinner } from "@material-tailwind/react";
 import ModalLayout from "../modal/modalLayout";
 
-function FileUploadModel({ isOpen, handleOpen }) {
+export default function FileUploadModel({ isOpen, handleOpen }) {
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [changestatus, setChangestatus] = useState(null);
   const [selectedActivity, setSelectedActivity] = useState("");
   const [selectedLevel, setSelectedLevel] = useState(0);
   const [selectedPosition, setSelectedPosition] = useState("");
   const [date, setDate] = useState("");
   const [uploadedCertificate, setUploadedCertificate] = useState(null);
   const [loader, setLoader] = useState(false);
+  const [fileDetails, setFileDetails] = useState(null);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
-    setSelectedActivity(null);
+    setSelectedActivity("");
     setSelectedLevel(0);
     setSelectedPosition("");
   };
@@ -37,8 +37,16 @@ function FileUploadModel({ isOpen, handleOpen }) {
     setSelectedPosition(position);
   };
 
+  const handleCancel = () => {
+    setSelectedCategory("");
+    setSelectedActivity("");
+    setSelectedLevel(0);
+    setSelectedPosition("");
+    setDate("");
+  }
+
+
   const handleFileChange = async (e) => {
-    e.preventDefault();
     const file = e.target.files[0];
     const fileDetails = {
       name: file.name,
@@ -46,7 +54,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
       type: file.type.split("/")[1],
     };
 
-    setChangestatus(fileDetails);
+    setFileDetails(fileDetails);
     setUploadedCertificate(file);
   };
 
@@ -90,13 +98,13 @@ function FileUploadModel({ isOpen, handleOpen }) {
           <h4 className="text-black text-lg font-semibold mb-2">Details</h4>
           <hr className="border-gray-400" />
           <div className="grid grid-cols-2 gap-5 mt-4 h-min">
-            {/* Category dropdown */}
             <Select
+              size="lg"
               required
               variant="outlined"
               label="Category"
-              name="category"
-              onChange={(e) => handleCategoryChange(e.target.value)}
+              value={selectedCategory}
+              onChange={(val) => handleCategoryChange(val)}
             >
               {form.map((categoryData, index) => (
                 <Option key={index} value={categoryData.category}>
@@ -105,14 +113,14 @@ function FileUploadModel({ isOpen, handleOpen }) {
               ))}
             </Select>
 
-            {/* Activity dropdown */}
             {selectedCategory && (
               <Select
+                size="lg"
                 required
                 variant="outlined"
                 label="Activity Name"
-                name="name"
-                onChange={(e) => handleActivityChange(e.target.value)}
+                value={selectedActivity}
+                onChange={(val) => handleActivityChange(val)}
               >
                 {form
                   .find(
@@ -126,7 +134,6 @@ function FileUploadModel({ isOpen, handleOpen }) {
               </Select>
             )}
 
-            {/* Level dropdown */}
             {selectedActivity &&
               form
                 .find(
@@ -137,11 +144,12 @@ function FileUploadModel({ isOpen, handleOpen }) {
                     activityData.activity_name === selectedActivity
                 )?.levels && (
                 <Select
+                  size="lg"
                   required
                   variant="outlined"
                   label="Levels"
-                  name="level"
-                  onChange={(e) => handleLevelChange(e.target.value)}
+                  value={selectedLevel}
+                  onChange={(val) => handleLevelChange(val)}
                 >
                   {form
                     .find(
@@ -160,7 +168,6 @@ function FileUploadModel({ isOpen, handleOpen }) {
                 </Select>
               )}
 
-            {/* Position dropdown */}
             {selectedActivity &&
               form
                 .find(
@@ -171,11 +178,12 @@ function FileUploadModel({ isOpen, handleOpen }) {
                     activityData.activity_name === selectedActivity
                 )?.positions && (
                 <Select
+                  size="lg"
                   required
                   variant="outlined"
                   label="Position"
-                  name="position"
-                  onChange={(e) => handlePositionChange(e.target.value)}
+                  value={selectedPosition}
+                  onChange={(val) => handlePositionChange(val)}
                 >
                   {form
                     .find(
@@ -194,11 +202,11 @@ function FileUploadModel({ isOpen, handleOpen }) {
                 </Select>
               )}
 
-            {/* Date input */}
             <Input
+              size="lg"
               type="date"
               label="Date"
-              name="date"
+              value={date}
               onChange={(e) => setDate(e.target.value)}
             />
           </div>
@@ -206,7 +214,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
         <div className="center justify-end w-full gap-3 ">
           <Button
             className="text-[#512B81] underline"
-            onClick={handleOpen}
+            onClick={handleCancel}
             variant="text"
           >
             Cancel
@@ -216,12 +224,10 @@ function FileUploadModel({ isOpen, handleOpen }) {
             className="capitalize bg-[#512B81]"
             onClick={handleFormSubmit}
           >
-            {loader ? <Spinner color="purple" /> : null}Upload Files
+            {loader && <Spinner color="purple" />}Upload Files
           </Button>
         </div>
       </form>
     </ModalLayout>
   );
 }
-
-export default FileUploadModel;

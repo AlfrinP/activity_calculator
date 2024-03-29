@@ -12,7 +12,7 @@ import pending from "../../assets/icons/pending.svg";
 import api from "../api/Instance";
 import Loader from "../subComponents/Loader";
 import Layout from "./Layout";
-import { Button } from "@material-tailwind/react";
+import { Avatar, Button } from "@material-tailwind/react";
 
 function Faculty() {
   const [openBatch, setOpenBatch] = useState(false);
@@ -78,21 +78,27 @@ function Faculty() {
           />
           <Sorted isOpen={openSorted} handleOpen={handleOpenSorted} />
           <div className="w-full flex gap-10 overflow-x ">
-            <div className="ring-offset-8 ring-2 ring-[#512B81] rounded-full w-32">
-              <img src={facultyImage} className="rounded-full" />
-            </div>
+            <Avatar
+              src={facultyImage}
+              alt="avatar"
+              withBorder={true}
+              color="deep-purple"
+              className="p-1.5 w-44 block h-44"
+            />
             <div className="center flex-col gap-3 items-start">
               <div className="dashicon flex-row text-xl">
                 <span className="font-normal text-[#512B81]">
                   Faculty Name :
                 </span>
-                <span className="text-xl font-semibold text-black">
+                <span className="text-xl font-semibold text-black capitalize">
                   {facultyData?.name}
                 </span>
               </div>
               <div className=" text-lg border-2 border-[#512B81] dashicon flex-row px-6 py-3 ">
-                <span className="font-normal text-[#512B81] ">Department -</span>
-                <span className="font-semibold text-black text-xl">
+                <span className="font-normal text-[#512B81] ">
+                  Department -
+                </span>
+                <span className="font-semibold text-black text-xl uppercase">
                   {facultyData?.department}
                 </span>
               </div>
