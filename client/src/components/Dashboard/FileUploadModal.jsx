@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Button, ButtonGroup } from "@material-tailwind/react";
-import Add from "../../assets/General/Addicon.svg";
+import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { baseURL, bytesToMB, form } from "../Util";
 import { Spinner } from "@material-tailwind/react";
-import { DropzoneButton } from "../fileupload/dropzoneButton";
-import { ContainedInputs } from "../selectInput/ContainedInputs";
 import ModalLayout from "../modal/modalLayout";
 
 function FileUploadModel({ isOpen, handleOpen }) {
@@ -89,34 +86,29 @@ function FileUploadModel({ isOpen, handleOpen }) {
         className="w-full flex flex-col items-center mt-6 gap-4"
         onSubmit={handleFormSubmit}
       >
-        <DropzoneButton />
-
         <div className="w-full">
           <h4 className="text-black text-lg font-semibold mb-2">Details</h4>
           <hr className="border-gray-400" />
           <div className="grid grid-cols-2 gap-5 mt-4 h-min">
             {/* Category dropdown */}
-
-            <select
+            <Select
               required
-              className=" outline-none w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
               variant="outlined"
               label="Category"
               name="category"
               onChange={(e) => handleCategoryChange(e.target.value)}
             >
               {form.map((categoryData, index) => (
-                <option key={index} value={categoryData.category}>
+                <Option key={index} value={categoryData.category}>
                   {categoryData.category}
-                </option>
+                </Option>
               ))}
-            </select>
+            </Select>
 
             {/* Activity dropdown */}
             {selectedCategory && (
-              <select
+              <Select
                 required
-                className=" outline-none w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                 variant="outlined"
                 label="Activity Name"
                 name="name"
@@ -127,11 +119,11 @@ function FileUploadModel({ isOpen, handleOpen }) {
                     (categoryData) => categoryData.category === selectedCategory
                   )
                   ?.data.map((activityData, index) => (
-                    <option key={index} value={activityData.activity_name}>
+                    <Option key={index} value={activityData.activity_name}>
                       {activityData.activity_name}
-                    </option>
+                    </Option>
                   ))}
-              </select>
+              </Select>
             )}
 
             {/* Level dropdown */}
@@ -144,9 +136,8 @@ function FileUploadModel({ isOpen, handleOpen }) {
                   (activityData) =>
                     activityData.activity_name === selectedActivity
                 )?.levels && (
-                <select
+                <Select
                   required
-                  className=" outline-none w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                   variant="outlined"
                   label="Levels"
                   name="level"
@@ -162,11 +153,11 @@ function FileUploadModel({ isOpen, handleOpen }) {
                         activityData.activity_name === selectedActivity
                     )
                     ?.levels.map((level, index) => (
-                      <option key={index} value={index}>
+                      <Option key={index} value={index}>
                         {level}
-                      </option>
+                      </Option>
                     ))}
-                </select>
+                </Select>
               )}
 
             {/* Position dropdown */}
@@ -179,9 +170,8 @@ function FileUploadModel({ isOpen, handleOpen }) {
                   (activityData) =>
                     activityData.activity_name === selectedActivity
                 )?.positions && (
-                <select
+                <Select
                   required
-                  className=" outline-none w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer  text-blue-gray-700  "
                   variant="outlined"
                   label="Position"
                   name="position"
@@ -197,17 +187,17 @@ function FileUploadModel({ isOpen, handleOpen }) {
                         activityData.activity_name === selectedActivity
                     )
                     ?.positions.map((position, index) => (
-                      <option key={index} value={position}>
+                      <Option key={index} value={position}>
                         {position}
-                      </option>
+                      </Option>
                     ))}
-                </select>
+                </Select>
               )}
 
             {/* Date input */}
-            <input
-              className="w-full h-full px-3 py-3 cursor-pointer font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer text-blue-gray-700  placeholder-shown:border placeholder-shown:placeholder-shown:border-t-blue-gray-200focus:border-gray-900  focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+            <Input
               type="date"
+              label="Date"
               name="date"
               onChange={(e) => setDate(e.target.value)}
             />

@@ -9,7 +9,6 @@ import PopMessage from "./PopMessage";
 import api from "../api/Instance";
 import Loader from "../subComponents/Loader";
 import Layout from "./Layout";
-import { ContainedInputs } from "../selectInput/ContainedInputs";
 import { Avatar, Button } from "@material-tailwind/react";
 
 export default function Student() {
