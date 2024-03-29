@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import ViewCertificate from "../ViewCertificate";
 import TableFaculty2 from "./TableFaculty2";
 import Student2 from "../Student2";
 import { Button } from "@material-tailwind/react";
 
-function TableFaculty({ isOpen, handleOpen, data }) {
-  const [openTable, setOpenTable] = React.useState(false);
-  const handleOpenTable = () => setOpenTable(!openTable);
+function TableFaculty({ data }) {
+  
+  const [openTable, setOpenTable] = useState(false);
+  const [openStudent, setOpenStudent] = useState(false);
 
-  const [openStudent, setOpenStudent] = React.useState(false);
-  const handleOpenStudent = () => setOpenStudent(!openStudent);
+  const handleOpenTable = () => setOpenTable(!openTable);
+  const handleOpenStudent = () => (
+    setOpenStudent(!openStudent), setOpenTable(!openTable)
+  );
 
   return (
-    <div className=" relative group shadow-[0_3px_10px_rgb(0,0,0,0.2)] text-black rounded-lg overflow-x-auto sm:rounded-lg w-full h-max-full hover:filter hover:brightness-50 transition cursor-pointer">
+    <div className="group shadow-[0_3px_10px_rgb(0,0,0,0.2)] text-black rounded-lg overflow-x-auto sm:rounded-lg w-full h-max-full hover:filter hover:brightness-50 transition cursor-pointer">
       <TableFaculty2 isOpen={openTable} handleOpen={handleOpenTable} />
       <Student2 isOpen={openStudent} handleOpen={handleOpenStudent} />
       <table className=" w-full text-sm text-left rtl:text-right text-black">
@@ -58,12 +61,13 @@ function TableFaculty({ isOpen, handleOpen, data }) {
             </tr>
           ))}
         </tbody>
-        <div className="absolute inset-0 items-center justify-center bottom-0 hidden group-hover:flex">
-          <Button onClick={handleOpenTable} variant="text">
-            Show More
-          </Button>
-        </div>
       </table>
+      <div
+        className="w-full center py-1 border-t-[1px] border-black"
+        onClick={handleOpenTable}
+      >
+        <Button variant="text">Show More</Button>
+      </div>
     </div>
   );
 }
