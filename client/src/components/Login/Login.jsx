@@ -131,7 +131,7 @@ function Login() {
           >
             <div className="text-center w-full text-white text-2xl">{data}</div>
             <div className="center justify-evenly lg:hidden">
-              <button
+              <Button ripple={true}
                 type="button"
                 className={`rounded-lg  text-md w-fit border center flex-col gap-2 py-2 px-6 border-[#F9F8FD] bg-opacity-0 ${
                   data === "Student Login"
@@ -141,9 +141,9 @@ function Login() {
                 onClick={handleStudentLogin}
               >
                 Student
-              </button>
+              </Button>
 
-              <button
+              <Button
                 type="button"
                 className={`rounded-lg  text-md w-fit border center flex-col gap-2 py-2 px-6 border-[#F9F8FD] bg-opacity-0 ${
                   data === "Faculty Login"
@@ -153,7 +153,7 @@ function Login() {
                 onClick={handleFacultyLogin}
               >
                 Faculty
-              </button>
+              </Button>
             </div>
             <div className="flex flex-col gap-4 px-6">
               {form.map((item, index) => (

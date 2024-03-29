@@ -1,6 +1,7 @@
 import React from "react";
 import logout from "../assets/icons/log-out.svg";
 import christ from "../assets/General/logocce.png";
+import log from "../assets/General/lo.svg"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "./Util";
