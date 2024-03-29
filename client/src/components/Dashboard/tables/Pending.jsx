@@ -12,7 +12,7 @@ function Pending({ isOpen, handleOpen, certificateData = [] }) {
   const [data, setData] = useState();
 
   return (
-    <ModalLayout isOpen={isOpen} handleOpen={handleOpen} header={null}>
+    <ModalLayout isOpen={isOpen} handleOpen={handleOpen} header={null} size="xl">
       <CheckCertificate
         isOpen={openCheckCertificate}
         handleOpen={handleOpenCheckCertificate}

@@ -2,7 +2,7 @@ import React from "react";
 import { Dialog, DialogBody, DialogHeader } from "@material-tailwind/react";
 import close from "../../assets/icons/close.svg";
 
-export default function ModalLayout({ header, children, isOpen, handleOpen }) {
+export default function ModalLayout({ header, children, isOpen, handleOpen,size }) {
   return (
     <Dialog open={isOpen} size="lg" handler={handleOpen} className="px-3 py-2 w-full">
       <DialogHeader className="center justify-between w-full pb-1 pt-3 ">
@@ -14,7 +14,7 @@ export default function ModalLayout({ header, children, isOpen, handleOpen }) {
           <img src={close} />
         </div>
       </DialogHeader>
-      <DialogBody>{children}</DialogBody>
+      <DialogBody className="h-fit">{children}</DialogBody>
     </Dialog>
   );
 }

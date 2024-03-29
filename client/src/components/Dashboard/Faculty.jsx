@@ -12,7 +12,7 @@ import pending from "../../assets/icons/pending.svg";
 import api from "../api/Instance";
 import Loader from "../subComponents/Loader";
 import Layout from "./Layout";
-import { Button } from "@material-tailwind/react";
+import { Avatar, Button } from "@material-tailwind/react";
 
 function Faculty() {
   const [openBatch, setOpenBatch] = useState(false);
@@ -77,22 +77,28 @@ function Faculty() {
             certificateData={facultyData?.students}
           />
           <Sorted isOpen={openSorted} handleOpen={handleOpenSorted} />
-          <div className="w-full flex gap-10 ">
-            <div className="ring-offset-8 ring-2 ring-[#512B81] rounded-full w-32">
-              <img src={facultyImage} className="rounded-full" />
-            </div>
+          <div className="w-full flex gap-10 overflow-x ">
+            <Avatar
+              src={facultyImage}
+              alt="avatar"
+              withBorder={true}
+              color="deep-purple"
+              className="p-1.5 w-44 block h-44"
+            />
             <div className="center flex-col gap-3 items-start">
-              <div className="dashicon flex-row text-lg">
+              <div className="dashicon flex-row text-xl">
                 <span className="font-normal text-[#512B81]">
                   Faculty Name :
                 </span>
-                <span className="text-xl font-semibold text-black">
+                <span className="text-xl font-semibold text-black capitalize">
                   {facultyData?.name}
                 </span>
               </div>
-              <div className=" text-lg border-2 border-[#512B81] dashicon flex-row">
-                <span className="font-light text-[#512B81] ">Department -</span>
-                <span className="font-semibold text-black text-xl">
+              <div className=" text-lg border-2 border-[#512B81] dashicon flex-row px-6 py-3 ">
+                <span className="font-normal text-[#512B81] ">
+                  Department -
+                </span>
+                <span className="font-semibold text-black text-xl uppercase">
                   {facultyData?.department}
                 </span>
               </div>
@@ -102,36 +108,30 @@ function Faculty() {
           <div className="w-full center flex-wrap xl:justify-between gap-10">
             <div className="center flex-col w-fit gap-2 p-5 rounded-lg border-t border-solid border-gray-300 border-opacity-82 bg-white shadow-md shadow-offset-x-11 shadow-offset-y-24 shadow-blur-26 shadow-opacity-20">
               <div className="center w-full gap-2 justify-evenly">
-                <Button className=" bg-[#512B81] text-sm flex-row dashicon ">
-                  <span className="font-light ">Batch :</span>
+                <div className=" bg-[#512B81] text-lg px-6 py-3 flex-row dashicon ">
+                  <span className="font-normal ">Batch :</span>
                   <span className="font-semibold">{facultyData?.batch}</span>
-                </Button>
-                <Button
-                  variant="text"
-                  className="dashicon text-sm flex-row border-2 border-[#512B81]"
-                >
-                  <span className="font-light text-[#512B81] ">Branch :</span>
+                </div>
+                <div className="dashicon flex-row border-2 text-lg border-[#512B81] px-6 py-3">
+                  <span className="font-normal text-[#512B81] ">Branch :</span>
                   <span className="font-semibold text-black">
                     {facultyData.department}
                   </span>
-                </Button>
+                </div>
               </div>
               <div className="center w-full gap-2 justify-evenly">
-                <Button className=" dashicon flex-row text-sm bg-[#512B81]">
-                  <span className="font-light">Semester :</span>
+                <div className=" dashicon flex-row text-lg bg-[#512B81] px-6 py-3">
+                  <span className="font-normal">Semester :</span>
                   <span className="font-semibold">4</span>
-                </Button>
-                <Button
-                  variant="text"
-                  className="dashicon flex-row border-2 text-sm border-[#512B81]"
-                >
-                  <span className="font-light text-[#512B81] ">
+                </div>
+                <div className="dashicon flex-row border-2 text-lg border-[#512B81] px-6 py-3">
+                  <span className="font-normal text-[#512B81] ">
                     Number of Students :
                   </span>
                   <span className="font-semibold text-black">
                     {totalStudents}
                   </span>
-                </Button>
+                </div>
               </div>
             </div>
             <div className="center flex-col w-fit gap-2 p-5 rounded-lg border-t border-solid border-gray-300 border-opacity-82 bg-white shadow-md shadow-offset-x-11 shadow-offset-y-24 shadow-blur-26 shadow-opacity-20">

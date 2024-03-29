@@ -34,7 +34,7 @@ function ViewPointsModal({ isOpen, handleOpen, data }) {
       header="Activity Point Details"
     >
       <div className="flex flex-row gap-20 center mb-3">
-        <Select variant="outlined" label="Select Year">
+        <Select variant="outlined" label="Year">
           <Option onClick={() => setSelectedYear(2022)}>22-23</Option>
           <Option onClick={() => setSelectedYear(2023)}>23-24</Option>
           <Option onClick={() => setSelectedYear(2024)}>24-25</Option>
