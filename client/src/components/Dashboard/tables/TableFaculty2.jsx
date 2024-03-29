@@ -107,7 +107,7 @@ function TableFaculty({ isOpen, handleOpen }) {
                   {item.point}
                 </td>
                 <td className="px-5 py-2 text-center  text-[#512B81] hover:underline cursor-pointer">
-                  <a onClick={handleOpenStudent} href="#">
+                  <a onClick={handleOpenStudent} href="#" target="_blank">
                     View
                   </a>
                 </td>

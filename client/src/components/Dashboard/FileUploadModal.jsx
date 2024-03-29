@@ -223,7 +223,7 @@ function FileUploadModel({ isOpen, handleOpen }) {
           </Button>
           <Button
             type="submit"
-            className="capitalize bg-[#512B81]"
+            className="capitalize bg-[#512B81] flex items-center gap-1"
             onClick={handleFormSubmit}
           >
             {loader ? <Spinner color="purple" /> : null}Upload Files
