@@ -4,6 +4,7 @@ import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { baseURL, bytesToMB, form } from "../Util";
 import { Spinner } from "@material-tailwind/react";
 import ModalLayout from "../modal/modalLayout";
+import DropZone from "./DropZone";
 
 export default function FileUploadModel({ isOpen, handleOpen }) {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -43,8 +44,7 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
     setSelectedLevel(0);
     setSelectedPosition("");
     setDate("");
-  }
-
+  };
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -57,6 +57,7 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
     setFileDetails(fileDetails);
     setUploadedCertificate(file);
   };
+
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -89,7 +90,7 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
       header="Upload Certificate and Details"
       isOpen={isOpen}
       handleOpen={handleOpen}
-    >
+    ><DropZone/>
       <form
         className="w-full flex flex-col items-center mt-6 gap-4"
         onSubmit={handleFormSubmit}

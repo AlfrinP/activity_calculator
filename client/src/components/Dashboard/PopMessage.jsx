@@ -24,11 +24,8 @@ function PopMessage({ data = [], faculty = "" }) {
             )}
           </Button>
         </PopoverHandler>
-        <PopoverContent className="h-1/2 overflow-scroll overflow-x-hidden">
-          {data &&
-            data.length !== undefined &&
-            data.length !== null &&
-            data.length !== 0 &&
+        <PopoverContent className="h-1/2 w-[18%] overflow-scroll overflow-x-hidden rounded-lg">
+          {data && data.some(item => item.status === "rejected") ? (
             data
               .filter((item) => item.status === "rejected")
               .map((item, index) => (
@@ -40,7 +37,12 @@ function PopMessage({ data = [], faculty = "" }) {
                     <p>{item.comment}</p>
                   </div>
                 </div>
-              ))}
+              ))
+          ) : (
+            <div className="flex justify-center items-center h-full">
+              <p className="message p-4">All is well 👍</p>
+            </div>
+          )}
         </PopoverContent>
       </Popover>
     </div>
