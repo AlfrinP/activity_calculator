@@ -85,10 +85,10 @@ function Login() {
     <div className="w-full h-screen background-main center flex">
       <div className="lg:w-1/2 lg:flex hidden lg:h-full lg:center lg:flex-col lg:gap-10">
         <div className="w-full center flex-col gap-2">
-          <div className="w-full text-center text-2xl text-white">
+          <div className="w-full text-center font-montserrat text-2xl text-white">
             Welcome to
           </div>
-          <div className="w-full text-center text-4xl text-white font-bold">
+          <div className="w-full text-center font-montserrat text-4xl text-white font-bold">
             CCE Portal
           </div>
         </div>
@@ -103,7 +103,7 @@ function Login() {
               onClick={handleStudentLogin}
             >
               <img className="w-10" src={si} alt="student_img" />
-              <div className="text-lg text-white">Student</div>
+              <div className="text-lg font-montserrat text-white">Student</div>
             </li>
             <li
               className={`rounded-lg border cursor-pointer center flex-col gap-2 p-5 px-8 border-[#F9F8FD] bg-opacity-0  ${
@@ -114,7 +114,7 @@ function Login() {
               onClick={handleFacultyLogin}
             >
               <img className="w-10" src={fi} alt="faculty_img" />
-              <div className="text-lg text-white">Faculty</div>
+              <div className="text-lg font-montserrat text-white">Faculty</div>
             </li>
           </ul>
         </div>
@@ -137,7 +137,7 @@ function Login() {
                   data === "Student Login"
                     ? "bg-[#41208B] border-purple-900 bg-opacity-100"
                     : ""
-                } active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none`}
+                } active:opacity-[0.85] disabled:pointer-events-none font-montserrat disabled:opacity-50 disabled:shadow-none`}
                 onClick={handleStudentLogin}
               >
                 Student
@@ -149,7 +149,7 @@ function Login() {
                   data === "Faculty Login"
                     ? "bg-[#41208B] border-purple-900 bg-opacity-100"
                     : ""
-                } active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none`}
+                } active:opacity-[0.85] disabled:pointer-events-none font-montserrat disabled:opacity-50 disabled:shadow-none`}
                 onClick={handleFacultyLogin}
               >
                 Faculty
@@ -226,15 +226,15 @@ function Login() {
             <div className="px-6 ">
               <Button
                 fullWidth
-                className="px-6 py-3 text-lg background-login"
+                className="px-6 py-3 text-lg font-montserrat background-login"
                 type="submit"
               >
                 Sign In
               </Button>
             </div>
-            <div className="w-full text-center">
+            <div className="w-full font-montserrat text-center">
               Don't have an account{" "}
-              <Link className="underline text-[#41208B]" to={"/register"}>
+              <Link className="underline font-montserrat text-[#41208B]" to={"/register"}>
                 SignUp
               </Link>
             </div>

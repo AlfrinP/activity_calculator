@@ -9,7 +9,7 @@ import PopMessage from "./PopMessage";
 import api from "../api/Instance";
 import Loader from "../subComponents/Loader";
 import Layout from "./Layout";
-import { Avatar, Button } from "@material-tailwind/react";
+import { Avatar, Button } from "@material-tailwind/react"; 
 
 export default function Student() {
   const [openFileModal, setOpenFileModal] = useState(false);
@@ -70,7 +70,7 @@ export default function Student() {
               <div className="w-full center justify-around gap-2">
                 <div className="center flex-col gap-3 items-start col-span-2 w-fit">
                   <div className="dashicon">
-                    <span className="font-normal text-[#512B81]">
+                    <span className="font-normal font-montserrat text-[#512B81]">
                       Student Name
                     </span>
                     <span className="text-lg font-semibold text-black capitalize">
@@ -79,16 +79,16 @@ export default function Student() {
                   </div>
                   <div className="center justify-start w-full gap-1">
                     <div className=" bg-[#512B81] dashicon">
-                      <span className="font-light">Register No:</span>
+                      <span className="font-montserrat font-light">Register No:</span>
                       <span className="font-semibold">
                         {studentData.regno?.toUpperCase()}
                       </span>
                     </div>
-                    <div className="outline outline-2 outline-offset-[-2px] outline-[#512B81] dashicon">
-                      <span className="font-light text-[#512B81] ">
+                    <div className="outline outline-2 outline-offset-[-2px] outline-[#512B81]  dashicon">
+                      <span className="font-light font-montserrat text-[#512B81] ">
                         Branch :
                       </span>
-                      <span className="font-semibold text-black uppercase">
+                      <span className="font-semibold font-montserrat text-black uppercase">
                         {studentData.department}
                       </span>
                     </div>
@@ -105,7 +105,7 @@ export default function Student() {
                     onClick={handleOpenFileModal}
                   >
                     <img src={upload} alt="Upload Icon" />
-                    <span className="text-white">Upload Certificate</span>
+                    <span className="text-white font-montserrat">Upload Certificate</span>
                   </Button>
                   {/* <ContainedInputs/> */}
                   <Button
@@ -114,7 +114,7 @@ export default function Student() {
                     onClick={handleOpenViewPoints}
                   >
                     <img src={level} alt="Graph Icon" className="rotate-90" />
-                    <span className=" text-white">View Points</span>
+                    <span className=" text-white capitalize font-montserrat">View Points</span>
                   </Button>
                 </div>
               </div>

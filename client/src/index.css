@@ -109,3 +109,10 @@ input:-webkit-autofill:active {
   background: #6e33bf;
   border-radius: 20px; /* Color of the scrollbar handle */
 }
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/font/montserrat.regular.ttf') format('truetype');
+}
