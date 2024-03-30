@@ -31,7 +31,7 @@ function PopMessage({ data = [], faculty = "" }) {
               .map((item, index) => (
                 <div className="w-fit center items-end py-2" key={index}>
                   <img src={Avatar} alt="avatar" className="rounded-full block w-10" />
-                  <div className="flex flex-col message p-4">
+                  <div className="flex flex-col message p-2">
                     <h4 className="font-bold text-black">{item.faculty}</h4>
                     <p>{item.category}</p>
                     <p>{item.comment}</p>
@@ -39,8 +39,9 @@ function PopMessage({ data = [], faculty = "" }) {
                 </div>
               ))
           ) : (
-            <div className="flex justify-center items-center h-full">
-              <p className="message p-4">All is well 👍</p>
+            <div className="flex  items-center">
+              <img src={Avatar} alt="avatar" className="rounded-full block w-10" />
+              <p className="message p-2">All is well 👍</p>
             </div>
           )}
         </PopoverContent>

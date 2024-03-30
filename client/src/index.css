@@ -45,7 +45,7 @@
 
   .message {
     box-shadow: 0px 5px 16px 0px #080f342e;
-    border-radius: 50px 50px 50px 0px;
+    border-radius: 10px 10px 10px 0px;
   }
 
   .box {
@@ -106,5 +106,6 @@ input:-webkit-autofill:active {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #6e33bf; /* Color of the scrollbar handle */
+  background: #6e33bf;
+  border-radius: 20px; /* Color of the scrollbar handle */
 }

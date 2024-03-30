@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
-import { baseURL, bytesToMB, form } from "../Util";
 import { Spinner } from "@material-tailwind/react";
 import ModalLayout from "../modal/modalLayout";
 import DropZone from "./DropZone";
+import { baseURL, bytesToMB, form } from "../Util";
 
 export default function FileUploadModel({ isOpen, handleOpen }) {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -46,19 +46,6 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
     setDate("");
   };
 
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0];
-    const fileDetails = {
-      name: file.name,
-      size: bytesToMB(file.size),
-      type: file.type.split("/")[1],
-    };
-
-    setFileDetails(fileDetails);
-    setUploadedCertificate(file);
-  };
-
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     let bodyFormData = new FormData();
@@ -85,16 +72,28 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
     }
   };
 
+  const handleFileChange = async (file) => {
+    const fileDetails = {
+      name: file.name,
+      size: bytesToMB(file.size),
+      type: file.type.split("/")[1],
+    };
+
+    setFileDetails(fileDetails);
+    setUploadedCertificate(file);
+  };
+
   return (
     <ModalLayout
       header="Upload Certificate and Details"
       isOpen={isOpen}
       handleOpen={handleOpen}
-    ><DropZone/>
+    >
       <form
         className="w-full flex flex-col items-center mt-6 gap-4"
         onSubmit={handleFormSubmit}
       >
+        <DropZone onFileChange={handleFileChange} />
         <div className="w-full">
           <h4 className="text-black text-lg font-semibold mb-2">Details</h4>
           <hr className="border-gray-400" />
