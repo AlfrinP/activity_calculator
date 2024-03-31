@@ -7,7 +7,7 @@ function Layout({ children }) {
       <div className="h-20 relative center w-full px-[50px] md:px-[100px] max-w-screen-2xl">
         <Navbar />
       </div>
-      <main className="max-w-screen-2xl w-full">{children}</main>
+      <main className="max-w-screen-2xl w-full height gap-5 flex-col center px-[50px] md:px-[100px]">{children}</main>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import Wdownload from "../../assets/General/Whitedownload.svg";
 import back from "../../assets/General/back.svg";
 import Table3 from "./tables/Table3";
 import Navbar2 from "../Navbar2";
-import { Dialog } from "@material-tailwind/react";
+import { Dialog,Button } from "@material-tailwind/react";
 import Downloaddetail from "./Downloaddetail";
 
 export default function Student2({ isOpen, handleOpen }) {
@@ -19,13 +19,13 @@ export default function Student2({ isOpen, handleOpen }) {
         handler={handleOpen}
         className="w-full h-screen center flex-col"
       >
-        <button
+        <Button variant="text"
           onClick={handleOpen}
           className="center justify-end gap-1 p-3 absolute mt-20 mr-20 right-0 top-0"
         >
           <img src={back} alt="back" />
           <div className="text-lg text-[#512B81] ml-1 font-semibold">Back</div>
-        </button>
+        </Button>
         <Navbar2 />
         <Downloaddetail isOpen={openDownload} handleOpen={handleOpenDownload} />
 

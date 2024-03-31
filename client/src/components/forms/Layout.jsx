@@ -8,7 +8,9 @@ const schema = z.object({
   password: z.string().min(8),
 });
 
-function Layout({ children }) {
+
+
+export default function FormLayout({ children }) {
   const {
     register,
     handleSubmit,
@@ -25,7 +27,5 @@ function Layout({ children }) {
       });
     }
   };
-  return <form onSubmit={handleSubmit(onSubmit)}>{children}</form>;
+  return <form>{children}</form>;
 }
-
-export default Layout;
