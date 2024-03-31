@@ -7,7 +7,6 @@ import (
 	"github.com/AlfrinP/point_calculator/config"
 	"github.com/AlfrinP/point_calculator/types"
 
-	"github.com/AlfrinP/point_calculator/models"
 	"github.com/AlfrinP/point_calculator/repository"
 	"github.com/AlfrinP/point_calculator/storage"
 	"github.com/AlfrinP/point_calculator/util"
@@ -21,7 +20,7 @@ func SignUp(c *fiber.Ctx) error {
 	log.Println(role)
 
 	if role == types.Student {
-		params := &models.StudentCreate{}
+		params := &types.StudentCreate{}
 		if err := c.BodyParser(params); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"error": true,
@@ -59,7 +58,7 @@ func SignUp(c *fiber.Ctx) error {
 	}
 
 	if role == types.Faculty {
-		params := &models.FacultyCreate{}
+		params := &types.FacultyCreate{}
 		if err := c.BodyParser(params); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"error": true,
@@ -103,7 +102,7 @@ func SignUp(c *fiber.Ctx) error {
 }
 
 func SignIn(c *fiber.Ctx) error {
-	params := &models.UserSignIn{}
+	params := &types.UserSignIn{}
 	var id uint
 	role := c.Params("role")
 
