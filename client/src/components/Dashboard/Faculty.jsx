@@ -87,14 +87,14 @@ function Faculty() {
             />
             <div className="center flex-col gap-3 items-start">
               <div className="dashicon flex-row text-xl">
-                <span className="font-normal text-[#512B81]">
+                <span className="font-normal font-montserrat text-[#512B81]">
                   Faculty Name :
                 </span>
-                <span className="text-xl font-semibold text-black capitalize">
+                <span className="text-xl font-semibold font-montserrat text-black capitalize">
                   {facultyData?.name}
                 </span>
               </div>
-              <div className=" text-lg border-2 border-[#512B81] dashicon flex-row px-6 py-3 ">
+              <div className=" text-lg border-2 border-[#512B81] font-montserrat dashicon flex-row px-6 py-3 ">
                 <span className="font-normal text-[#512B81] ">
                   Department -
                 </span>
@@ -104,27 +104,27 @@ function Faculty() {
               </div>
             </div>
           </div>
-          <div className="font-bold text-lg text-start w-full">Batch info</div>
+          <div className="font-bold font-montserrat text-lg text-start w-full">Batch info</div>
           <div className="w-full center flex-wrap xl:justify-between gap-10">
             <div className="center flex-col w-fit gap-2 p-5 rounded-lg border-t border-solid border-gray-300 border-opacity-82 bg-white shadow-md shadow-offset-x-11 shadow-offset-y-24 shadow-blur-26 shadow-opacity-20">
               <div className="center w-full gap-2 justify-evenly">
                 <div className=" bg-[#512B81] text-lg px-6 py-3 flex-row dashicon ">
-                  <span className="font-normal ">Batch :</span>
+                  <span className="font-normal font-montserrat ">Batch :</span>
                   <span className="font-semibold">{facultyData?.batch}</span>
                 </div>
-                <div className="dashicon flex-row border-2 text-lg border-[#512B81] px-6 py-3">
+                <div className="dashicon flex-row border-2 font-montserrat text-lg border-[#512B81] px-6 py-3">
                   <span className="font-normal text-[#512B81] ">Branch :</span>
                   <span className="font-semibold text-black">
                     {facultyData.department}
                   </span>
                 </div>
               </div>
-              <div className="center w-full gap-2 justify-evenly">
+              <div className="center w-full gap-2 justify-evenly font-montserrat">
                 <div className=" dashicon flex-row text-lg bg-[#512B81] px-6 py-3">
                   <span className="font-normal">Semester :</span>
                   <span className="font-semibold">4</span>
                 </div>
-                <div className="dashicon flex-row border-2 text-lg border-[#512B81] px-6 py-3">
+                <div className="dashicon flex-row border-2 text-lg border-[#512B81] px-6 py-3 font-montserrat">
                   <span className="font-normal text-[#512B81] ">
                     Number of Students :
                   </span>
@@ -134,11 +134,11 @@ function Faculty() {
                 </div>
               </div>
             </div>
-            <div className="center flex-col w-fit gap-2 p-5 rounded-lg border-t border-solid border-gray-300 border-opacity-82 bg-white shadow-md shadow-offset-x-11 shadow-offset-y-24 shadow-blur-26 shadow-opacity-20">
+            <div className="center font-montserrat flex-col w-fit gap-2 p-5 rounded-lg border-t border-solid border-gray-300 border-opacity-82 bg-white shadow-md shadow-offset-x-11 shadow-offset-y-24 shadow-blur-26 shadow-opacity-20">
               <div className="center gap-3 ">
                 <Button
                   onClick={handleOpenShort}
-                  className="bg-[#512B81] text-sm center gap-2"
+                  className="bg-[#512B81] capitalize font-montserrat text-sm center gap-2"
                 >
                   <span className="text-white">Add Shortlist</span>
                   <img src={user} />
@@ -146,7 +146,7 @@ function Faculty() {
                 <Button
                   onClick={handleOpenBatch}
                   variant="outlined"
-                  className="border-2 border-[#512B81] text-sm center gap-2 text-[#512B81]"
+                  className="border-2 border-[#512B81] capitalize font-montserrat text-sm center gap-2 text-[#512B81]"
                 >
                   <img src={download} className="h-6" />
                   <span>Download Batch Report</span>
@@ -155,7 +155,7 @@ function Faculty() {
               <div className="center w-full gap-3 justify-around">
                 <Button
                   onClick={handleOpenPending}
-                  className="bg-[#512B81] center gap-2 w-full text-sm"
+                  className="bg-[#512B81] font-montserrat capitalize center gap-2 w-full text-sm"
                 >
                   <span className="font-semibold">Pending</span>
                   <img src={pending} />
@@ -163,7 +163,7 @@ function Faculty() {
                 <Button
                   onClick={handleOpenSorted}
                   variant="outlined"
-                  className="border-2 text-sm border-[#512B81] center gap-2 text-[#512B81] w-full"
+                  className="border-2 text-sm capitalize border-[#512B81] font-montserrat center gap-2 text-[#512B81] w-full"
                 >
                   <img src={list} />
                   <span>View sorted list</span>
@@ -171,7 +171,7 @@ function Faculty() {
               </div>
             </div>
           </div>
-          <div className="font-bold text-lg w-full text-start">
+          <div className="font-bold text-lg font-montserrat w-full text-start">
             Batch Report
           </div>
           {facultyData.students ? (

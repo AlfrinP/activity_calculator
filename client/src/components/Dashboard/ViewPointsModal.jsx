@@ -33,15 +33,15 @@ function ViewPointsModal({ isOpen, handleOpen, data }) {
       handleOpen={handleOpen}
       header="Activity Point Details"
     >
-      <div className="flex flex-row gap-20 center mb-3">
+      <div className="flex flex-row gap-20 font-montserrat center mb-3">
         <Select variant="outlined" label="Year">
-          <Option onClick={() => setSelectedYear(2022)}>22-23</Option>
-          <Option onClick={() => setSelectedYear(2023)}>23-24</Option>
-          <Option onClick={() => setSelectedYear(2024)}>24-25</Option>
-          <Option onClick={() => setSelectedYear(2025)}>25-26</Option>
+          <Option className="font-montserrat" onClick={() => setSelectedYear(2022)}>22-23</Option>
+          <Option className="font-montserrat" onClick={() => setSelectedYear(2023)}>23-24</Option>
+          <Option className="font-montserrat" onClick={() => setSelectedYear(2024)}>24-25</Option>
+          <Option className="font-montserrat" onClick={() => setSelectedYear(2025)}>25-26</Option>
         </Select>
-        <div className="bg-purple-900 w-fit py-1 px-5 rounded-lg box">
-          <p className="text-center text-white text-xs">
+        <div className="bg-purple-900 w-fit py-1 px-3 rounded-lg box">
+          <p className="text-center text-white text-xs font-montserrat">
             Total Points {totalPoint}
           </p>
         </div>

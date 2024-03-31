@@ -95,9 +95,9 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
       >
         <DropZone onFileChange={handleFileChange} />
         <div className="w-full">
-          <h4 className="text-black text-lg font-semibold mb-2">Details</h4>
+          <h4 className="text-black text-lg font-semibold font-montserrat mb-2">Details</h4>
           <hr className="border-gray-400" />
-          <div className="grid grid-cols-2 gap-5 mt-4 h-min">
+          <div className="grid grid-cols-2 font-montserrat gap-5 mt-4 h-min">
             <Select
               size="lg"
               required
@@ -107,7 +107,7 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
               onChange={(val) => handleCategoryChange(val)}
             >
               {form.map((categoryData, index) => (
-                <Option key={index} value={categoryData.category}>
+                <Option key={index} className="font-montserrat" value={categoryData.category}>
                   {categoryData.category}
                 </Option>
               ))}
@@ -127,7 +127,7 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
                     (categoryData) => categoryData.category === selectedCategory
                   )
                   ?.data.map((activityData, index) => (
-                    <Option key={index} value={activityData.activity_name}>
+                    <Option key={index} className="font-montserrat" value={activityData.activity_name}>
                       {activityData.activity_name}
                     </Option>
                   ))}
@@ -161,7 +161,7 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
                         activityData.activity_name === selectedActivity
                     )
                     ?.levels.map((level, index) => (
-                      <Option key={index} value={index}>
+                      <Option key={index} className="font-montserrat" value={index}>
                         {level}
                       </Option>
                     ))}
@@ -195,7 +195,7 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
                         activityData.activity_name === selectedActivity
                     )
                     ?.positions.map((position, index) => (
-                      <Option key={index} value={position}>
+                      <Option key={index} className="font-montserrat" value={position}>
                         {position}
                       </Option>
                     ))}
@@ -213,7 +213,7 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
         </div>
         <div className="center justify-end w-full gap-3 ">
           <Button
-            className="text-[#512B81] underline"
+            className="text-[#512B81] font-montserrat underline"
             onClick={handleCancel}
             variant="text"
           >
@@ -221,7 +221,7 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
           </Button>
           <Button
             type="submit"
-            className="capitalize bg-[#512B81] flex items-center gap-1"
+            className="capitalize bg-[#512B81] font-montserrat flex items-center gap-1"
             onClick={handleFormSubmit}
           >
             {loader && <Spinner color="purple" />}Upload Files

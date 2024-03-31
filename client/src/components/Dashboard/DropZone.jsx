@@ -16,6 +16,11 @@ const DropZone = () => {
       setUploadMessage("File size exceeds 5MB limit");
       setBgColor("#FFADB0"); // Change background color to red
       setIcon(Wrong); // Change icon to wrong
+    } else if (!file.type.startsWith('image/')) {
+      // If file type is not an image
+      setUploadMessage("Upload valid file format"); // Update upload message
+      setBgColor("#FFADB0"); // Change background color to red
+      setIcon(Wrong); // Change icon to wrong
     } else {
       // Handle file upload logic here
       console.log("File uploaded:", file);
@@ -75,21 +80,21 @@ const DropZone = () => {
         className={`flex flex-col items-center justify-center w-full h-[20%] border-2 border-gray-500 border-dashed rounded-lg cursor-pointer pb-4`}
       >
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
-          <p className=" text-2xl text-black dark:text-gray-400">
+          <p className=" text-2xl font-montserrat text-black dark:text-gray-400">
             Drop your files here!
           </p>
-          <p className="text-gray-500 dark:text-gray-400 font-bold">
+          <p className="text-gray-500 font-montserrat dark:text-gray-400 font-bold">
             or click
           </p>
         </div>
         {/* Render the button conditionally based on whether the upload was successful */}
         {icon ? (
-          <button className='bg-purple-900 flex items-center py-2 px-8 text-white rounded-lg capitalize text-[15px]'>
+          <button className='bg-purple-900 flex items-center py-2 px-8 font-montserrat text-white rounded-lg capitalize text-[15px]'>
             <img src={icon} alt="icon" className='w-5 mr-2'/>
             {uploadMessage}
           </button>
         ) : (
-          <label htmlFor="dropzone-file" className='flex items-center gap-2 bg-purple-900 py-2 px-8 text-white rounded-lg capitalize text-[15px] cursor-pointer'>
+          <label htmlFor="dropzone-file" className='flex items-center gap-2 bg-purple-900 py-2 px-8 text-white font-montserrat rounded-lg capitalize text-[15px] cursor-pointer'>
             <input
               id="dropzone-file"
               type="file"

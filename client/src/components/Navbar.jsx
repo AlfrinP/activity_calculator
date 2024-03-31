@@ -33,7 +33,7 @@ function Navbar() {
       <img src={christ} alt="Logo" className="w-28" />
       <Button className="center gap-1" onClick={handleLogout} variant="text">
         <img src={logout} alt="Logout Icon" className="w-7 h-7" />
-        <div className="text-lg text-[#512B81] font-semibold">Logout</div>
+        <div className="text-lg font-montserrat text-[#512B81] font-semibold">Logout</div>
       </Button>
     </div>
   );

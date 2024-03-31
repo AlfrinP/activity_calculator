@@ -51,16 +51,16 @@ function BatchReport({ isOpen, handleOpen, data }) {
       <div className="center items-end flex-col mt-4 w-full">
         <div className="center flex-col items-start">
           <div className="center gap-3 pr-4">
-            <Select variant="outlined" label="Select Year">
-              <Option onClick={() => setYear(2022)}>22-23</Option>
-              <Option onClick={() => setYear(2023)}>23-24</Option>
-              <Option onClick={() => setYear(2024)}>24-25</Option>
-              <Option onClick={() => setYear(2025)}>25-26</Option>
+            <Select variant="outlined" className="font-montserrat" label="Select Year">
+              <Option className="font-montserrat" onClick={() => setYear(2022)}>22-23</Option>
+              <Option className="font-montserrat" onClick={() => setYear(2023)}>23-24</Option>
+              <Option className="font-montserrat" onClick={() => setYear(2024)}>24-25</Option>
+              <Option className="font-montserrat" onClick={() => setYear(2025)}>25-26</Option>
             </Select>
             <Button
               className={`${
                 loader ? "bg-green-500 cursor-none" : "bg-green-100"
-              } text-green-600 center gap-1 p-2 rounded-md capitalize`}
+              } text-green-600 center gap-1 py-2 px-3 rounded-md capitalize`}
               style={{ color: "#076F2C" }}
               onClick={() =>
                 year ? handleSubmit() : setError("Please select a year")
@@ -68,7 +68,7 @@ function BatchReport({ isOpen, handleOpen, data }) {
             >
               {loader ? <Spinner /> : null}
               <img src={Download} alt="Download" className="w-[30px] pl-2" />
-              <span className="mr-6">Download</span>
+              <span className=" pr-3 font-montserrat">Download</span>
             </Button>
           </div>
           {error ? <div className="text-red-500 w-fit">{error}</div> : null}

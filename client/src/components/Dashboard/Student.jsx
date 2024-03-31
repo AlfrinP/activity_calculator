@@ -73,7 +73,7 @@ export default function Student() {
                     <span className="font-normal font-montserrat text-[#512B81]">
                       Student Name
                     </span>
-                    <span className="text-lg font-semibold text-black capitalize">
+                    <span className="text-lg font-semibold font-montserrat text-black capitalize">
                       {studentData.name}
                     </span>
                   </div>
@@ -93,7 +93,7 @@ export default function Student() {
                       </span>
                     </div>
                   </div>
-                  <div className="center gap-2">
+                  <div className="center font-montserrat gap-2">
                     <span className="text-[#512B81]">Semester</span>
                     <span className="text-2xl text-[#512B81]">4</span>
                   </div>
@@ -105,7 +105,7 @@ export default function Student() {
                     onClick={handleOpenFileModal}
                   >
                     <img src={upload} alt="Upload Icon" />
-                    <span className="text-white font-montserrat">Upload Certificate</span>
+                    <span className="text-white capitalize font-montserrat">Upload Certificate</span>
                   </Button>
                   {/* <ContainedInputs/> */}
                   <Button
