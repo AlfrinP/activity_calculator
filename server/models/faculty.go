@@ -1,8 +1,6 @@
 package models
 
 import (
-	"github.com/go-playground/validator/v10"
-	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -14,35 +12,4 @@ type Faculty struct {
 	Batch      string    `json:"batch"`
 	Password   string    `json:"-"`
 	Students   []Student `json:"students" gorm:"foreignKey:FacultyID"`
-}
-
-type FacultyCreate struct {
-	Name       string `validate:"required" json:"name"`
-	Email      string `validate:"required" json:"email"`
-	Department string `validate:"required" json:"department"`
-	Batch      string `validate:"required" json:"batch"`
-	Password   string `validate:"required" json:"password"`
-}
-
-func (fc *FacultyCreate) Validate() error {
-	validate := validator.New()
-	if err := validate.Struct(fc); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (fc *FacultyCreate) Convert() (*Faculty, error) {
-	hashedPasswd, err := bcrypt.GenerateFromPassword([]byte(fc.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return &Faculty{}, err
-	}
-
-	return &Faculty{
-		Name:       fc.Name,
-		Email:      fc.Email,
-		Department: fc.Department,
-		Batch:      fc.Batch,
-		Password:   string(hashedPasswd),
-	}, nil
 }

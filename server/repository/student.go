@@ -52,14 +52,6 @@ func (repo *StudentRepositry) GetByID(id uint) (*models.Student, error) {
 	return &student, nil
 }
 
-func (repo *StudentRepositry) All() ([]models.Student, error) {
-	var students []models.Student
-	if err := repo.db.Find(&students).Error; err != nil {
-		return students, err
-	}
-	return students, nil
-}
-
 func (repo *StudentRepositry) GetStudentByID(id uint) ([]models.Student, error) {
 	var student []models.Student
 	err := repo.db.Model(&models.Student{}).Preload("Certificate").Find(&student).Error

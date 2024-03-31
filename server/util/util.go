@@ -24,7 +24,7 @@ var Positions = []string{
 	"Volunteer",
 }
 
-type Data struct {
+type TokenData struct {
 	ID   uint
 	Role string
 }
