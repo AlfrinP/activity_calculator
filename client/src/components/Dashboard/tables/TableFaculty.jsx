@@ -13,10 +13,7 @@ function TableFaculty({ data }) {
   return (
     <div className="group shadow-lg text-black rounded-lg overflow-x-auto sm:rounded-lg w-full h-max-full transition cursor-pointer">
       <TableFaculty2 isOpen={openTable} handleOpen={handleOpenTable} data={data} />
-      <Student2 isOpen={openStudent} handleOpen={handleOpenStudent} />
-    <div className="group shadow-[0_3px_10px_rgb(0,0,0,0.2)] text-black rounded-lg overflow-x-auto sm:rounded-lg w-full h-max-full hover:filter hover:brightness-50 transition cursor-pointer">
-      <TableFaculty2 isOpen={openTable} handleOpen={handleOpenTable} />
-      {/* <StudentDetail data={studentData} /> */}
+    {/* <StudentDetail data={studentData} /> */}
       <table className=" w-full text-sm text-left rtl:text-right text-black">
         <thead className="text-black uppercase bg-gray-5 border-b text-sm ">
           <tr>
