@@ -1,68 +1,11 @@
 import React from "react";
 import Student2 from "../Student2";
-import { Dialog } from "@material-tailwind/react";
 import ModalLayout from "../../modal/modalLayout";
 
-function TableFaculty({ isOpen, handleOpen }) {
+function TableFaculty({ isOpen, handleOpen,data }) {
   const [openStudent, setOpenStudent] = React.useState(false);
   const handleOpenStudent = () => setOpenStudent(!openStudent);
 
-  const data = [
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Aalap",
-      point: "15",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Abhishek",
-      point: "15",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Adithya",
-      point: "15",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Agna",
-      point: "15",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Aisac",
-      point: "15",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Aiswarya",
-      point: "15",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Aiswarya",
-      point: "15",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Aiswarya",
-      point: "15",
-    },
-    {
-      no: "01",
-      regno: "CCE22CS001",
-      name: "Aiswarya",
-      point: "15",
-    },
-  ];
   return (
     <>
       <Student2 isOpen={openStudent} handleOpen={handleOpenStudent} />

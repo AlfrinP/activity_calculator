@@ -56,7 +56,12 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
     bodyFormData.append("date", date);
     bodyFormData.append("upload_certificate", uploadedCertificate);
 
+    const form={
+      
+    }
+
     try {
+      console.log(form);
       setLoader(true);
       const response = await axios.post(`${baseURL}certificate`, bodyFormData, {
         headers: {
