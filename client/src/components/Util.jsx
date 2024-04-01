@@ -242,7 +242,7 @@ function validateRegisterNo(registerNo) {
     error: "",
   };
 
-  const validFormat = registerNo.match(/^CCE\d{2}[A-Z]{2}\d{3}$/i); // Case-insensitive validation
+  const validFormat = registerNo.match(/^CCE\d{2}[A-Z]{2}\d{3}$/i);
 
   if (validFormat) {
     const regNoLowerCase = registerNo.toLowerCase();

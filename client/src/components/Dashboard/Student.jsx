@@ -119,7 +119,7 @@ export default function Student() {
                 </div>
               </div>
             </div>
-            <div className="w-full h-full overflow-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] text-black rounded-lg">
+            <div className="flex-1 w-full overflow-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] text-black rounded-lg">
               <CertificateTable
                 data={
                   studentData.certificates?.length === 0

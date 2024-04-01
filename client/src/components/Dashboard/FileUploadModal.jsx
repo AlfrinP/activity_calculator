@@ -9,23 +9,23 @@ import { baseURL, bytesToMB, form } from "../Util";
 export default function FileUploadModel({ isOpen, handleOpen }) {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedActivity, setSelectedActivity] = useState("");
-  const [selectedLevel, setSelectedLevel] = useState(0);
+  const [selectedLevel, setSelectedLevel] = useState("");
   const [selectedPosition, setSelectedPosition] = useState("");
   const [date, setDate] = useState("");
-  const [uploadedCertificate, setUploadedCertificate] = useState(null);
+  const [uploadedCertificate, setUploadedCertificate] = useState();
   const [loader, setLoader] = useState(false);
-  const [fileDetails, setFileDetails] = useState(null);
+  const [userMessage, setUserMessage] = useState(null);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setSelectedActivity("");
-    setSelectedLevel(0);
+    setSelectedLevel("");
     setSelectedPosition("");
   };
 
   const handleActivityChange = (activity) => {
     setSelectedActivity(activity);
-    setSelectedLevel(0);
+    setSelectedLevel("");
     setSelectedPosition("");
   };
 
@@ -41,21 +41,22 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
   const handleCancel = () => {
     setSelectedCategory("");
     setSelectedActivity("");
-    setSelectedLevel(0);
+    setSelectedLevel("");
     setSelectedPosition("");
     setDate("");
+    setUserMessage(null);
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     let bodyFormData = new FormData();
     bodyFormData.append("name", selectedActivity);
-    bodyFormData.append("level", Number(selectedLevel));
+    bodyFormData.append("level", selectedLevel);
     bodyFormData.append("category", selectedCategory);
     bodyFormData.append("position", selectedPosition);
     bodyFormData.append("date", date);
     bodyFormData.append("upload_certificate", uploadedCertificate);
-
+    console.log(bodyFormData);
     const form={
       
     }
@@ -71,8 +72,11 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
       });
       console.log(response.data);
       setLoader(false);
+      setUserMessage("Certificate uploaded successfully");
       handleOpen();
     } catch (error) {
+      setLoader(false);
+      setUserMessage("Error uploading certificate");
       console.error("Error submitting form:", error);
     }
   };
@@ -83,8 +87,7 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
       size: bytesToMB(file.size),
       type: file.type.split("/")[1],
     };
-
-    setFileDetails(fileDetails);
+    console.log(fileDetails);
     setUploadedCertificate(file);
   };
 
@@ -216,7 +219,8 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
             />
           </div>
         </div>
-        <div className="center justify-end w-full gap-3 ">
+        <div className="center w-full gap-3 ">
+          <div className="flex-1 capitalize w-full center text-lg font-bold">{userMessage}</div>
           <Button
             className="text-[#512B81] font-montserrat underline"
             onClick={handleCancel}

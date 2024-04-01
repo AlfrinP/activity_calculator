@@ -14,7 +14,7 @@ const ViewCertificate = ({ isOpen, handleOpen, data = "" }) => {
     >
       <div className="flex-col w-full center gap-3">
         <div className="center w-full ">
-          <div className="flex flex-col w-2/3">
+          <div className="flex flex-col w-1/2">
             <h3 className="mb-2 underline">Activity Name</h3>
             <span className="font-semibold text-lg">{data.name}</span>
 
@@ -29,7 +29,7 @@ const ViewCertificate = ({ isOpen, handleOpen, data = "" }) => {
               {new Date(data.date).toLocaleDateString()}
             </span>
           </div>
-          <div className="block w-1/3 h-full">
+          <div className="block w-1/2 h-full">
             <img alt="nature" className="w-full block" src={data.file_url} />
           </div>
         </div>
