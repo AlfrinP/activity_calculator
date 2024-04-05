@@ -12,7 +12,7 @@ function Pending({ isOpen, handleOpen, certificateData = [] }) {
   const [data, setData] = useState();
 
   return (
-    <ModalLayout isOpen={isOpen} handleOpen={handleOpen} header={null} size="xl">
+    <ModalLayout isOpen={isOpen} handleOpen={handleOpen} header={"Pending List"} size="lg">
       <CheckCertificate
         isOpen={openCheckCertificate}
         handleOpen={handleOpenCheckCertificate}
@@ -29,7 +29,7 @@ function Pending({ isOpen, handleOpen, certificateData = [] }) {
           "Action",
         ]}
       >
-        {certificateData.map((student, studentIndex) =>
+        {certificateData.map((student) =>
           student.certificates.map((item, certificateIndex) => (
             <tr
               key={certificateIndex}

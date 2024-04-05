@@ -1,9 +1,9 @@
 import React from "react";
-import Student2 from "../Student2";
+// import Student2 from "../Student2";
 import ModalLayout from "../../modal/modalLayout";
 
 
-function TableFacultyDetail({ isOpen, handleOpen , data }) {
+export default function TableFacultyDetail({ isOpen, handleOpen , data }) {
   const [openStudent, setOpenStudent] = React.useState(false);
   const handleOpenStudent = () => setOpenStudent(!openStudent);
 
@@ -63,4 +63,3 @@ function TableFacultyDetail({ isOpen, handleOpen , data }) {
   );
 }
 
-export default TableFaculty;

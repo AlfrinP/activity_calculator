@@ -45,6 +45,8 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
     setSelectedPosition("");
     setDate("");
     setUserMessage(null);
+    setUploadedCertificate(null);
+    setLoader(false);
   };
 
   const handleFormSubmit = async (e) => {
@@ -57,9 +59,7 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
     bodyFormData.append("date", date);
     bodyFormData.append("upload_certificate", uploadedCertificate);
     console.log(bodyFormData);
-    const form={
-      
-    }
+    const form = {};
 
     try {
       console.log(form);
@@ -103,7 +103,9 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
       >
         <DropZone onFileChange={handleFileChange} />
         <div className="w-full">
-          <h4 className="text-black text-lg font-semibold font-montserrat mb-2">Details</h4>
+          <h4 className="text-black text-lg font-semibold font-montserrat mb-2">
+            Details
+          </h4>
           <hr className="border-gray-400" />
           <div className="grid grid-cols-2 font-montserrat gap-5 mt-4 h-min">
             <Select
@@ -115,7 +117,11 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
               onChange={(val) => handleCategoryChange(val)}
             >
               {form.map((categoryData, index) => (
-                <Option key={index} className="font-montserrat" value={categoryData.category}>
+                <Option
+                  key={index}
+                  className="font-montserrat"
+                  value={categoryData.category}
+                >
                   {categoryData.category}
                 </Option>
               ))}
@@ -135,7 +141,11 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
                     (categoryData) => categoryData.category === selectedCategory
                   )
                   ?.data.map((activityData, index) => (
-                    <Option key={index} className="font-montserrat" value={activityData.activity_name}>
+                    <Option
+                      key={index}
+                      className="font-montserrat"
+                      value={activityData.activity_name}
+                    >
                       {activityData.activity_name}
                     </Option>
                   ))}
@@ -169,7 +179,11 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
                         activityData.activity_name === selectedActivity
                     )
                     ?.levels.map((level, index) => (
-                      <Option key={index} className="font-montserrat" value={index}>
+                      <Option
+                        key={index}
+                        className="font-montserrat"
+                        value={index}
+                      >
                         {level}
                       </Option>
                     ))}
@@ -203,7 +217,11 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
                         activityData.activity_name === selectedActivity
                     )
                     ?.positions.map((position, index) => (
-                      <Option key={index} className="font-montserrat" value={position}>
+                      <Option
+                        key={index}
+                        className="font-montserrat"
+                        value={position}
+                      >
                         {position}
                       </Option>
                     ))}
@@ -220,7 +238,9 @@ export default function FileUploadModel({ isOpen, handleOpen }) {
           </div>
         </div>
         <div className="center w-full gap-3 ">
-          <div className="flex-1 capitalize w-full center text-lg font-bold">{userMessage}</div>
+          <div className="flex-1 capitalize w-full center text-lg font-bold">
+            {userMessage}
+          </div>
           <Button
             className="text-[#512B81] font-montserrat underline"
             onClick={handleCancel}

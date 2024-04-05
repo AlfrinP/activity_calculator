@@ -19,6 +19,7 @@
     "react": "^18.2.0",
     "react-axios": "^2.0.6",
     "react-cookie": "^6.1.1",
+    "react-datepicker": "^6.6.0",
     "react-dom": "^18.2.0",
     "react-flatpickr": "^3.10.13",
     "react-hook-form": "^7.49.3",
