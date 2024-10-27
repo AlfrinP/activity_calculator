@@ -1,12 +1,12 @@
-# Contributing to Lab Docs
+# Contributing to EasyCertify
 
-First off, thank you for considering contributing to Lab Docs! It's people like you that make this project great.
+First off, thank you for considering contributing to EasyCertify! It's people like you that make this project great.
 
 ## How to Contribute
 
 ### Reporting Bugs
 
-If you find a bug, please open an issue [here](https://github.com/pranavmadhu01/lab-docs/issues) and include:
+If you find a bug, please open an issue [here](https://github.com/AlfrinP/activity_calculator/issues) and include:
 
 - A clear and descriptive title.
 - A detailed description of the issue.
@@ -15,7 +15,7 @@ If you find a bug, please open an issue [here](https://github.com/pranavmadhu01/
 
 ### Suggesting Enhancements
 
-If you have an idea for an enhancement, please open an issue [here](https://github.com/pranavmadhu01/lab-docs/issues) and include:
+If you have an idea for an enhancement, please open an issue [here](https://github.com/AlfrinP/activity_calculator/issues) and include:
 
 - A clear and descriptive title.
 - A detailed description of the enhancement.
@@ -32,7 +32,7 @@ If you have an idea for an enhancement, please open an issue [here](https://gith
 3. Make your changes.
 4. Commit your changes (`git commit -m 'Add some feature'`).
 5. Push to the branch (`git push origin feat/your-feature-name`).
-6. Open a pull request [here](https://github.com/pranavmadhu01/lab-docs/pulls).
+6. Open a pull request [here](https://github.com/AlfrinP/activity_calculator/pulls).
 
 ### Code Style
 
