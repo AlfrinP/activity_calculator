@@ -25,7 +25,7 @@ Before running the project, make sure you have the following installed:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/EasyCertify
+git clone https://github.com/AlfrinP/EasyCertify
 cd EasyCertify
 ```
 
