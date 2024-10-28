@@ -7,6 +7,7 @@ import (
 	"github.com/AlfrinP/point_calculator/config"
 	"github.com/AlfrinP/point_calculator/repository"
 	"github.com/AlfrinP/point_calculator/storage"
+	"github.com/AlfrinP/point_calculator/types"
 	"github.com/AlfrinP/point_calculator/util"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt"
@@ -24,7 +25,10 @@ func DeserializeUser(c *fiber.Ctx) error {
 	}
 
 	if tokenString == "" {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": "You are not logged in"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"error": true,
+			"msg":   "You are not logged in,empty token",
+		})
 	}
 
 	c.Locals("token", tokenString)
@@ -36,46 +40,64 @@ func DeserializeUser(c *fiber.Ctx) error {
 	})
 
 	if err != nil {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": fmt.Sprintf("invalidate token: %v", err)})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"error": true,
+			"msg":   "invalid token parse",
+		})
 	}
 
 	claims, ok := tokenByte.Claims.(jwt.MapClaims)
 	if !ok || !tokenByte.Valid {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": "invalid token claim"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"error": true,
+			"msg":   "invalid token claim",
+		})
 	}
 
 	role := claims["role"].(string)
 	id, ok := claims["user_id"].(float64)
 	if !ok {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": "invalid token claim 11"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"error": true,
+			"msg":   "invalid token claim",
+		})
 	}
 
-	if role == "student" {
+	if role == types.Student {
 		studentRepo := repository.NewStudentRepository(storage.GetDB())
 		student, err := studentRepo.GetByID(uint(id))
 		if err != nil {
-			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "the user belonging to this token no logger exists"})
+			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
+				"error": true,
+				"msg":   "the user belonging to this token no logger exists",
+			})
 		}
-		c.Locals("user", &util.Data{
+		c.Locals("user", &util.TokenData{
 			ID:   student.ID,
-			Role: "student",
+			Role: types.Student,
 		})
 
-	} else if role == "faculty" {
+	} else if role == types.Faculty {
 
 		facultyRepo := repository.NewFacultyRepository(storage.GetDB())
 		faculty, err := facultyRepo.GetByID(uint(id))
 
 		if err != nil {
-			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"status": "fail", "message": "the user belonging to this token no logger exists"})
+			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
+				"error": true,
+				"msg":   "the user belonging to this token no logger exists",
+			})
 		}
 
-		c.Locals("user", &util.Data{
+		c.Locals("user", &util.TokenData{
 			ID:   faculty.ID,
-			Role: "faculty",
+			Role: types.Faculty,
 		})
 	} else {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "fail", "message": "invalid token claim"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"error": true,
+			"msg":   "invalid token claim",
+		})
 	}
 
 	return c.Next()
